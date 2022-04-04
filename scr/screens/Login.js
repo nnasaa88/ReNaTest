@@ -10,18 +10,23 @@ import {
 } from "react-native";
 
 export default function (props) {
-  const [myemail, setMyemail] = useState("nasaa88@gmail.com");
+  const [Myemail, setMyemail] = useState("jhjdas");
+  const [Mypass, setMypass] = useState("jhjdas");
   return (
     <View>
       <Image
-        style={{ width: "95%", height: "50%", justifyContent: "center" }}
+        style={{
+          width: "100%",
+          height: "50%",
+          justifyContent: "center",
+          resizeMode: "stretch",
+        }}
         source={require("../../assets/log.jpg")}
       />
       <Text style={{ textAlign: "center", fontSize: 18 }}>
         Хэрэглэгчийн нэр, нууц үг ээ оруулна уу
+        {Myemail} - {Mypass}
       </Text>
-      <Text> ӨӨрчоөро л {setMyemail}</Text>
-
       <TextInput
         autoCapitalize="words"
         style={css.input}
@@ -33,6 +38,7 @@ export default function (props) {
         secureTextEntry={true}
         style={css.input}
         placeholder="Нууц үгээ оруулна уу"
+        onChangeText={setMypass}
       />
       <View style={css.Button}>
         <Button
@@ -42,7 +48,7 @@ export default function (props) {
       </View>
       <View style={css.Button}>
         <Button
-          onPress={() => props.navigation.navigate("Home")}
+          onPress={() => props.navigation.navigate("List")}
           title="Буцах"
         />
       </View>

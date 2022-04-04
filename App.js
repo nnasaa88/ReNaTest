@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import LoginScreen from "./scr/screens/Login";
 import HomeScreen from "./scr/screens/Home";
+import FlatScreen from "./scr/screens/Flatlistscreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -20,6 +21,7 @@ export default function App() {
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="List" component={FlatScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
