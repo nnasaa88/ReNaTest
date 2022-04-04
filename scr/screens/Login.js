@@ -1,15 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
   View,
   Button,
-  TouchableOpacity,
   Alert,
   Image,
   TextInput,
 } from "react-native";
+
 export default function (props) {
+  const [myemail, setMyemail] = useState("nasaa88@gmail.com");
   return (
     <View>
       <Image
@@ -19,8 +20,20 @@ export default function (props) {
       <Text style={{ textAlign: "center", fontSize: 18 }}>
         Хэрэглэгчийн нэр, нууц үг ээ оруулна уу
       </Text>
-      <TextInput style={css.input} placeholder="Емайл хаягаа оруулна уу" />
-      <TextInput style={css.input} placeholder="Нууц үгээ оруулна уу" />
+      <Text> ӨӨрчоөро л {setMyemail}</Text>
+
+      <TextInput
+        autoCapitalize="words"
+        style={css.input}
+        placeholder="Емайл хаягаа оруулна уу"
+        onChangeText={setMyemail}
+      />
+
+      <TextInput
+        secureTextEntry={true}
+        style={css.input}
+        placeholder="Нууц үгээ оруулна уу"
+      />
       <View style={css.Button}>
         <Button
           onPress={() => props.navigation.navigate("Home")}
