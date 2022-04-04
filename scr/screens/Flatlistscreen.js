@@ -29,14 +29,14 @@ const Flatlistscreen = () => {
       data={persons}
       renderItem={({ item, index, separators }) => (
         <TouchableHighlight
-          key={item.key}
+          key={item.index}
           onPress={() => handleClick(item.name)}
           onShowUnderlay={separators.highlight}
           onHideUnderlay={separators.unhighlight}
         >
           <View style={{ backgroundColor: "white" }}>
             <Text>
-              {index} {item.name} {item.key}
+              {index + 1}) {item.name} {item.key}
             </Text>
           </View>
         </TouchableHighlight>
