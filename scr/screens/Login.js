@@ -24,8 +24,7 @@ export default function (props) {
         source={require("../../assets/log.jpg")}
       />
       <Text style={{ textAlign: "center", fontSize: 18 }}>
-        Хэрэглэгчийн нэр, нууц үг ээ оруулна уу
-        {Myemail} - {Mypass}
+        Хэрэглэгчийн нэр, нууц
       </Text>
       <TextInput
         autoCapitalize="words"
@@ -48,6 +47,12 @@ export default function (props) {
       </View>
       <View style={css.Button}>
         <Button
+          onPress={() => props.navigation.navigate("SignUp")}
+          title="Бүртгүүлэх"
+        />
+      </View>
+      <View style={css.Button}>
+        <Button
           onPress={() => props.navigation.navigate("List")}
           title="Буцах"
         />
@@ -58,9 +63,9 @@ export default function (props) {
 const css = StyleSheet.create({
   input: {
     height: 40,
-    margin: 12,
+    margin: 10,
     borderWidth: 1,
     padding: 10,
   },
-  Button: { marginVertical: 10, marginHorizontal: 50 },
+  Button: { marginVertical: 5, marginHorizontal: 50 },
 });

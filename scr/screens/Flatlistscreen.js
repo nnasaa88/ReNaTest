@@ -19,29 +19,36 @@ const Flatlistscreen = () => {
     Alert.alert(name + " сайн уу талаараа хар");
   };
   return (
-    <FlatList
-      ItemSeparatorComponent={
-        Platform.OS !== "android" &&
-        (({ highlighted }) => (
-          <View style={[style.separator, highlighted && { marginLeft: 0 }]} />
-        ))
-      }
-      data={persons}
-      renderItem={({ item, index, separators }) => (
-        <TouchableHighlight
-          key={item.index}
-          onPress={() => handleClick(item.name)}
-          onShowUnderlay={separators.highlight}
-          onHideUnderlay={separators.unhighlight}
-        >
-          <View style={{ backgroundColor: "white" }}>
-            <Text>
-              {index + 1}) {item.name} {item.key}
-            </Text>
-          </View>
-        </TouchableHighlight>
-      )}
-    />
+    (
+      <View>
+        <Text> Dahin </Text>
+      </View>
+    ),
+    (
+      <FlatList
+        ItemSeparatorComponent={
+          Platform.OS !== "android" &&
+          (({ highlighted }) => (
+            <View style={[style.separator, highlighted && { marginLeft: 0 }]} />
+          ))
+        }
+        data={persons}
+        renderItem={({ item, index, separators }) => (
+          <TouchableHighlight
+            key={item.index}
+            onPress={() => handleClick(item.name)}
+            onShowUnderlay={separators.highlight}
+            onHideUnderlay={separators.unhighlight}
+          >
+            <View style={{ backgroundColor: "white" }}>
+              <Text>
+                {index + 1}) {item.name} {item.key}
+              </Text>
+            </View>
+          </TouchableHighlight>
+        )}
+      />
+    )
   );
 };
 
