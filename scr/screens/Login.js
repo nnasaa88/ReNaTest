@@ -23,7 +23,7 @@ export default function (props) {
         }}
         source={require("../../assets/log.jpg")}
       />
-      <Text style={{ textAlign: "center", fontSize: 18 }}>
+      <Text style={{ textAlign: "center", fontSize: 16 }}>
         Хэрэглэгчийн нэр, нууц
       </Text>
       <TextInput

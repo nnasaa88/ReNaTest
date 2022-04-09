@@ -1,18 +1,11 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
+import { StyleSheet, Alert } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "./scr/screens/Login";
 import HomeScreen from "./scr/screens/Home";
 import FlatScreen from "./scr/screens/Flatlistscreen";
 import SignUpScreen from "./scr/screens/Signupscreen";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
 
