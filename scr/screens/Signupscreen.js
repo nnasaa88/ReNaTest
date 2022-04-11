@@ -1,23 +1,53 @@
 import React, { useState } from "react";
-import { View, Text, Image, StyleSheet, TextInput, Button } from "react-native";
+import axios from "axios";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TextInput,
+  Button,
+  Alert,
+} from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function ({ route, navigation }) {
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password1, setPassword1] = useState("");
+  const [password2, setPassword2] = useState("");
+  const [error, setError] = useState(null);
 
   const signupHandler = () => {
-    // Alert.alert(`Таны утас: ${phone}, нууц үг: ${password}`);
-    navigation.push("Login", {
-      phone,
-      password,
-      garchig: "Таны нууц үг дээр байна",
-    });
-  };
+    //Alert.alert("Нууц үгнүүд хооронdsfsdfdsfдоо таарахгүй байна!");
+    setError(null);
 
+    if (name.length === 0) {
+      Alert.alert("Та нэрэээ бичнэ үү");
+      return;
+    }
+
+    if (password1 !== password2) {
+      Alert.alert("Нууц үгнүүд хоорондоо таарахгүй байна!");
+      return;
+    }
+    AsyncStorage.setItem("user_name", name);
+    Alert.alert(name + " Утга хадгалlaa");
+  };
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem("user_name");
+      if (value !== null) {
+        Alert.alert(value + "хадгалсан байна");
+      }
+    } catch (e) {
+      Alert.alert("Алдаа байна");
+    }
+  };
   return (
     <View>
       <Image
-        style={{ width: "100%", height: "50%", resizeMode: "stretch" }}
+        style={{ width: "80%", height: "30%", resizeMode: "stretch" }}
         source={require("../../assets/log.jpg")}
       />
       <Text
@@ -28,32 +58,40 @@ export default function ({ route, navigation }) {
           color: "gray",
         }}
       >
-        Шинээр бүртгүүлэх
+        Шинэ хэрэглэгч
       </Text>
+
+      <Button title="Хадгалсан утга" onPress={getData} />
 
       <TextInput
         style={css.inputField}
         askeyboardType="number-pad"
+        placeholder="Нэр оруулна уу"
+        onChangeText={setName}
+      />
+      <TextInput
+        style={css.inputField}
+        askeyboardType="number-pad"
         placeholder="Та имэйл хаягаа оруулна уу"
-        onChangeText={setPhone}
+        onChangeText={setEmail}
       />
 
       <TextInput
         style={css.inputField}
         secureTextEntry={true}
         placeholder="Нууц үгээ оруулна уу"
-        onChangeText={setPassword}
+        onChangeText={setPassword1}
       />
 
       <TextInput
         style={css.inputField}
         secureTextEntry={true}
         placeholder="Нууц үгээ давтан оруулна уу"
-        onChangeText={setPassword}
+        onChangeText={setPassword2}
       />
       <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
         <Button title="Буцах" onPress={() => navigation.goBack()} />
-        <Button title="Бүртгэх" onPress={signupHandler} />
+        <Button title="Бүртгэх toвч" onPress={signupHandler} />
       </View>
     </View>
   );

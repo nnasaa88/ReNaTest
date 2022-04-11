@@ -57,12 +57,6 @@ export default function (props) {
           title="Буцах"
         />
       </View>
-      <View style={css.Button}>
-        <Button
-          onPress={() => props.navigation.navigate("Drawer")}
-          title="Цэс"
-        />
-      </View>
     </View>
   );
 }

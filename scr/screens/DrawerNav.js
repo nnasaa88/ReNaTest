@@ -29,7 +29,7 @@ function ScreenC() {
 
 const Drawer = createDrawerNavigator();
 
-export default function DrawerScreen({ navigation }) {
+export default function ({ navigation }) {
   return (
     <NavigationContainer>
       <Drawer.Navigator initialRouteName="Screen A">
