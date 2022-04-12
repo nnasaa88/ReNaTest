@@ -43,16 +43,6 @@ export default function ({ route, navigation }) {
         setError("Токен хадгалж чадсангүй. Шалтгаан :" + err.message);
       });
   };
-  const getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem("userName");
-      if (value !== null) {
-        Alert.alert(value + "---хадгалсан байна");
-      }
-    } catch (e) {
-      Alert.alert("Алдаа байна");
-    }
-  };
   return (
     <View>
       <Image
@@ -70,7 +60,7 @@ export default function ({ route, navigation }) {
         Шинэ хэрэглэгч
       </Text>
 
-      <Button title="Хадгалсан утга" onPress={getData} />
+      {/* <Button title="Хадгалсан утга" onPress={getData} /> */}
 
       <TextInput
         style={css.inputField}

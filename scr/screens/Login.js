@@ -10,21 +10,25 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function (props) {
-  const [name, setName] = useState("");
-  const [mobile, setMobile] = useState("");
-  const [Mypass, setMypass] = useState("jhjdas");
-
-  const getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem("userName");
-      if (value !== null) {
-        return value;
-      }
-    } catch (e) {
-      Alert.alert("Алдаа байна");
+const getData = async () => {
+  try {
+    const value = await AsyncStorage.getItem("userName");
+    const value1 = await AsyncStorage.getItem("userPass");
+    if (value !== null) {
+      Alert.alert(value + "olj irlee" + value1);
+      return value;
     }
-  };
+  } catch (e) {
+    Alert.alert("Алдаа байна");
+  }
+};
+
+export default function (props) {
+  const [name, setName] = useState("naxxs");
+  const [mobile, setMobile] = useState("");
+  const [Mypass, setMypass] = useState("");
+
+  // name = getData();
 
   return (
     <View>
@@ -41,7 +45,7 @@ export default function (props) {
         Хэрэглэгчийн нэр, нууц
       </Text>
       <TextInput
-        //defaultValue={getData}
+        value={name}
         autoCapitalize="words"
         style={css.input}
         placeholder="Нэр оруулна уу"
@@ -72,10 +76,7 @@ export default function (props) {
         />
       </View>
       <View style={css.Button}>
-        <Button
-          onPress={() => props.navigation.navigate("List")}
-          title="Буцах"
-        />
+        <Button onPress={() => getData()} title="Буцах" />
       </View>
     </View>
   );
