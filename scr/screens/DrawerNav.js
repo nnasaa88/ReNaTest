@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 // npm install @react-navigation/drawer
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
+// import Stacknav from "./Stacknav";
 
 function ScreenA() {
   return (
@@ -29,18 +30,13 @@ function ScreenC() {
 
 const Drawer = createDrawerNavigator();
 
-export default function ({ navigation }) {
-  return (
-    <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Screen A">
-        <Drawer.Screen name="Screen A" component={ScreenA} />
-        <Drawer.Screen name="Screen B" component={ScreenB} />
-        <Drawer.Screen name="Screen C" component={ScreenC} />
-      </Drawer.Navigator>
-    </NavigationContainer>
-  );
-}
-
+export default () => (
+  <Drawer.Navigator initialRouteName="Screen A">
+    <Drawer.Screen name="Screen A" component={ScreenA} />
+    <Drawer.Screen name="Screen B" component={ScreenB} />
+    <Drawer.Screen name="Screen C" component={ScreenC} />
+  </Drawer.Navigator>
+);
 const css = StyleSheet.create({
   container: {
     flex: 1,

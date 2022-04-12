@@ -13,6 +13,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function ({ route, navigation }) {
   const [name, setName] = useState("");
+  const [mobile, setMobile] = useState("");
   const [email, setEmail] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
@@ -31,14 +32,22 @@ export default function ({ route, navigation }) {
       Alert.alert("Нууц үгнүүд хоорондоо таарахгүй байна!");
       return;
     }
-    AsyncStorage.setItem("user_name", name);
-    Alert.alert(name + " Утга хадгалlaa");
+    AsyncStorage.setItem("userName", name);
+    AsyncStorage.setItem("userPass", password1)
+      .then((result) => {
+        Alert.alert(name + " Утга хадгалlaa");
+        navigation.navigate("Home");
+      })
+      .catch((err) => {
+        console.log("Токен хадгалж чадсангүй. Шалтгаан :" + err.message);
+        setError("Токен хадгалж чадсангүй. Шалтгаан :" + err.message);
+      });
   };
   const getData = async () => {
     try {
-      const value = await AsyncStorage.getItem("user_name");
+      const value = await AsyncStorage.getItem("userName");
       if (value !== null) {
-        Alert.alert(value + "хадгалсан байна");
+        Alert.alert(value + "---хадгалсан байна");
       }
     } catch (e) {
       Alert.alert("Алдаа байна");
@@ -68,6 +77,12 @@ export default function ({ route, navigation }) {
         askeyboardType="number-pad"
         placeholder="Нэр оруулна уу"
         onChangeText={setName}
+      />
+      <TextInput
+        style={css.inputField}
+        keyboardType="numeric"
+        placeholder="Та утсаа оруулна уу"
+        onChangeText={setMobile}
       />
       <TextInput
         style={css.inputField}

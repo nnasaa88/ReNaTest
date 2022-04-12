@@ -1,7 +1,7 @@
 import React, { useLayoutEffect } from "react";
 import { StyleSheet, Text, View, Button, Alert } from "react-native";
 import { Feather } from "@expo/vector-icons";
-/*import { DrawerScreen } from "../navigation/drawernav";*/
+import Drawernav from "./DrawerNav";
 
 export default function (props) {
   useLayoutEffect(() => {
@@ -12,7 +12,7 @@ export default function (props) {
           style={{ marginRight: 20 }}
           name="menu"
           color="black"
-          onPress={() => props.navigation.toggleDrawer}
+          onPress={() => Drawernav()}
         />
       ),
     });

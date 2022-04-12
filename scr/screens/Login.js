@@ -8,10 +8,24 @@ import {
   Image,
   TextInput,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function (props) {
-  const [Myemail, setMyemail] = useState("jhjdas");
+  const [name, setName] = useState("");
+  const [mobile, setMobile] = useState("");
   const [Mypass, setMypass] = useState("jhjdas");
+
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem("userName");
+      if (value !== null) {
+        return value;
+      }
+    } catch (e) {
+      Alert.alert("Алдаа байна");
+    }
+  };
+
   return (
     <View>
       <Image
@@ -27,12 +41,18 @@ export default function (props) {
         Хэрэглэгчийн нэр, нууц
       </Text>
       <TextInput
+        //defaultValue={getData}
         autoCapitalize="words"
         style={css.input}
-        placeholder="Емайл хаягаа оруулна уу"
-        onChangeText={setMyemail}
+        placeholder="Нэр оруулна уу"
+        onChangeText={setName}
       />
-
+      <TextInput
+        keyboardType="numeric"
+        style={css.input}
+        placeholder="Утсаа оруулна уу"
+        onChangeText={setMobile}
+      />
       <TextInput
         secureTextEntry={true}
         style={css.input}
