@@ -4,14 +4,14 @@ import { NavigationContainer } from "@react-navigation/native";
 // import {createNativeStackNavigator, HeaderBackButton,} from "@react-navigation/native-stack";
 import Stacknav from "./scr/screens/Stacknav";
 // import Drawernav from "./scr/screens/DrawerNav";
-import Mycontext from "./context/Mycontext";
+import { Mystore } from "./context/Mycontext";
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Mycontext.Provider value="vdsfsdfsdf">
+      <Mystore>
         <Stacknav />
-      </Mycontext.Provider>
+      </Mystore>
     </NavigationContainer>
   );
 }

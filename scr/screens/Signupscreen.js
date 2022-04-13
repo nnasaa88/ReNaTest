@@ -32,8 +32,8 @@ export default function ({ route, navigation }) {
       Alert.alert("Нууц үгнүүд хоорондоо таарахгүй байна!");
       return;
     }
-    AsyncStorage.setItem("userName", name);
-    AsyncStorage.setItem("userPass", password1)
+    AsyncStorage.setItem("Username", name);
+    AsyncStorage.setItem("Userpass", password1)
       .then((result) => {
         Alert.alert(name + " Утга хадгалlaa");
         navigation.navigate("Home");
@@ -101,6 +101,18 @@ export default function ({ route, navigation }) {
     </View>
   );
 }
+export const getData = async (para) => {
+  try {
+    const value = await AsyncStorage.getItem(para);
+    if (value !== null) {
+      Alert.alert(value + "olj irlee");
+      return value;
+    }
+  } catch (e) {
+    Alert.alert("Алдаа байна");
+    console.log(e);
+  }
+};
 
 const css = StyleSheet.create({
   inputField: {

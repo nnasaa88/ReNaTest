@@ -8,27 +8,12 @@ import {
   Image,
   TextInput,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
-const getData = async () => {
-  try {
-    const value = await AsyncStorage.getItem("userName");
-    const value1 = await AsyncStorage.getItem("userPass");
-    if (value !== null) {
-      Alert.alert(value + "olj irlee" + value1);
-      return value;
-    }
-  } catch (e) {
-    Alert.alert("Алдаа байна");
-  }
-};
+import { getData } from "./Signupscreen";
 
 export default function (props) {
   const [name, setName] = useState("naxxs");
   const [mobile, setMobile] = useState("");
   const [Mypass, setMypass] = useState("");
-
-  // name = getData();
 
   return (
     <View>
@@ -76,7 +61,7 @@ export default function (props) {
         />
       </View>
       <View style={css.Button}>
-        <Button onPress={() => getData()} title="Буцах" />
+        <Button onPress={() => getData("Userpass")} title="Буцах" />
       </View>
     </View>
   );
