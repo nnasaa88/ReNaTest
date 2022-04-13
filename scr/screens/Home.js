@@ -1,7 +1,8 @@
-import React, { useLayoutEffect } from "react";
+import React, { useLayoutEffect, useContext } from "react";
 import { StyleSheet, Text, View, Button, Alert } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import Drawernav from "./DrawerNav";
+import Mycontext from "../../context/Mycontext";
 
 export default function (props) {
   useLayoutEffect(() => {
@@ -18,8 +19,10 @@ export default function (props) {
     });
   }, [props.navigation]);
 
+  const value = useContext(Mycontext);
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <Text>{value}}</Text>
       <Text>Home Screen</Text>
       <Button
         onPress={() => props.navigation.navigate("Login")}

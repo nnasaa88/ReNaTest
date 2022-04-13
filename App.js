@@ -4,11 +4,14 @@ import { NavigationContainer } from "@react-navigation/native";
 // import {createNativeStackNavigator, HeaderBackButton,} from "@react-navigation/native-stack";
 import Stacknav from "./scr/screens/Stacknav";
 // import Drawernav from "./scr/screens/DrawerNav";
+import Mycontext from "./context/Mycontext";
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stacknav />
+      <Mycontext.Provider value="vdsfsdfsdf">
+        <Stacknav />
+      </Mycontext.Provider>
     </NavigationContainer>
   );
 }
