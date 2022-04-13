@@ -1,16 +1,23 @@
 import React, { useState } from "react";
 
 const Mycontext = React.createContext();
-import { getData } from "../scr/screens/Signupscreen";
+import { Getdata } from "../scr/screens/Signupscreen";
 
 export const Mystore = (props) => {
   const [isLoggedIn, setisLoggedIn] = useState(false);
-  const [Username, setUsername] = useState(getData("Username"));
-  console.log(Username);
+  const [Storename, setStorename] = useState("Username");
+  const [Storepass, setStorepass] = useState("z");
 
   return (
     <Mycontext.Provider
-      value={{ isLoggedIn, setisLoggedIn, Username, setUsername }}
+      value={{
+        isLoggedIn,
+        setisLoggedIn,
+        Storename,
+        setStorename,
+        Storepass,
+        setStorepass,
+      }}
     >
       {props.children}
     </Mycontext.Provider>

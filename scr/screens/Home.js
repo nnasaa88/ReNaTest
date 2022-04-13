@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useContext } from "react";
 import { StyleSheet, Text, View, Button, Alert } from "react-native";
 import { Feather } from "@expo/vector-icons";
+import { NavigationContainer } from "@react-navigation/native";
 import Drawernav from "./DrawerNav";
 import Mycontext, { Mystore } from "../../context/Mycontext";
 
@@ -13,18 +14,22 @@ export default function (props) {
           style={{ marginRight: 20 }}
           name="menu"
           color="black"
-          onPress={() => Drawernav()}
+          onPress={() => {
+            <NavigationContainer>
+              <Drawernav />;
+            </NavigationContainer>;
+          }}
         />
       ),
     });
   }, [props.navigation]);
 
   const mystatus = useContext(Mycontext);
-  console.log(mystatus.Username);
+  // console.log(mystatus.Username);
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>{"dfdsf" + mystatus.Username._W}</Text>
+      <Text>{"dfdsf" + mystatus.isLoggedIn}</Text>
       <Text>Home Screen</Text>
       <Button
         onPress={() => props.navigation.navigate("Login")}

@@ -32,16 +32,14 @@ export default function ({ route, navigation }) {
       Alert.alert("Нууц үгнүүд хоорондоо таарахгүй байна!");
       return;
     }
-    AsyncStorage.setItem("Username", name);
-    AsyncStorage.setItem("Userpass", password1)
-      .then((result) => {
-        Alert.alert(name + " Утга хадгалlaa");
-        navigation.navigate("Home");
-      })
-      .catch((err) => {
-        console.log("Токен хадгалж чадсангүй. Шалтгаан :" + err.message);
-        setError("Токен хадгалж чадсангүй. Шалтгаан :" + err.message);
-      });
+    if (Setdata(mobile, password1)) {
+      Setdata(mobile + "name", name);
+      Setdata(mobile + "email", email);
+      Alert.alert("Амжилттай бүртгэлээ");
+      return;
+    } else {
+      Alert.alert("Бүртгэхд алдаа гарлаа");
+    }
   };
   return (
     <View>
@@ -101,16 +99,29 @@ export default function ({ route, navigation }) {
     </View>
   );
 }
-export const getData = async (para) => {
+export const Setdata = async (para, para1) => {
+  AsyncStorage.setItem(para, para1)
+    .then((result) => {
+      // Alert.alert(para + "d Утга хадгалlaa");
+      return true;
+    })
+    .catch((err) => {
+      console.log("Токен хадгалж чадсангүй. Шалтгаан :" + err.message);
+      setError("Токен хадгалж чадсангүй. Шалтгаан :" + err.message);
+    });
+};
+export const Getdata = async (para) => {
   try {
     const value = await AsyncStorage.getItem(para);
     if (value !== null) {
-      Alert.alert(value + "olj irlee");
+      Alert.alert(para + "aar " + value + " utga olj irlee");
       return value;
+    } else {
+      Alert.alert(para + "key-geer Utga oldsongui");
     }
   } catch (e) {
     Alert.alert("Алдаа байна");
-    console.log(e);
+    // console.log(e);
   }
 };
 

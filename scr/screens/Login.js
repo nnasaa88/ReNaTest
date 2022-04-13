@@ -8,22 +8,36 @@ import {
   Image,
   TextInput,
 } from "react-native";
+
 import Mycontext, { Mystore } from "../../context/Mycontext";
-import { getData } from "./Signupscreen";
+import { Getdata, Setdata } from "./Signupscreen";
 
 export default function (props) {
   const [name, setName] = useState("naxxs");
   const [mobile, setMobile] = useState("");
   const [Mypass, setMypass] = useState("");
   const mystatus = useContext(Mycontext);
-  console.log(mystatus.Username._W);
+  // console.log(mystatus.Username._W);
+  const Handlerlogin = () => {
+    mystatus.setStorepass(Getdata(mobile));
 
+    console.log(mystatus.Storepass);
+
+    if (Mypass === mystatus.Storepass._W) {
+      Alert.alert("Амжилттай нэвтэрлээ");
+      mystatus.setisLoggedIn(true);
+      props.navigation.navigate("Home");
+    } else {
+      Alert.alert("Утас эсхүл нууц үг буруу байна");
+      mystatus.setisLoggedIn(false);
+    }
+  };
   return (
     <View>
       <Image
         style={{
           width: "100%",
-          height: "50%",
+          height: "20%",
           justifyContent: "center",
           resizeMode: "stretch",
         }}
@@ -33,18 +47,14 @@ export default function (props) {
         Хэрэглэгчийн нэр, нууц
       </Text>
       <TextInput
-        value={mystatus.Username._W}
-        autoCapitalize="words"
-        style={css.input}
-        placeholder="Нэр оруулна уу"
-        onChangeText={setName}
-      />
-      <TextInput
         keyboardType="numeric"
         style={css.input}
-        placeholder="Утсаа оруулна уу"
+        placeholder="Утсаа оруулна rrrrуу"
         onChangeText={setMobile}
       />
+      <Text style={{ textAlign: "center", fontSize: 14 }}>
+        Хэрэглэгч: {setName}
+      </Text>
       <TextInput
         secureTextEntry={true}
         style={css.input}
@@ -52,10 +62,7 @@ export default function (props) {
         onChangeText={setMypass}
       />
       <View style={css.Button}>
-        <Button
-          onPress={() => props.navigation.navigate("Home")}
-          title="Нэвтрэх"
-        />
+        <Button onPress={Handlerlogin} title="Нэвтрэх" />
       </View>
       <View style={css.Button}>
         <Button
@@ -64,7 +71,10 @@ export default function (props) {
         />
       </View>
       <View style={css.Button}>
-        <Button onPress={() => getData("Userpass")} title="Буцах" />
+        <Button onPress={() => Getdata("86163023name")} title="Get" />
+      </View>
+      <View style={css.Button}>
+        <Button onPress={() => Setdata("nn", "nnutga")} title="Set" />
       </View>
     </View>
   );
