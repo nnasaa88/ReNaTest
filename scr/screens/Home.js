@@ -24,7 +24,7 @@ export default function (props) {
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>{"dfdsf" + mystatus.Username}</Text>
+      <Text>{"dfdsf" + mystatus.Username._W}</Text>
       <Text>Home Screen</Text>
       <Button
         onPress={() => props.navigation.navigate("Login")}

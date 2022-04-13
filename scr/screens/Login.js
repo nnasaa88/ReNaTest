@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   StyleSheet,
   Text,
@@ -8,12 +8,15 @@ import {
   Image,
   TextInput,
 } from "react-native";
+import Mycontext, { Mystore } from "../../context/Mycontext";
 import { getData } from "./Signupscreen";
 
 export default function (props) {
   const [name, setName] = useState("naxxs");
   const [mobile, setMobile] = useState("");
   const [Mypass, setMypass] = useState("");
+  const mystatus = useContext(Mycontext);
+  console.log(mystatus.Username._W);
 
   return (
     <View>
@@ -30,7 +33,7 @@ export default function (props) {
         Хэрэглэгчийн нэр, нууц
       </Text>
       <TextInput
-        value={name}
+        value={mystatus.Username._W}
         autoCapitalize="words"
         style={css.input}
         placeholder="Нэр оруулна уу"
