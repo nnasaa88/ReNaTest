@@ -5,8 +5,10 @@ import { Getdata } from "../scr/screens/Signupscreen";
 
 export const Mystore = (props) => {
   const [isLoggedIn, setisLoggedIn] = useState(false);
+  const [Storemobile, setStoremobile] = useState("");
   const [Storename, setStorename] = useState("Username");
   const [Storepass, setStorepass] = useState("z");
+  const [IsLoading, setIsLoading] = useState(true);
 
   return (
     <Mycontext.Provider
@@ -17,6 +19,10 @@ export const Mystore = (props) => {
         setStorename,
         Storepass,
         setStorepass,
+        IsLoading,
+        setIsLoading,
+        Storemobile,
+        setStoremobile,
       }}
     >
       {props.children}

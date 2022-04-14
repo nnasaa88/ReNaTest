@@ -6,6 +6,7 @@ import Drawernav from "./DrawerNav";
 import Mycontext, { Mystore } from "../../context/Mycontext";
 
 export default function (props) {
+  const mystatus = useContext(Mycontext);
   useLayoutEffect(() => {
     props.navigation.setOptions({
       headerRight: () => (
@@ -24,11 +25,9 @@ export default function (props) {
     });
   }, [props.navigation]);
 
-  const mystatus = useContext(Mycontext);
-  // console.log(mystatus.Username);
-
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <Text>{"Хэрэглэгч   " + mystatus.Storename}</Text>
       <Text>{"dfdsf" + mystatus.isLoggedIn}</Text>
       <Text>Home Screen</Text>
       <Button

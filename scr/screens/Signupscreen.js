@@ -10,6 +10,7 @@ import {
   Alert,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 
 export default function ({ route, navigation }) {
   const [name, setName] = useState("");
@@ -32,9 +33,9 @@ export default function ({ route, navigation }) {
       Alert.alert("Нууц үгнүүд хоорондоо таарахгүй байна!");
       return;
     }
-    if (Setdata(mobile, password1)) {
-      Setdata(mobile + "name", name);
-      Setdata(mobile + "email", email);
+    if (Setdata(mobile, name, email, password1)) {
+      // Setdata(mobile + "name", name);
+      // Setdata(mobile + "email", email);
       Alert.alert("Амжилттай бүртгэлээ");
       return;
     } else {
@@ -99,10 +100,10 @@ export default function ({ route, navigation }) {
     </View>
   );
 }
-export const Setdata = async (para, para1) => {
-  AsyncStorage.setItem(para, para1)
+export const Setdata = async (para, para1, para2, para3, para4) => {
+  AsyncStorage.setItem(para, JSON.stringify({ para1, para2, para3 }))
     .then((result) => {
-      // Alert.alert(para + "d Утга хадгалlaa");
+      Alert.alert(para + "d Утга хадгалlaa");
       return true;
     })
     .catch((err) => {
@@ -111,20 +112,20 @@ export const Setdata = async (para, para1) => {
     });
 };
 export const Getdata = async (para) => {
-  try {
-    const value = await AsyncStorage.getItem(para);
-    if (value !== null) {
-      Alert.alert(para + "aar " + value + " utga olj irlee");
-      return value;
-    } else {
-      Alert.alert(para + "key-geer Utga oldsongui");
-    }
-  } catch (e) {
-    Alert.alert("Алдаа байна");
-    // console.log(e);
-  }
+  await AsyncStorage.getItem(para)
+    .then((data) => {
+      if (data !== null) {
+        const value = JSON.parse(data);
+        // Alert.alert(para + "aar " + value + " utga olj irlee");
+        console.log(value);
+        return value;
+      } else {
+        // Alert.alert(para + "key-geer Utga oldsongui");
+        return data;
+      }
+    })
+    .catch((err) => Alert.alert(" Хайлт олдсонгүй " + err.message));
 };
-
 const css = StyleSheet.create({
   inputField: {
     borderBottomColor: "gray",

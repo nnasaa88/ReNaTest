@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   StyleSheet,
   Text,
@@ -8,28 +9,36 @@ import {
   Image,
   TextInput,
 } from "react-native";
-
+import SplashScreen from "./SplashScreen";
 import Mycontext, { Mystore } from "../../context/Mycontext";
 import { Getdata, Setdata } from "./Signupscreen";
 
 export default function (props) {
-  const [name, setName] = useState("naxxs");
   const [mobile, setMobile] = useState("");
   const [Mypass, setMypass] = useState("");
   const mystatus = useContext(Mycontext);
-  // console.log(mystatus.Username._W);
-  const Handlerlogin = () => {
-    mystatus.setStorepass(Getdata(mobile));
+  let Userinfo = {};
 
-    console.log(mystatus.Storepass);
+  const Handlerlogin = async () => {
+    const userstring = await AsyncStorage.getItem(mobile);
 
-    if (Mypass === mystatus.Storepass._W) {
+    if (userstring !== null) {
+      Userinfo = JSON.parse(userstring);
+      console.log(Userinfo);
+    }
+
+    mystatus.setStorepass(Userinfo.para3);
+    mystatus.setStorename(Userinfo.para1);
+
+    if (Mypass === mystatus.Storepass) {
       Alert.alert("Амжилттай нэвтэрлээ");
       mystatus.setisLoggedIn(true);
       props.navigation.navigate("Home");
+      setMypass(null);
     } else {
       Alert.alert("Утас эсхүл нууц үг буруу байна");
       mystatus.setisLoggedIn(false);
+      setMypass(null);
     }
   };
   return (
@@ -49,14 +58,14 @@ export default function (props) {
       <TextInput
         keyboardType="numeric"
         style={css.input}
-        placeholder="Утсаа оруулна rrrrуу"
+        placeholder="Утсаа оруулна уу"
         onChangeText={setMobile}
       />
       <Text style={{ textAlign: "center", fontSize: 14 }}>
-        Хэрэглэгч: {setName}
+        Хэрэглэгч: {mystatus.Storename}
       </Text>
       <TextInput
-        secureTextEntry={true}
+        secureTextEntry={false}
         style={css.input}
         placeholder="Нууц үгээ оруулна уу"
         onChangeText={setMypass}
@@ -71,14 +80,18 @@ export default function (props) {
         />
       </View>
       <View style={css.Button}>
-        <Button onPress={() => Getdata("86163023name")} title="Get" />
+        <Button onPress={() => Getdata("86163023")} title="Get" />
       </View>
       <View style={css.Button}>
-        <Button onPress={() => Setdata("nn", "nnutga")} title="Set" />
+        <Button
+          onPress={() => Setdata("86163023", "name", "email", "nnutga")}
+          title="Set"
+        />
       </View>
     </View>
   );
 }
+
 const css = StyleSheet.create({
   input: {
     height: 40,
