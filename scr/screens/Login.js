@@ -19,17 +19,7 @@ export default function (props) {
   const mystatus = useContext(Mycontext);
   let Userinfo = {};
 
-  const Handlerlogin = async () => {
-    const userstring = await AsyncStorage.getItem(mobile);
-
-    if (userstring !== null) {
-      Userinfo = JSON.parse(userstring);
-      console.log(Userinfo);
-    }
-
-    mystatus.setStorepass(Userinfo.para3);
-    mystatus.setStorename(Userinfo.para1);
-
+  const Handlerlogin = () => {
     if (Mypass === mystatus.Storepass) {
       Alert.alert("Амжилттай нэвтэрлээ");
       mystatus.setisLoggedIn(true);
@@ -60,6 +50,17 @@ export default function (props) {
         style={css.input}
         placeholder="Утсаа оруулна уу"
         onChangeText={setMobile}
+        onEndEditing={async () => {
+          const userstring = await AsyncStorage.getItem(mobile);
+          if (userstring !== null) {
+            Userinfo = JSON.parse(userstring);
+            mystatus.setStorename(Userinfo.para1);
+            mystatus.setStorepass(Userinfo.para3);
+          } else {
+            Alert.alert("Хэрэглэгч олдсонгүй");
+            mystatus.setStorename("");
+          }
+        }}
       />
       <Text style={{ textAlign: "center", fontSize: 14 }}>
         Хэрэглэгч: {mystatus.Storename}

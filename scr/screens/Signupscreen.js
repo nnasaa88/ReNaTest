@@ -112,6 +112,7 @@ export const Setdata = async (para, para1, para2, para3, para4) => {
     });
 };
 export const Getdata = async (para) => {
+  console.log(" from Getdata");
   await AsyncStorage.getItem(para)
     .then((data) => {
       if (data !== null) {

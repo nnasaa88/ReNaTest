@@ -6,17 +6,18 @@ import {
   TouchableHighlight,
   Alert,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 
 const Flatlistscreen = () => {
-  const persons = [
+  const [Persons, setPersons] = useState([
     { name: "Amaraa", key: "56" },
     { name: "Amaa", key: "6" },
     { name: "Amadfraa", key: "16" },
     { name: "Amaasds", key: "5" },
-  ];
+  ]);
   const handleClick = (name) => {
-    Alert.alert(name + " сайн уу талаараа хар");
+    setPersons((oldPersons) => oldPersons.filter((el) => el.name !== name));
+    // Alert.alert(name + " сайн уу талаараа хар");
   };
   return (
     (
@@ -32,7 +33,7 @@ const Flatlistscreen = () => {
             <View style={[style.separator, highlighted && { marginLeft: 0 }]} />
           ))
         }
-        data={persons}
+        data={Persons}
         renderItem={({ item, index, separators }) => (
           <TouchableHighlight
             key={item.index}
