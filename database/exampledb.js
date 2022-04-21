@@ -22,7 +22,7 @@ function openDatabase() {
     };
   }
 
-  const db = SQLite.openDatabase("db.db");
+  const db = SQLite.openDatabase("main.db");
   return db;
 }
 

@@ -5,6 +5,8 @@ import HomeScreen from "./Home";
 import FlatScreen from "./Flatlistscreen";
 import SignUpScreen from "./Signupscreen";
 import SplashScreen from "./SplashScreen";
+// import TestData from "../../database/exampledb";
+import Searchdb from "../../database/Search";
 
 import Mycontext from "../../context/Mycontext";
 // import DrawerScreen from "./DrawerNav";
@@ -31,6 +33,8 @@ export default () => {
         options={{ title: "Дэлгэрэнгүй" }}
       />
       <Stack.Screen name="SignUp" component={SignUpScreen} />
+      {/* <Stack.Screen name="Testdb" component={TestData} /> */}
+      <Stack.Screen name="Searchdb" component={Searchdb} />
     </Stack.Navigator>
   );
 };

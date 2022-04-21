@@ -36,10 +36,10 @@ export default function (props) {
     props.navigation.navigate("List");
   };
   const cattletouch = () => {
-    // props.navigation.navigate("Database");
+    // props.navigation.navigate("Testdb");
   };
   const sheeptouch = () => {
-    // props.navigation.navigate("Mysearch");
+    props.navigation.navigate("Searchdb");
   };
   return (
     <View style={{ flex: 1 }}>
