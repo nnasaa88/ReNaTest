@@ -12,13 +12,13 @@ import {
 import SplashScreen from "./SplashScreen";
 import Mycontext, { Mystore } from "../../context/Mycontext";
 import { Getdata, Setdata } from "./Signupscreen";
-import { getdb } from "../../database/db";
+import { getdb, resultdb } from "../../database/db";
 
 export default function (props) {
   const [mobile, setMobile] = useState("");
   const [Mypass, setMypass] = useState("");
   const mystatus = useContext(Mycontext);
-  let Userinfo = {};
+  // let Userinfo1 = {};
 
   const Handlerlogin = () => {
     if (Mypass === mystatus.Storepass) {
@@ -52,15 +52,30 @@ export default function (props) {
         placeholder="Утсаа оруулна уу"
         onChangeText={setMobile}
         onEndEditing={async () => {
-          const userstring = await AsyncStorage.getItem(mobile);
-          if (userstring !== null) {
-            Userinfo = JSON.parse(userstring);
-            mystatus.setStorename(Userinfo.para1);
-            mystatus.setStorepass(Userinfo.para3);
+          const userstring = await resultdb(
+            "select * from users where mobile = ?",
+            [mobile]
+          );
+          console.log(userstring.rows.length);
+          if (userstring.rows.length !== 0) {
+            mystatus.setUserinfo(userstring.rows.item(0));
+            mystatus.setStorename(mystatus.Userinfo.name);
+            mystatus.setStorepass(mystatus.Userinfo.pass);
           } else {
             Alert.alert("Хэрэглэгч олдсонгүй");
-            mystatus.setStorename("");
+            mystatus.setStorename("Хэрэглэгч олдсонгүй");
+            mystatus.setStorepass("sssssssssss");
           }
+
+          // const userstring = await AsyncStorage.getItem(mobile);
+          // if (userstring !== null) {
+          //   Userinfo = JSON.parse(userstring);
+          //   mystatus.setStorename(Userinfo.para1);
+          //   mystatus.setStorepass(Userinfo.para3);
+          // } else {
+          //   Alert.alert("Хэрэглэгч олдсонгүй");
+          //   mystatus.setStorename("");
+          // }
         }}
       />
       <Text style={{ textAlign: "center", fontSize: 14 }}>
@@ -91,7 +106,7 @@ export default function (props) {
       <View style={css.Button}>
         <Button
           onPress={() => {
-            getdb();
+            getdb("select * from users where mobile=?", ["86526"]);
           }}
           title="DB"
         />

@@ -66,8 +66,11 @@ export default function ({ route, navigation }) {
         str +
         ");"
     )
-      .then((result) => console.log("Хэрэглэгч нэмлээ" + { name }))
-      .catch((err) => console.log("Items асуудал гарлаа." + err.message));
+      .then((result) => {
+        Alert.alert("Хэрэглэгч нэмлээ" + { name });
+        navigation.goBack();
+      })
+      .catch((err) => Alert.alert("Items асуудал гарлаа." + err.message));
 
     //   if (Setdata(mobile, name, email, password1)) {
     //     Alert.alert("Амжилттай бүртгэлээ");

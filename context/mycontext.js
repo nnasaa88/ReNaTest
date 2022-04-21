@@ -7,9 +7,9 @@ export const Mystore = (props) => {
   const [isLoggedIn, setisLoggedIn] = useState(false);
   const [Storemobile, setStoremobile] = useState("");
   const [Storename, setStorename] = useState("Username");
-  const [Storepass, setStorepass] = useState("z");
+  const [Storepass, setStorepass] = useState("dddddddz");
   const [IsLoading, setIsLoading] = useState(true);
-  const [Rezultdb, setRezultdb] = useState("");
+  const [Userinfo, setUserinfo] = useState({});
 
   return (
     <Mycontext.Provider
@@ -24,8 +24,8 @@ export const Mystore = (props) => {
         setIsLoading,
         Storemobile,
         setStoremobile,
-        Rezultdb,
-        setRezultdb,
+        Userinfo,
+        setUserinfo,
       }}
     >
       {props.children}

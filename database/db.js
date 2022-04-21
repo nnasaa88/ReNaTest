@@ -20,20 +20,39 @@ export const initdb = (mysql) => {
   });
   return promise;
 };
+export const resultdb = (mysql, para) => {
+  return createdbpromise(mysql, para);
+};
 
-export const getdb = () => {
-  db.transaction((tx) => {
+export const getdb = async (mysql, para) => {
+  await db.transaction((tx) => {
     tx.executeSql(
-      // "DROP TABLE IF EXISTS items;",
-      "select * from users where mobile='586625';",
-      //   "insert into items (done, value) values (0, 'Amraa')",
-      [],
+      mysql,
+      para,
       (_, result) => {
-        console.log(JSON.stringify(result));
+        const Infodb = result.rows.item(0);
+        console.log(Infodb.mobile);
       },
       (_, err) => {
         console.log("DB тэст амжилтгүй");
       }
     );
   });
+};
+const createdbpromise = (mysql, para) => {
+  const promise = new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        mysql,
+        para,
+        (_, result) => {
+          resolve(result);
+        },
+        (_, err) => {
+          reject(err);
+        }
+      );
+    });
+  });
+  return promise;
 };
