@@ -89,7 +89,12 @@ export default function (props) {
         />
       </View>
       <View style={css.Button}>
-        <Button onPress={() => getdb()} title="DB" />
+        <Button
+          onPress={() => {
+            getdb();
+          }}
+          title="DB"
+        />
       </View>
     </View>
   );

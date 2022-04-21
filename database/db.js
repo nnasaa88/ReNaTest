@@ -1,4 +1,5 @@
 import * as sqlite from "expo-sqlite";
+import { useContext } from "react";
 
 const db = sqlite.openDatabase("main.db");
 
@@ -24,7 +25,7 @@ export const getdb = () => {
   db.transaction((tx) => {
     tx.executeSql(
       // "DROP TABLE IF EXISTS items;",
-      "select * from users;",
+      "select * from users where mobile='586625';",
       //   "insert into items (done, value) values (0, 'Amraa')",
       [],
       (_, result) => {
