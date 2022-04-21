@@ -2,11 +2,11 @@ import * as sqlite from "expo-sqlite";
 
 const db = sqlite.openDatabase("main.db");
 
-export const initdb = () => {
+export const initdb = (mysql) => {
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        "create table if not exists items (id integer primary key not null, done int, value text);",
+        mysql,
         [],
         (_, result) => {
           resolve(result);
@@ -23,7 +23,8 @@ export const initdb = () => {
 export const getdb = () => {
   db.transaction((tx) => {
     tx.executeSql(
-      "select * from items ;",
+      // "DROP TABLE IF EXISTS items;",
+      "select * from users;",
       //   "insert into items (done, value) values (0, 'Amraa')",
       [],
       (_, result) => {

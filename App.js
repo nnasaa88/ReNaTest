@@ -9,9 +9,21 @@ import { initdb } from "./database/db";
 
 export default function App() {
   useEffect(() => {
-    initdb()
-      .then((result) => console.log("Бааз бэлдлээ"))
-      .catch((err) => console.log("Бааз бэлдэхэд асуудал гарлаа."));
+    initdb(
+      "create table if not exists users (id integer primary key not null, name text,mobile text,email text,pass text,isadmin int,nemeh int,ustgah int,zasah int,tuluv int,batlah int);"
+    )
+      .then((result) => console.log("Users db бэлдлээ"))
+      .catch((err) => console.log("Users асуудал гарлаа." + err.message));
+    initdb(
+      "create table if not exists items (id integer primary key not null, type text,sex text,im text,tamga text,color text,speccolor text,image text,desc text,start text,finish text,mygroup int,helder text,status text,created text,modified text);"
+    )
+      .then((result) => console.log("Items бэлдлээ"))
+      .catch((err) => console.log("Items асуудал гарлаа." + err.message));
+    initdb(
+      "create table if not exists events (id integer primary key not null, itemsId int,event text,desc text,date text,created text,modified text );"
+    )
+      .then((result) => console.log("Event db бэлдлээ"))
+      .catch((err) => console.log("Event асуудал гарлаа." + err.message));
   }, []);
 
   return (
