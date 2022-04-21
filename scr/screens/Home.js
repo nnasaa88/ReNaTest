@@ -32,8 +32,14 @@ export default function (props) {
       ),
     });
   }, [props.navigation]);
-  const handlertouch = () => {
+  const horsetouch = () => {
     props.navigation.navigate("List");
+  };
+  const cattletouch = () => {
+    // props.navigation.navigate("Database");
+  };
+  const sheeptouch = () => {
+    // props.navigation.navigate("Mysearch");
   };
   return (
     <View style={{ flex: 1 }}>
@@ -42,7 +48,7 @@ export default function (props) {
           <TouchableOpacity
             style={css.button}
             activeOpacity={0.5}
-            onPress={handlertouch}
+            onPress={horsetouch}
           >
             <Image
               style={css.image}
@@ -58,7 +64,7 @@ export default function (props) {
           </View>
         </View>
         <View style={css.container}>
-          <TouchableOpacity activeOpacity={0.5}>
+          <TouchableOpacity activeOpacity={0.5} onPress={cattletouch}>
             <Image
               style={css.image}
               source={require("../../assets/cattle.jpg")}
@@ -67,7 +73,7 @@ export default function (props) {
           <Text style={css.text}> Үхэр сүрэг </Text>
         </View>
         <View style={css.container}>
-          <TouchableOpacity activeOpacity={0.5}>
+          <TouchableOpacity activeOpacity={0.5} onPress={sheeptouch}>
             <Image
               style={css.image}
               source={require("../../assets/sheep.jpg")}

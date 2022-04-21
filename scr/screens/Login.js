@@ -12,6 +12,7 @@ import {
 import SplashScreen from "./SplashScreen";
 import Mycontext, { Mystore } from "../../context/Mycontext";
 import { Getdata, Setdata } from "./Signupscreen";
+import { getdb } from "../../database/db";
 
 export default function (props) {
   const [mobile, setMobile] = useState("");
@@ -80,14 +81,15 @@ export default function (props) {
           title="Бүртгүүлэх"
         />
       </View>
-      <View style={css.Button}>
+      <View style={css.Button} flexDirection="row" justifyContent="center">
         <Button onPress={() => Getdata("86163023")} title="Get" />
-      </View>
-      <View style={css.Button}>
         <Button
           onPress={() => Setdata("86163023", "name", "email", "nnutga")}
           title="Set"
         />
+      </View>
+      <View style={css.Button}>
+        <Button onPress={() => getdb()} title="DB" />
       </View>
     </View>
   );
