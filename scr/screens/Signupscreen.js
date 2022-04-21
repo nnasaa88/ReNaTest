@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import {
   View,
   Text,
@@ -10,7 +9,8 @@ import {
   Alert,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import { CheckBox } from "react-native-elements";
+import { initdb } from "../../database/db";
 
 export default function ({ route, navigation }) {
   const [name, setName] = useState("");
@@ -18,6 +18,12 @@ export default function ({ route, navigation }) {
   const [email, setEmail] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
+  const [isadmin, setisadmin] = useState(false);
+  const [nemeh, setnemeh] = useState(true);
+  const [ustgah, setustgah] = useState(false);
+  const [zasah, setzasah] = useState(false);
+  const [tuluv, settuluv] = useState(false);
+  const [batlah, setbatlah] = useState(false);
   const [error, setError] = useState(null);
 
   const signupHandler = () => {
@@ -33,21 +39,45 @@ export default function ({ route, navigation }) {
       Alert.alert("Нууц үгнүүд хоорондоо таарахгүй байна!");
       return;
     }
-    if (Setdata(mobile, name, email, password1)) {
-      // Setdata(mobile + "name", name);
-      // Setdata(mobile + "email", email);
-      Alert.alert("Амжилттай бүртгэлээ");
-      return;
-    } else {
-      Alert.alert("Бүртгэхд алдаа гарлаа");
-    }
+    const str =
+      "'" +
+      name +
+      "','" +
+      mobile +
+      "','" +
+      email +
+      "','" +
+      password1 +
+      "','" +
+      isadmin +
+      "','" +
+      nemeh +
+      "','" +
+      ustgah +
+      "','" +
+      zasah +
+      "','" +
+      tuluv +
+      "','" +
+      batlah +
+      "'";
+    initdb(
+      "insert into users (name, mobile,email,pass, isadmin,nemeh,ustgah,zasah,tuluv,batlah) values (" +
+        str +
+        ");"
+    )
+      .then((result) => console.log("Хэрэглэгч нэмлээ" + { name }))
+      .catch((err) => console.log("Items асуудал гарлаа." + err.message));
+
+    //   if (Setdata(mobile, name, email, password1)) {
+    //     Alert.alert("Амжилттай бүртгэлээ");
+    //     return;
+    // } else {
+    //   Alert.alert("Бүртгэхд алдаа гарлаа");
+    // }
   };
   return (
     <View>
-      <Image
-        style={{ width: "80%", height: "30%", resizeMode: "stretch" }}
-        source={require("../../assets/log.jpg")}
-      />
       <Text
         style={{
           textAlign: "center",
@@ -58,9 +88,6 @@ export default function ({ route, navigation }) {
       >
         Шинэ хэрэглэгч
       </Text>
-
-      {/* <Button title="Хадгалсан утга" onPress={getData} /> */}
-
       <TextInput
         style={css.inputField}
         askeyboardType="number-pad"
@@ -79,21 +106,53 @@ export default function ({ route, navigation }) {
         placeholder="Та имэйл хаягаа оруулна уу"
         onChangeText={setEmail}
       />
-
       <TextInput
         style={css.inputField}
         secureTextEntry={true}
         placeholder="Нууц үгээ оруулна уу"
         onChangeText={setPassword1}
       />
-
       <TextInput
         style={css.inputField}
         secureTextEntry={true}
         placeholder="Нууц үгээ давтан оруулна уу"
         onChangeText={setPassword2}
       />
-      <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
+      <View style={css.rowview}>
+        <CheckBox
+          title={"admin"}
+          checked={isadmin}
+          onPress={() => setisadmin(!isadmin)}
+        />
+        <CheckBox
+          title={"нэмэх"}
+          checked={nemeh}
+          onPress={() => setnemeh(!nemeh)}
+        />
+        <CheckBox
+          title={"устгах"}
+          checked={ustgah}
+          onPress={() => setustgah(!ustgah)}
+        />
+      </View>
+      <View style={css.rowview}>
+        <CheckBox
+          title={"засах"}
+          checked={zasah}
+          onPress={() => setzasah(!zasah)}
+        />
+        <CheckBox
+          title={"төлөв"}
+          checked={tuluv}
+          onPress={() => settuluv(!tuluv)}
+        />
+        <CheckBox
+          title={"батлах"}
+          checked={batlah}
+          onPress={() => setbatlah(!batlah)}
+        />
+      </View>
+      <View style={css.rowview}>
         <Button title="Буцах" onPress={() => navigation.goBack()} />
         <Button title="Бүртгэх toвч" onPress={signupHandler} />
       </View>
@@ -137,5 +196,7 @@ const css = StyleSheet.create({
   },
   button: {
     marginVertical: 5,
+    marginTop: 20,
   },
+  rowview: { flexDirection: "row", justifyContent: "space-evenly" },
 });
