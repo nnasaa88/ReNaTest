@@ -51,4 +51,22 @@ export const Mystore = (props) => {
   );
 };
 
+export const fdate = () => {
+  let a = new Date().getMonth() + 1;
+  let c = new Date().getDate();
+  let d = new Date().getHours();
+  let f = new Date().getMinutes();
+  let b =
+    new Date().getFullYear() +
+    "-" +
+    (a < 10 ? "0" + a : a) +
+    "-" +
+    (c < 10 ? "0" + c : c) +
+    " " +
+    (d < 10 ? "0" + d : d) +
+    ":" +
+    (f < 10 ? "0" + f : f);
+  return b;
+};
+
 export default Mycontext;

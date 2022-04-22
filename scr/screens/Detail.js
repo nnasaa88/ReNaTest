@@ -12,7 +12,7 @@ import {
 import React, { useState, useContext } from "react";
 import DatePicker from "react-native-datepicker";
 import { Button, Icon } from "react-native-elements";
-import Mycontext from "../../context/Mycontext";
+import Mycontext, { fdate } from "../../context/Mycontext";
 import { getdb, resultdb } from "../../database/db";
 
 export default (props) => {
@@ -27,12 +27,10 @@ export default (props) => {
   const [helder, sethelder] = useState("");
   const [mygroup, setmygroup] = useState(["1", "2"]);
   const [bdate, setbdate] = useState("2000-04-22");
-  //   const [mdate] = new Date().getDate() + "/" + new Date().getFullYear();
 
-  console.log(mdate);
   const HandlerSave = async () => {
     const userstring = await resultdb(
-      "insert into items (type,sex,im,tamga,color,speccolor,image,desc,start,mygroup,helder,status,created) values(?,?,?,?,?,?,?,?,?,?,?,?,?)",
+      "insert into items (type,sex,im,tamga,color,speccolor,image,desc,start,mygroup,helder,status,created, modified) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
       [
         mystatus.Activetype,
         sex,
@@ -46,7 +44,8 @@ export default (props) => {
         mygroup,
         helder,
         "anid",
-        "mdate",
+        fdate(),
+        fdate(),
       ]
     );
     console.log("Хадгаллаа");

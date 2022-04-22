@@ -12,7 +12,7 @@ import {
 import SplashScreen from "./SplashScreen";
 import Mycontext, { Mystore } from "../../context/Mycontext";
 import { Getdata, Setdata } from "./Signupscreen";
-import { getdb, resultdb } from "../../database/db";
+import { getdb, resultdb, fdate } from "../../database/db";
 
 export default function (props) {
   const [mobile, setMobile] = useState("");
