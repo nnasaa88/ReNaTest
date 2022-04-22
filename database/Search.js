@@ -23,7 +23,7 @@ export default function SearchScreen1(props) {
     StatusBar.setBarStyle("dark-content", false);
     axios.get("https://randomuser.me/api/?results=150").then(({ data }) => {
       setUsers(data.results);
-      console.log(data.results);
+      // console.log(data.results);
     });
   }, []);
 

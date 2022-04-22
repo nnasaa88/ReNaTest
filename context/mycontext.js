@@ -12,6 +12,12 @@ export const Mystore = (props) => {
   const [Userinfo, setUserinfo] = useState({});
   const [Activetype, setActivetype] = useState("");
 
+  const [Im, setIm] = useState([
+    "Баруун тэвхэр Зүүн онь",
+    "Баруун Зүүн тэвхэр",
+  ]);
+  const [Tamga, setTamga] = useState(["Сар", "Нар"]);
+
   return (
     <Mycontext.Provider
       value={{
@@ -29,6 +35,10 @@ export const Mystore = (props) => {
         setUserinfo,
         Activetype,
         setActivetype,
+        Im,
+        setIm,
+        Tamga,
+        setTamga,
       }}
     >
       {props.children}
