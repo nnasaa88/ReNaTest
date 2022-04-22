@@ -10,6 +10,7 @@ export const Mystore = (props) => {
   const [Storepass, setStorepass] = useState("dddddddz");
   const [IsLoading, setIsLoading] = useState(true);
   const [Userinfo, setUserinfo] = useState({});
+  const [Activetype, setActivetype] = useState("");
 
   return (
     <Mycontext.Provider
@@ -26,6 +27,8 @@ export const Mystore = (props) => {
         setStoremobile,
         Userinfo,
         setUserinfo,
+        Activetype,
+        setActivetype,
       }}
     >
       {props.children}

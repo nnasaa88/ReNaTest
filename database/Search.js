@@ -11,10 +11,10 @@ import {
   SafeAreaView,
   Alert,
 } from "react-native";
-import { Icon } from "react-native-elements";
+import { Button, Icon } from "react-native-elements";
 import axios from "axios";
 
-export default function SearchScreen1() {
+export default function SearchScreen1(props) {
   const [searchText, setSearchText] = useState("");
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
@@ -23,11 +23,17 @@ export default function SearchScreen1() {
     StatusBar.setBarStyle("dark-content", false);
     axios.get("https://randomuser.me/api/?results=150").then(({ data }) => {
       setUsers(data.results);
+      console.log(data.results);
     });
   }, []);
+
+  const HandlerAdd = () => {
+    props.navigation.navigate("Detail");
+  };
   return (
-    <View style={{ flex: 1, paddingTop: 40 }}>
+    <View style={{ flex: 1, paddingTop: 5 }}>
       <View style={styles.container}>
+        <Button onPress={HandlerAdd} title="Олдохгүй бол нэмээрэй" />
         <View style={styles.searchView}>
           <View style={styles.inputView}>
             <TextInput
@@ -36,6 +42,7 @@ export default function SearchScreen1() {
               placeholder="Search"
               textContentType="name"
               onChangeText={(text) => {
+                // console.log(text);
                 setSearchText(text);
                 if (text === "") {
                   return setFilteredUsers([]);
@@ -107,9 +114,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 12,
-    paddingTop: 10,
+    paddingTop: 5,
   },
   searchView: {
+    paddingTop: 10,
     display: "flex",
     flexDirection: "row",
   },

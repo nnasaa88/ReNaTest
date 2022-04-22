@@ -33,12 +33,15 @@ export default function (props) {
     });
   }, [props.navigation]);
   const horsetouch = () => {
+    mystatus.setActivetype("horse");
     props.navigation.navigate("List");
   };
   const cattletouch = () => {
+    mystatus.setActivetype("cattle");
     // props.navigation.navigate("Testdb");
   };
   const sheeptouch = () => {
+    mystatus.setActivetype("sheep");
     props.navigation.navigate("Searchdb");
   };
   return (

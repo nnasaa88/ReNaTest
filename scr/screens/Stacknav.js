@@ -7,6 +7,7 @@ import SignUpScreen from "./Signupscreen";
 import SplashScreen from "./SplashScreen";
 // import TestData from "../../database/exampledb";
 import Searchdb from "../../database/Search";
+import DetailScreen from "./Detail";
 
 import Mycontext from "../../context/Mycontext";
 // import DrawerScreen from "./DrawerNav";
@@ -35,6 +36,7 @@ export default () => {
       <Stack.Screen name="SignUp" component={SignUpScreen} />
       {/* <Stack.Screen name="Testdb" component={TestData} /> */}
       <Stack.Screen name="Searchdb" component={Searchdb} />
+      <Stack.Screen name="Detail" component={DetailScreen} />
     </Stack.Navigator>
   );
 };
