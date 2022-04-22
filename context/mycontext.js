@@ -17,6 +17,8 @@ export const Mystore = (props) => {
     "Баруун Зүүн тэвхэр",
   ]);
   const [Tamga, setTamga] = useState(["Сар", "Нар"]);
+  const [Helder, setHelder] = useState(["Dorj", "Dondog"]);
+  const [Mygroup, setMygroup] = useState(["1", "2"]);
 
   return (
     <Mycontext.Provider
@@ -39,6 +41,9 @@ export const Mystore = (props) => {
         setIm,
         Tamga,
         setTamga,
+        Helder,
+        setHelder,
+        Mygroup,
       }}
     >
       {props.children}

@@ -30,8 +30,8 @@ export const getdb = async (mysql, para) => {
       mysql,
       para,
       (_, result) => {
-        const Infodb = result.rows.item(0);
-        console.log(Infodb.mobile);
+        const Infodb = result;
+        console.log(Infodb);
       },
       (_, err) => {
         console.log("DB тэст амжилтгүй");
