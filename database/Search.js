@@ -13,18 +13,24 @@ import {
 } from "react-native";
 import { Button, Icon } from "react-native-elements";
 import axios from "axios";
+import { resultdb } from "./db";
 
 export default function SearchScreen1(props) {
   const [searchText, setSearchText] = useState("");
   const [users, setUsers] = useState([]);
+  const [items, setItems] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
 
-  useEffect(() => {
+  useEffect(async () => {
     StatusBar.setBarStyle("dark-content", false);
     axios.get("https://randomuser.me/api/?results=150").then(({ data }) => {
       setUsers(data.results);
-      // console.log(data.results);
+      // console.log(users);
     });
+    var userstring;
+    userstring = await resultdb("select * from items", []);
+    setItems(userstring.rows._array);
+    // console.log(items);
   }, []);
 
   const HandlerAdd = () => {
@@ -47,8 +53,11 @@ export default function SearchScreen1(props) {
                 if (text === "") {
                   return setFilteredUsers([]);
                 }
-                const filtered_users = users.filter((user) =>
-                  user.name.first.toLowerCase().startsWith(text.toLowerCase())
+                // const filtered_users = users.filter((user) =>
+                //   user.name.first.toLowerCase().startsWith(text.toLowerCase())
+                // );
+                const filtered_users = items.filter((user) =>
+                  user.color.toLowerCase().startsWith(text.toLowerCase())
                 );
                 setFilteredUsers(filtered_users);
               }}
@@ -77,20 +86,17 @@ export default function SearchScreen1(props) {
                 style={styles.userCard}
                 onPress={() => {
                   Alert.alert(
-                    `${user.name.first} ${user.name.last}`,
-                    `You can call me at ${user.phone}`
+                    `${user.color} ${user.tamga}`,
+                    `You can call me at ${user.im}`
                   );
                 }}
               >
-                <Image
-                  style={styles.userImage}
-                  source={{ uri: user.picture?.large }}
-                />
+                <Image style={styles.userImage} source={{ uri: user.image }} />
                 <View style={styles.userCardRight}>
                   <Text
                     style={{ fontSize: 18, fontWeight: "500" }}
-                  >{`${user.name.first} ${user.name.last}`}</Text>
-                  <Text>{`${user?.phone}`}</Text>
+                  >{`${user.color} ${user.im}`}</Text>
+                  <Text>{`${user?.tamga}`}</Text>
                 </View>
               </TouchableOpacity>
             ))}
