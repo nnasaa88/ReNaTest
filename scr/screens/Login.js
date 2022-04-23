@@ -82,6 +82,7 @@ export default function (props) {
         Хэрэглэгч: {mystatus.Storename}
       </Text>
       <TextInput
+        clearTextOnFocus={true}
         secureTextEntry={false}
         style={css.input}
         placeholder="Нууц үгээ оруулна уу"
@@ -106,7 +107,7 @@ export default function (props) {
       <View style={css.Button}>
         <Button
           onPress={() => {
-            getdb("select * from items", []);
+            getdb("select * from events", []);
           }}
           title="DB"
         />

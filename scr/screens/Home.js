@@ -41,7 +41,7 @@ export default function (props) {
     // props.navigation.navigate("Testdb");
   };
   const sheeptouch = () => {
-    mystatus.setActivetype("sheep");
+    mystatus.setActivetype("Хонь");
     props.navigation.navigate("Searchdb");
   };
   return (

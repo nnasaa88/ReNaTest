@@ -13,12 +13,13 @@ export const Mystore = (props) => {
   const [Activetype, setActivetype] = useState("");
 
   const [Im, setIm] = useState([
+    "",
     "Баруун тэвхэр Зүүн онь",
     "Баруун Зүүн тэвхэр",
   ]);
-  const [Tamga, setTamga] = useState(["Сар", "Нар"]);
-  const [Helder, setHelder] = useState(["Dorj", "Dondog"]);
-  const [Mygroup, setMygroup] = useState(["1", "2"]);
+  const [Tamga, setTamga] = useState(["", "Сар", "Нар"]);
+  const [Helder, setHelder] = useState(["", "Dorj", "Dondog"]);
+  const [Mygroup, setMygroup] = useState(["", "1", "2"]);
 
   return (
     <Mycontext.Provider
