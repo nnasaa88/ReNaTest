@@ -17,20 +17,15 @@ import { resultdb } from "./db";
 
 export default function SearchScreen1(props) {
   const [searchText, setSearchText] = useState("");
-  const [users, setUsers] = useState([]);
   const [items, setItems] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
 
   useEffect(async () => {
     StatusBar.setBarStyle("dark-content", false);
-    axios.get("https://randomuser.me/api/?results=150").then(({ data }) => {
-      setUsers(data.results);
-      // console.log(users);
-    });
     var userstring;
     userstring = await resultdb("select * from items", []);
     setItems(userstring.rows._array);
-    // console.log(items);
+    setFilteredUsers(items);
   }, []);
 
   const HandlerAdd = () => {
@@ -48,10 +43,9 @@ export default function SearchScreen1(props) {
               placeholder="Search"
               textContentType="name"
               onChangeText={(text) => {
-                // console.log(text);
                 setSearchText(text);
                 if (text === "") {
-                  return setFilteredUsers([]);
+                  return setFilteredUsers(items);
                 }
                 // const filtered_users = users.filter((user) =>
                 //   user.name.first.toLowerCase().startsWith(text.toLowerCase())
@@ -71,7 +65,7 @@ export default function SearchScreen1(props) {
               <TouchableOpacity
                 onPress={() => {
                   setSearchText("");
-                  setFilteredUsers([]);
+                  setFilteredUsers(items);
                 }}
               >
                 <Icon name="cancel" size={24} color="#333" />
