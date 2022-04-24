@@ -14,10 +14,52 @@ import {
   Alert,
 } from "react-native";
 import { Button, Icon } from "react-native-elements";
-// import RNModal from "react-native-modal";
 import Mycontext, { fdate } from "../context/Mycontext";
-import Mymodal from "./Mymodal";
 import { resultdb } from "./db";
+
+export function Mymodal(props) {
+  //   const [rnmodalvisible, setrnmodalvisible] = useState(true);
+  //   console.log(props.seemodal + " sdfsdfds ");
+  //   setrnmodalvisible(props.seemodal);
+  return (
+    <View style={css.centeredview}>
+      <Modal visible={props.seemodal} animationType="slide" transparent={true}>
+        <View style={[css.centeredview, { marginTop: -200 }]}>
+          <View style={css.modalview}>
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: "bold",
+                alignItems: "center",
+              }}
+            >
+              {" "}
+              Modoal title{" "}
+            </Text>
+            <Text style={{ marginTop: 10 }}>
+              {" "}
+              xzcxzcXZCxzcXZCxz d fdsModoal body{" "}
+            </Text>
+            <View flexDirection="row" justifyContent="center">
+              <TouchableOpacity
+                style={{}}
+                onPress={() => {
+                  console.log("garlaa");
+                  props.hidemodal();
+                }}
+              >
+                <Text> Яах санаатай </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={{}} onPress={props.hidemodal}>
+                <Text> Санаатай </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+    </View>
+  );
+}
 
 export default function SearchScreen1(props) {
   const mystatus = useContext(Mycontext);
@@ -216,24 +258,22 @@ const css = StyleSheet.create({
     borderColor: "#74D122",
     borderBottomWidth: 5,
   },
-  container: {
+  centeredview: {
     flex: 1,
-    alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#ecf0f1",
-    marginTop: 30,
+    alignItems: "center",
   },
-
-  rnmodalview: {
+  modalview: {
+    width: "90%",
     backgroundColor: "white",
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    paddingVertical: 14,
-  },
-  rnmodalbutton: {
-    backgroundColor: "#222f3e",
-    borderRadius: 4,
-    paddingHorizontal: 6,
-    paddingVertical: 10,
+    borderRadius: 10,
+    paddingHorizontal: 20,
+    paddingTop: 10,
+    paddingBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
 });

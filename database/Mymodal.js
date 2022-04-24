@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from "react-native";
-const Mymodal = (props) => {
+
+const Mymodal1 = (props) => {
   //   const [rnmodalvisible, setrnmodalvisible] = useState(true);
   //   console.log(props.seemodal + " sdfsdfds ");
   //   setrnmodalvisible(props.seemodal);
@@ -50,7 +51,7 @@ const Mymodal = (props) => {
     </View>
   );
 };
-export default Mymodal;
+export default Mymodal1;
 
 const css = StyleSheet.create({
   centeredview: {

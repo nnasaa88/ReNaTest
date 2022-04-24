@@ -7,7 +7,7 @@ import {
   Alert,
 } from "react-native";
 import React, { useState } from "react";
-import Mymodal from "../../database/Mymodal";
+import { Mymodal } from "../../database/Search";
 
 const Flatlistscreen = () => {
   const [rnmodalvisible, setrnmodalvisible] = useState(false);
