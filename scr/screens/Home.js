@@ -33,15 +33,19 @@ export default function (props) {
     });
   }, [props.navigation]);
   const horsetouch = () => {
-    mystatus.setActivetype("horse");
-    props.navigation.navigate("List");
+    mystatus.setActivetype("Адуу");
+    props.navigation.navigate("Searchdb");
   };
   const cattletouch = () => {
-    mystatus.setActivetype("cattle");
-    // props.navigation.navigate("Testdb");
+    mystatus.setActivetype("Үхэр");
+    props.navigation.navigate("Searchdb");
   };
   const sheeptouch = () => {
     mystatus.setActivetype("Хонь");
+    props.navigation.navigate("Searchdb");
+  };
+  const goattouch = () => {
+    mystatus.setActivetype("Ямаа");
     props.navigation.navigate("Searchdb");
   };
   return (
@@ -85,7 +89,7 @@ export default function (props) {
           <Text style={css.text}> Хонин сүрэг </Text>
         </View>
         <View style={css.container}>
-          <TouchableOpacity activeOpacity={0.5}>
+          <TouchableOpacity activeOpacity={0.5} onPress={goattouch}>
             <Image
               style={css.image}
               source={require("../../assets/goat.jpg")}

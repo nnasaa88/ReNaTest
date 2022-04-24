@@ -15,7 +15,7 @@ export default function App() {
       .then((result) => console.log("Users db бэлдлээ"))
       .catch((err) => console.log("Users асуудал гарлаа." + err.message));
     initdb(
-      "create table if not exists items (id integer primary key not null, type text,sex text,im text,tamga text,color text,speccolor text,image text,desc text,start text,finish text,mygroup int,helder text,status text,created text,modified text);"
+      "create table if not exists items (id integer primary key not null, type text,sex text,im text,tamga text,name text,color text,image text,qty int,desc text,start text,finish text,mygroup int,helder text,status text,created text,modified text);"
     )
       .then((result) => console.log("Items бэлдлээ"))
       .catch((err) => console.log("Items асуудал гарлаа." + err.message));

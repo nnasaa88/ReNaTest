@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,6 +6,7 @@ import {
   TextInput,
   StatusBar,
   TouchableOpacity,
+  Picker,
   Image,
   ScrollView,
   SafeAreaView,
@@ -13,17 +14,22 @@ import {
 } from "react-native";
 import { Button, Icon } from "react-native-elements";
 import axios from "axios";
+import Mycontext, { fdate } from "../context/Mycontext";
 import { resultdb } from "./db";
 
 export default function SearchScreen1(props) {
+  const mystatus = useContext(Mycontext);
   const [searchText, setSearchText] = useState("");
   const [items, setItems] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
+  const [filterfield, setFilterfield] = useState("color");
 
   useEffect(async () => {
     StatusBar.setBarStyle("dark-content", false);
     var userstring;
-    userstring = await resultdb("select * from items", []);
+    userstring = await resultdb("select * from items where type=?", [
+      mystatus.Activetype,
+    ]);
     setItems(userstring.rows._array);
     setFilteredUsers(items);
   }, []);
@@ -34,13 +40,38 @@ export default function SearchScreen1(props) {
   return (
     <View style={{ flex: 1, paddingTop: 5 }}>
       <View style={styles.container}>
-        <Button onPress={HandlerAdd} title="Олдохгүй бол нэмээрэй" />
+        <View flexDirection="row" justifyContent="center">
+          <Text style={styles.text}>{mystatus.Activetype} </Text>
+          <Button onPress={HandlerAdd} title="байхгүй бол нэмээрэй" />
+        </View>
         <View style={styles.searchView}>
-          <View style={styles.inputView}>
+          <View
+            style={styles.inputView}
+            flexDirection="row"
+            justifyContent="center"
+          >
+            <Picker
+              style={{ flex: 1 }}
+              selectedValue={filterfield}
+              onValueChange={(l) => {
+                setFilterfield(l.value);
+              }}
+            >
+              {[
+                { name: "Нэр", value: "color" },
+                { name: "Им", value: "im" },
+                { name: "Тамга", value: "tamga" },
+                { name: "Т/бар", value: "desc" },
+              ].map((l) => (
+                <Picker.Item label={l.name} value={l.value} />
+              ))}
+            </Picker>
             <TextInput
+              style={{ flex: 6 }}
               defaultValue={searchText}
               style={styles.input}
-              placeholder="Search"
+              placeholder="Хайя"
+              placeholderTextColor="blue"
               textContentType="name"
               onChangeText={(text) => {
                 setSearchText(text);
@@ -51,7 +82,7 @@ export default function SearchScreen1(props) {
                 //   user.name.first.toLowerCase().startsWith(text.toLowerCase())
                 // );
                 const filtered_users = items.filter((user) =>
-                  user.color.toLowerCase().startsWith(text.toLowerCase())
+                  user.color.toLowerCase().includes(text.toLowerCase())
                 );
                 setFilteredUsers(filtered_users);
               }}
@@ -81,12 +112,17 @@ export default function SearchScreen1(props) {
                 onPress={() => {
                   Alert.alert(
                     `${user.color} ${user.tamga}`,
-                    `You can call me at ${user.im}`
+                    `Онцлог зүс ${user.im}`
                   );
                 }}
               >
-                <Image style={styles.userImage} source={{ uri: user.image }} />
-                <View style={styles.userCardRight}>
+                <Image
+                  style={styles.userImage}
+                  source={{
+                    uri: "https://pbs.twimg.com/profile_images/486929358120964097/gNLINY67_400x400.png",
+                  }}
+                />
+                <View key={user.id} style={styles.userCardRight}>
                   <Text
                     style={{ fontSize: 18, fontWeight: "500" }}
                   >{`${user.color} ${user.im}`}</Text>
@@ -98,11 +134,13 @@ export default function SearchScreen1(props) {
           </ScrollView>
         ) : searchText.length > 0 ? (
           <View style={styles.messageBox}>
-            <Text style={styles.messageBoxText}>No user found</Text>
+            <Text style={styles.messageBoxText}>Хайлт олдсонгүй</Text>
           </View>
         ) : (
           <View style={styles.messageBox}>
-            <Text style={styles.messageBoxText}>Search for users</Text>
+            <Text style={styles.messageBoxText}>
+              Хайх талбар,утгаа оруулна уу
+            </Text>
           </View>
         )}
       </View>
@@ -162,5 +200,16 @@ const styles = StyleSheet.create({
   messageBoxText: {
     fontSize: 20,
     fontWeight: "500",
+  },
+  text: {
+    fontSize: 18,
+    padding: 3,
+    marginHorizontal: 5,
+    marginVertical: 1,
+    justifyContent: "space-between",
+    textAlign: "left",
+    borderWidth: 1,
+    borderColor: "#74D122",
+    borderBottomWidth: 5,
   },
 });
