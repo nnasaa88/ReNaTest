@@ -3,6 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
+  Modal,
   TextInput,
   StatusBar,
   TouchableOpacity,
@@ -13,8 +14,9 @@ import {
   Alert,
 } from "react-native";
 import { Button, Icon } from "react-native-elements";
-import axios from "axios";
+// import RNModal from "react-native-modal";
 import Mycontext, { fdate } from "../context/Mycontext";
+import Mymodal from "./Mymodal";
 import { resultdb } from "./db";
 
 export default function SearchScreen1(props) {
@@ -34,19 +36,23 @@ export default function SearchScreen1(props) {
     setFilteredUsers(items);
   }, []);
 
+  const whatdo = () => {
+    return Alert.alert("xfsdfsdfsdf");
+  };
+
   const HandlerAdd = () => {
     props.navigation.navigate("Detail");
   };
   return (
     <View style={{ flex: 1, paddingTop: 5 }}>
-      <View style={styles.container}>
+      <View style={css.container}>
         <View flexDirection="row" justifyContent="center">
-          <Text style={styles.text}>{mystatus.Activetype} </Text>
+          <Text style={css.text}>{mystatus.Activetype} </Text>
           <Button onPress={HandlerAdd} title="байхгүй бол нэмээрэй" />
         </View>
-        <View style={styles.searchView}>
+        <View style={css.searchView}>
           <View
-            style={styles.inputView}
+            style={css.inputView}
             flexDirection="row"
             justifyContent="center"
           >
@@ -69,7 +75,7 @@ export default function SearchScreen1(props) {
             <TextInput
               style={{ flex: 6 }}
               defaultValue={searchText}
-              style={styles.input}
+              style={css.input}
               placeholder="Хайя"
               placeholderTextColor="blue"
               textContentType="name"
@@ -108,21 +114,21 @@ export default function SearchScreen1(props) {
           <ScrollView>
             {filteredUsers.map((user) => (
               <TouchableOpacity
-                style={styles.userCard}
+                style={css.userCard}
                 onPress={() => {
-                  Alert.alert(
-                    `${user.color} ${user.tamga}`,
-                    `Онцлог зүс ${user.im}`
-                  );
+                  // Alert.alert(
+                  //   `${user.name} ${user.tamga}`,
+                  //   `Онцлог зүс ${user.color}`
+                  // );
                 }}
               >
                 <Image
-                  style={styles.userImage}
+                  style={css.userImage}
                   source={{
                     uri: "https://pbs.twimg.com/profile_images/486929358120964097/gNLINY67_400x400.png",
                   }}
                 />
-                <View key={user.id} style={styles.userCardRight}>
+                <View key={user.id} style={css.userCardRight}>
                   <Text
                     style={{ fontSize: 18, fontWeight: "500" }}
                   >{`${user.color} ${user.im}`}</Text>
@@ -133,14 +139,12 @@ export default function SearchScreen1(props) {
             <View style={{ height: 50 }}></View>
           </ScrollView>
         ) : searchText.length > 0 ? (
-          <View style={styles.messageBox}>
-            <Text style={styles.messageBoxText}>Хайлт олдсонгүй</Text>
+          <View style={css.messageBox}>
+            <Text style={css.messageBoxText}>Хайлт олдсонгүй</Text>
           </View>
         ) : (
-          <View style={styles.messageBox}>
-            <Text style={styles.messageBoxText}>
-              Хайх талбар,утгаа оруулна уу
-            </Text>
+          <View style={css.messageBox}>
+            <Text style={css.messageBoxText}>Хайх талбар,утгаа оруулна уу</Text>
           </View>
         )}
       </View>
@@ -148,7 +152,7 @@ export default function SearchScreen1(props) {
   );
 }
 
-const styles = StyleSheet.create({
+const css = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 12,
@@ -211,5 +215,25 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#74D122",
     borderBottomWidth: 5,
+  },
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#ecf0f1",
+    marginTop: 30,
+  },
+
+  rnmodalview: {
+    backgroundColor: "white",
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 14,
+  },
+  rnmodalbutton: {
+    backgroundColor: "#222f3e",
+    borderRadius: 4,
+    paddingHorizontal: 6,
+    paddingVertical: 10,
   },
 });

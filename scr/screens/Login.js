@@ -22,7 +22,6 @@ export default function (props) {
 
   const Handlerlogin = () => {
     if (Mypass === mystatus.Storepass) {
-      Alert.alert("Амжилттай нэвтэрлээ");
       mystatus.setisLoggedIn(true);
       props.navigation.navigate("Home");
       setMypass(null);

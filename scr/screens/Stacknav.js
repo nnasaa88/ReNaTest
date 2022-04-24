@@ -34,7 +34,7 @@ export default () => {
         options={{ title: "Дэлгэрэнгүй" }}
       />
       <Stack.Screen name="SignUp" component={SignUpScreen} />
-      {/* <Stack.Screen name="Testdb" component={TestData} /> */}
+      
       <Stack.Screen name="Searchdb" component={Searchdb} />
       <Stack.Screen name="Detail" component={DetailScreen} />
     </Stack.Navigator>

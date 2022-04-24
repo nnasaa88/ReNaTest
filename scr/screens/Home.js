@@ -46,7 +46,7 @@ export default function (props) {
   };
   const goattouch = () => {
     mystatus.setActivetype("Ямаа");
-    props.navigation.navigate("Searchdb");
+    props.navigation.navigate("List");
   };
   return (
     <View style={{ flex: 1 }}>

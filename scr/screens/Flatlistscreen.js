@@ -7,8 +7,10 @@ import {
   Alert,
 } from "react-native";
 import React, { useState } from "react";
+import Mymodal from "../../database/Mymodal";
 
 const Flatlistscreen = () => {
+  const [rnmodalvisible, setrnmodalvisible] = useState(false);
   const [Persons, setPersons] = useState([
     { name: "Amaraa", key: "56" },
     { name: "Amaa", key: "6" },
@@ -16,16 +18,17 @@ const Flatlistscreen = () => {
     { name: "Amaasds", key: "5" },
   ]);
   const handleClick = (name) => {
-    setPersons((oldPersons) => oldPersons.filter((el) => el.name !== name));
+    setrnmodalvisible(true);
+    // setPersons((oldPersons) => oldPersons.filter((el) => el.name !== name));
     // Alert.alert(name + " сайн уу талаараа хар");
   };
+
   return (
-    (
-      <View>
-        <Text> Dahin </Text>
-      </View>
-    ),
-    (
+    <View>
+      <Mymodal
+        seemodal={rnmodalvisible}
+        hidemodal={() => setrnmodalvisible(false)}
+      />
       <FlatList
         ItemSeparatorComponent={
           Platform.OS !== "android" &&
@@ -49,7 +52,7 @@ const Flatlistscreen = () => {
           </TouchableHighlight>
         )}
       />
-    )
+    </View>
   );
 };
 
