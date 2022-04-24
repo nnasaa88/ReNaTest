@@ -68,6 +68,8 @@ export default function SearchScreen1(props) {
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [filterfield, setFilterfield] = useState("color");
 
+  const [rnmodalvisible, setrnmodalvisible] = useState(false);
+
   useEffect(async () => {
     StatusBar.setBarStyle("dark-content", false);
     var userstring;
@@ -91,6 +93,10 @@ export default function SearchScreen1(props) {
         <View flexDirection="row" justifyContent="center">
           <Text style={css.text}>{mystatus.Activetype} </Text>
           <Button onPress={HandlerAdd} title="байхгүй бол нэмээрэй" />
+          <Mymodal
+            seemodal={rnmodalvisible}
+            hidemodal={() => setrnmodalvisible(false)}
+          />
         </View>
         <View style={css.searchView}>
           <View
@@ -158,6 +164,7 @@ export default function SearchScreen1(props) {
               <TouchableOpacity
                 style={css.userCard}
                 onPress={() => {
+                  setrnmodalvisible(true);
                   // Alert.alert(
                   //   `${user.name} ${user.tamga}`,
                   //   `Онцлог зүс ${user.color}`
