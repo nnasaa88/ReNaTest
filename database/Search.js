@@ -14,52 +14,10 @@ import {
   Alert,
 } from "react-native";
 import { Button, Icon } from "react-native-elements";
+import RadioButtonRN from "radio-buttons-react-native";
+
 import Mycontext, { fdate } from "../context/Mycontext";
 import { resultdb } from "./db";
-
-export function Mymodal(props) {
-  //   const [rnmodalvisible, setrnmodalvisible] = useState(true);
-  //   console.log(props.seemodal + " sdfsdfds ");
-  //   setrnmodalvisible(props.seemodal);
-  return (
-    <View style={css.centeredview}>
-      <Modal visible={props.seemodal} animationType="slide" transparent={true}>
-        <View style={[css.centeredview, { marginTop: -200 }]}>
-          <View style={css.modalview}>
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: "bold",
-                alignItems: "center",
-              }}
-            >
-              {" "}
-              Modoal title{" "}
-            </Text>
-            <Text style={{ marginTop: 10 }}>
-              {" "}
-              xzcxzcXZCxzcXZCxz d fdsModoal body{" "}
-            </Text>
-            <View flexDirection="row" justifyContent="center">
-              <TouchableOpacity
-                style={{}}
-                onPress={() => {
-                  console.log("garlaa");
-                  props.hidemodal();
-                }}
-              >
-                <Text> Яах санаатай </Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={{}} onPress={props.hidemodal}>
-                <Text> Санаатай </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </Modal>
-    </View>
-  );
-}
 
 export default function SearchScreen1(props) {
   const mystatus = useContext(Mycontext);
@@ -69,6 +27,7 @@ export default function SearchScreen1(props) {
   const [filterfield, setFilterfield] = useState("color");
 
   const [rnmodalvisible, setrnmodalvisible] = useState(false);
+  const [modalbody, setmodalbody] = useState("");
 
   useEffect(async () => {
     StatusBar.setBarStyle("dark-content", false);
@@ -79,10 +38,6 @@ export default function SearchScreen1(props) {
     setItems(userstring.rows._array);
     setFilteredUsers(items);
   }, []);
-
-  const whatdo = () => {
-    return Alert.alert("xfsdfsdfsdf");
-  };
 
   const HandlerAdd = () => {
     props.navigation.navigate("Detail");
@@ -96,6 +51,7 @@ export default function SearchScreen1(props) {
           <Mymodal
             seemodal={rnmodalvisible}
             hidemodal={() => setrnmodalvisible(false)}
+            modalbody={modalbody}
           />
         </View>
         <View style={css.searchView}>
@@ -165,6 +121,9 @@ export default function SearchScreen1(props) {
                 style={css.userCard}
                 onPress={() => {
                   setrnmodalvisible(true);
+                  setmodalbody(
+                    `${user.id} тай ${user.name} ийн  ${user.tamga} зүс ${user.color}`
+                  );
                   // Alert.alert(
                   //   `${user.name} ${user.tamga}`,
                   //   `Онцлог зүс ${user.color}`
@@ -197,6 +156,92 @@ export default function SearchScreen1(props) {
           </View>
         )}
       </View>
+    </View>
+  );
+}
+
+export function Mymodal(props) {
+  const mystatus = useContext(Mycontext);
+  const data = [
+    {
+      label: "data 1",
+    },
+    {
+      label: "data 2",
+    },
+  ];
+  return (
+    <View style={css.centeredview}>
+      <Modal visible={props.seemodal} animationType="slide" transparent={true}>
+        <View style={[css.centeredview, { marginTop: -200 }]}>
+          <View style={css.modalview}>
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: "bold",
+                alignItems: "center",
+              }}
+            >
+              {" "}
+              {mystatus.Storename}
+              {"  Юу хийх вэ."}
+            </Text>
+            <Text style={{ marginTop: 10 }}>
+              {props.modalbody}
+              {
+                "hgjhgjhhhgghghjghgg  g gjggghghgjhg h h g   gggg     hghgh   hh    hgjghgjhghgjg    ggfhg gfhfgfgfgfgh fdf f"
+              }
+            </Text>
+            {/* <RadioButtonRN data={data} selectedBtn={(e) => console.log(e)} /> */}
+            <View
+              style={{ marginTop: 10, backgroundColor: "#CFD20F" }}
+              flexDirection="row"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Text style={[css.text, { flex: 1, fontSize: 14 }]}>
+                {" "}
+                Яах санаатай??!!
+              </Text>
+              <Picker
+                style={css.pick}
+                selectedValue={mystatus.Event}
+                onValueChange={(l) => {
+                  mystatus.setEvent(l);
+                }}
+              >
+                {["Буцах", "Борлуулах", "Хорогдол", "Хэрэглээ"].map((l) => (
+                  <Picker.Item label={l} value={l} />
+                ))}
+              </Picker>
+            </View>
+            <View
+              style={{ marginTop: 10 }}
+              flexDirection="row"
+              justifyContent="center"
+            >
+              <TouchableOpacity
+                style={{}}
+                onPress={() => {
+                  props.hidemodal();
+                  console.log("Event hii");
+                }}
+              >
+                <Text> БАТЛАХ </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{}}
+                onPress={() => {
+                  props.hidemodal();
+                  mystatus.setEvent("");
+                }}
+              >
+                <Text> БУЦАХ </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -282,5 +327,15 @@ const css = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+  },
+  pick: {
+    // fontSize: 12,
+    // padding: 10,
+    flex: 2,
+    // width: "70%",
+    textAlign: "center",
+    borderWidth: 5,
+    borderColor: "#8987C1",
+    justifyContent: "flex-end",
   },
 });
