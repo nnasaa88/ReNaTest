@@ -16,7 +16,7 @@ import { resultdb } from "../../database/db";
 
 import { Mymodal } from "../../database/Search";
 
-const Flatlistscreen = () => {
+const Flatlistscreen1 = () => {
   const mystatus = useContext(Mycontext);
   const [rnmodalvisible, setrnmodalvisible] = useState(false);
   const [rnmodalvisible1, setrnmodalvisible1] = useState(false);
@@ -112,7 +112,7 @@ const Flatlistscreen = () => {
   );
 };
 
-export default Flatlistscreen;
+export default Flatlistscreen1;
 
 function UserCard({ item }) {
   return (

@@ -4,6 +4,7 @@ import {
   Text,
   View,
   Modal,
+  FlatList,
   TextInput,
   StatusBar,
   TouchableOpacity,
@@ -14,6 +15,7 @@ import {
   Alert,
 } from "react-native";
 import { Button, Icon } from "react-native-elements";
+import { Feather as Icon1 } from "@expo/vector-icons";
 import RadioButtonRN from "radio-buttons-react-native";
 
 import Mycontext, { fdate } from "../context/Mycontext";
@@ -244,6 +246,272 @@ export function Mymodal(props) {
           </View>
         </View>
       </Modal>
+    </View>
+  );
+}
+
+export function Mymodal1(props) {
+  return (
+    <View style={css.centeredview}>
+      <Modal visible={props.seemodal} animationType="slide" transparent={true}>
+        <View style={[css.centeredview, { marginTop: 50 }]}>
+          <View style={css.modalview}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                {" "}
+                Томсгов{" "}
+              </Text>
+              <TouchableOpacity
+                style={{ marginBottom: 5, alignItems: "center" }}
+                onPress={() => {
+                  console.log("garlaa");
+                  props.hidemodal();
+                }}
+              >
+                <Icon name="close" />
+              </TouchableOpacity>
+            </View>
+            <Image
+              style={{
+                width: "100%",
+                height: "60%",
+                borderRadius: 100,
+              }}
+              source={{
+                uri: "https://pbs.twimg.com/profile_images/486929358120964097/gNLINY67_400x400.png",
+              }}
+            />
+          </View>
+        </View>
+      </Modal>
+    </View>
+  );
+}
+
+export const Flatlistscreen = (props) => {
+  const mystatus = useContext(Mycontext);
+  const [searchText, setSearchText] = useState("");
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [filterfield, setFilterfield] = useState("color");
+  const [modalbody, setmodalbody] = useState("");
+  const [rnmodalvisible, setrnmodalvisible] = useState(false);
+  const [rnmodalvisible1, setrnmodalvisible1] = useState(false);
+  const [items, setItems] = useState([]);
+
+  useEffect(async () => {
+    // StatusBar.setBarStyle("dark-content", false);
+    var userstring;
+    userstring = await resultdb("select * from items", []);
+    setItems(userstring.rows._array);
+  }, []);
+
+  const HandlerAdd = () => {
+    props.navigation.navigate("Detail");
+  };
+  const handleClick = (name) => {
+    setrnmodalvisible(true);
+  };
+  const handleClick1 = (name) => {
+    setrnmodalvisible1(true);
+  };
+
+  return (
+    <View style={{ flex: 1, paddingTop: 5 }}>
+      <View style={css.container}>
+        <View flexDirection="row" justifyContent="center">
+          <Text style={css.text}>{mystatus.Activetype} </Text>
+          <Button onPress={HandlerAdd} title="байхгүй бол нэмээрэй" />
+        </View>
+        <View>
+          <Mymodal
+            seemodal={rnmodalvisible}
+            hidemodal={() => setrnmodalvisible(false)}
+          />
+          <Mymodal1
+            seemodal={rnmodalvisible1}
+            hidemodal={() => setrnmodalvisible1(false)}
+          />
+          <View style={css.searchView}>
+            <View
+              style={css.inputView}
+              flexDirection="row"
+              justifyContent="center"
+            >
+              <Picker
+                style={{ flex: 1 }}
+                selectedValue={filterfield}
+                onValueChange={(l) => {
+                  setFilterfield(l.value);
+                }}
+              >
+                {[
+                  { name: "Нэр", value: "color" },
+                  { name: "Им", value: "im" },
+                  { name: "Тамга", value: "tamga" },
+                  { name: "Т/бар", value: "desc" },
+                ].map((l) => (
+                  <Picker.Item label={l.name} value={l.value} />
+                ))}
+              </Picker>
+              <TextInput
+                style={{ flex: 6 }}
+                defaultValue={searchText}
+                style={css.input}
+                placeholder="Хайя"
+                placeholderTextColor="blue"
+                textContentType="name"
+                onChangeText={(text) => {
+                  setSearchText(text);
+                  if (text === "") {
+                    return setFilteredUsers(items);
+                  }
+                  // const filtered_users = users.filter((user) =>
+                  //   user.name.first.toLowerCase().startsWith(text.toLowerCase())
+                  // );
+                  const filtered_users = items.filter((user) =>
+                    user.color.toLowerCase().includes(text.toLowerCase())
+                  );
+                  setFilteredUsers(filtered_users);
+                }}
+                returnKeyType="search"
+              />
+              {searchText.length === 0 ? (
+                <TouchableOpacity>
+                  <Icon name="search" size={24} color="#333" />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  onPress={() => {
+                    setSearchText("");
+                    setFilteredUsers(items);
+                  }}
+                >
+                  <Icon name="cancel" size={24} color="#333" />
+                </TouchableOpacity>
+              )}
+            </View>
+          </View>
+          <FlatList
+            ItemSeparatorComponent={
+              Platform.OS !== "android" &&
+              (({ highlighted }) => (
+                <View
+                  style={[style.separator, highlighted && { marginLeft: 0 }]}
+                />
+              ))
+            }
+            // data={items}
+            data={filteredUsers}
+            key={items.id}
+            // renderItem={UserCard}
+            renderItem={({ item, index, separators }) => (
+              <View
+                style={{
+                  margin: 4,
+                  backgroundColor: "#E1E43B",
+                  marginRight: 8,
+                  paddingHorizontal: 10,
+                  paddingVertical: 4,
+                  borderRadius: 10,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  height: 60,
+                }}
+              >
+                <View>
+                  <TouchableOpacity onPress={() => handleClick1(item.name)}>
+                    <Image
+                      style={{ width: 50, height: 50, borderRadius: 100 }}
+                      source={{
+                        uri: "https://pbs.twimg.com/profile_images/486929358120964097/gNLINY67_400x400.png",
+                      }}
+                    />
+                  </TouchableOpacity>
+                </View>
+                <View style={{ flex: 1, paddingHorizontal: 10 }}>
+                  <Text
+                    style={{ fontSize: 16 }}
+                  >{`${item.name} ${item.color}`}</Text>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      Alert.alert(`Тайлбар: ${item.desc}`);
+                    }}
+                  >
+                    <Icon name="phone" style={{ marginLeft: 12 }} size={20} />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      Alert.alert(`Төрсөн огноо ${item.bdate}`);
+                    }}
+                  >
+                    <Icon1
+                      name="message-circle"
+                      style={{ marginLeft: 14 }}
+                      size={20}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
+          />
+        </View>
+      </View>
+    </View>
+  );
+};
+
+function UserCard({ item }) {
+  return (
+    <View
+      style={{
+        margin: 4,
+        backgroundColor: "#E1E43B",
+        marginRight: 20,
+        paddingHorizontal: 10,
+        paddingVertical: 4,
+        borderRadius: 10,
+        flexDirection: "row",
+        alignItems: "center",
+        height: 60,
+      }}
+    >
+      <View>
+        <TouchableOpacity onPress={() => handleClick(item.name)}>
+          <Image
+            style={{ width: 50, height: 50, borderRadius: 100 }}
+            source={{
+              uri: "https://pbs.twimg.com/profile_images/486929358120964097/gNLINY67_400x400.png",
+            }}
+          />
+        </TouchableOpacity>
+      </View>
+      <View style={{ flex: 1, paddingHorizontal: 10 }}>
+        <Text style={{ fontSize: 16 }}>{`${item.name} ${item.color}`}</Text>
+      </View>
+      <View style={{ flexDirection: "row" }}>
+        <TouchableOpacity
+          onPress={() => {
+            Alert.alert(`Calling ${item.im}`);
+          }}
+        >
+          <Icon name="phone" style={{ marginLeft: 12 }} size={20} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            Alert.alert(`Messaging ${item.tamga}`);
+          }}
+        >
+          <Icon1 name="message-circle" style={{ marginLeft: 14 }} size={20} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }

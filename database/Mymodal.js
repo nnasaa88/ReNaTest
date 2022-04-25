@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { Icon } from "react-native-elements";
 
-const Mymodal1 = (props) => {
+const Mymodal2 = (props) => {
   return (
     <View style={css.centeredview}>
       <Modal visible={props.seemodal} animationType="slide" transparent={true}>
@@ -53,7 +53,7 @@ const Mymodal1 = (props) => {
     </View>
   );
 };
-export default Mymodal1;
+export default Mymodal2;
 
 const css = StyleSheet.create({
   centeredview: {
