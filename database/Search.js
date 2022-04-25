@@ -115,7 +115,7 @@ export default function SearchScreen1(props) {
           </View>
         </View>
         {filteredUsers.length > 0 ? (
-          <ScrollView>
+          <ScrollView key={items.id}>
             {filteredUsers.map((user) => (
               <TouchableOpacity
                 style={css.userCard}
@@ -173,7 +173,7 @@ export function Mymodal(props) {
   return (
     <View style={css.centeredview}>
       <Modal visible={props.seemodal} animationType="slide" transparent={true}>
-        <View style={[css.centeredview, { marginTop: -200 }]}>
+        <View style={[css.centeredview, { marginTop: 150 }]}>
           <View style={css.modalview}>
             <Text
               style={{
@@ -210,9 +210,11 @@ export function Mymodal(props) {
                   mystatus.setEvent(l);
                 }}
               >
-                {["Буцах", "Борлуулах", "Хорогдол", "Хэрэглээ"].map((l) => (
-                  <Picker.Item label={l} value={l} />
-                ))}
+                {[" ? ", "Засах", "Борлуулах", "Хорогдол", "Хэрэглээ"].map(
+                  (l) => (
+                    <Picker.Item label={l} value={l} />
+                  )
+                )}
               </Picker>
             </View>
             <View

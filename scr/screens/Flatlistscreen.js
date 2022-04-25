@@ -6,21 +6,26 @@ import {
   TouchableHighlight,
   Alert,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import Mycontext, { fdate } from "../../context/Mycontext";
+import { resultdb } from "../../database/db";
+
 import { Mymodal } from "../../database/Search";
 
 const Flatlistscreen = () => {
+  const mystatus = useContext(Mycontext);
   const [rnmodalvisible, setrnmodalvisible] = useState(false);
-  const [Persons, setPersons] = useState([
-    { name: "Amaraa", key: "56" },
-    { name: "Amaa", key: "6" },
-    { name: "Amadfraa", key: "16" },
-    { name: "Amaasds", key: "5" },
-  ]);
+  const [items, setItems] = useState([]);
+
+  useEffect(async () => {
+    // StatusBar.setBarStyle("dark-content", false);
+    var userstring;
+    userstring = await resultdb("select * from items", []);
+    setItems(userstring.rows._array);
+  }, []);
+
   const handleClick = (name) => {
     setrnmodalvisible(true);
-    // setPersons((oldPersons) => oldPersons.filter((el) => el.name !== name));
-    // Alert.alert(name + " сайн уу талаараа хар");
   };
 
   return (
@@ -36,7 +41,7 @@ const Flatlistscreen = () => {
             <View style={[style.separator, highlighted && { marginLeft: 0 }]} />
           ))
         }
-        data={Persons}
+        data={items}
         renderItem={({ item, index, separators }) => (
           <TouchableHighlight
             key={item.index}
@@ -46,7 +51,9 @@ const Flatlistscreen = () => {
           >
             <View style={{ backgroundColor: "white" }}>
               <Text>
-                {index + 1}) {item.name} {item.key}
+                {index + 1}) {item.name} {item.color}
+                {item.tamge} {item.im} {item.desc}
+                {item.image}
               </Text>
             </View>
           </TouchableHighlight>
