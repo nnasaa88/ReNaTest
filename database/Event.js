@@ -154,9 +154,17 @@ export default function EventListScreen(props) {
                   }}
                 >
                   <TouchableOpacity
-                    onPress={() =>
-                      setIteminfo(item.name + " нэр " + item.color + "зүстэй ")
-                    }
+                    onPress={() => {
+                      if (selectedid > 0) {
+                        setIteminfo(
+                          selected.name + " нэр " + selected.color + "зүстэй "
+                        );
+                      } else {
+                        setIteminfo(
+                          item.name + " нэр " + item.color + "зүстэй "
+                        );
+                      }
+                    }}
                   >
                     <Text
                       style={{ fontSize: 16 }}
