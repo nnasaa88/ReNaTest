@@ -4,6 +4,7 @@ import {
   Text,
   View,
   Modal,
+  Button,
   FlatList,
   TextInput,
   StatusBar,
@@ -14,9 +15,7 @@ import {
   SafeAreaView,
   Alert,
 } from "react-native";
-import { Button, Icon } from "react-native-elements";
-import { Feather as Icon1 } from "@expo/vector-icons";
-import RadioButtonRN from "radio-buttons-react-native";
+import { Feather as Icon1, EvilIcons, AntDesign } from "@expo/vector-icons";
 
 import Mycontext, { fdate } from "../context/Mycontext";
 import { resultdb } from "./db";
@@ -49,7 +48,7 @@ export default function SearchScreen1(props) {
       <View style={css.container}>
         <View flexDirection="row" justifyContent="center">
           <Text style={css.text}>{mystatus.Activetype} </Text>
-          <Button onPress={HandlerAdd} title="байхгүй бол нэмээрэй" />
+          <Button onPress={HandlerAdd} title="байхгүй бол бүртгээрэй" />
           <Mymodal
             seemodal={rnmodalvisible}
             hidemodal={() => setrnmodalvisible(false)}
@@ -102,7 +101,7 @@ export default function SearchScreen1(props) {
             />
             {searchText.length === 0 ? (
               <TouchableOpacity>
-                <Icon name="search" size={24} color="#333" />
+                <Icon1 name="search" size={24} color="#333" />
               </TouchableOpacity>
             ) : (
               <TouchableOpacity
@@ -111,7 +110,7 @@ export default function SearchScreen1(props) {
                   setFilteredUsers(items);
                 }}
               >
-                <Icon name="cancel" size={24} color="#333" />
+                <EvilIcons name="close" size={24} color="#060606" />
               </TouchableOpacity>
             )}
           </View>
@@ -126,10 +125,6 @@ export default function SearchScreen1(props) {
                   setmodalbody(
                     `${user.id} тай ${user.name} ийн  ${user.tamga} зүс ${user.color}`
                   );
-                  // Alert.alert(
-                  //   `${user.name} ${user.tamga}`,
-                  //   `Онцлог зүс ${user.color}`
-                  // );
                 }}
               >
                 <Image
@@ -274,7 +269,7 @@ export function Mymodal1(props) {
                   props.hidemodal();
                 }}
               >
-                <Icon name="close" />
+                <EvilIcons name="close" size={30} />
               </TouchableOpacity>
             </View>
             <Image
@@ -309,15 +304,16 @@ export const Flatlistscreen = (props) => {
     var userstring;
     userstring = await resultdb("select * from items", []);
     setItems(userstring.rows._array);
+    setFilteredUsers(items);
   }, []);
 
   const HandlerAdd = () => {
-    props.navigation.navigate("Detail");
+    props.navigation.navigate("Detail", { item: {} });
   };
-  const handleClick = (name) => {
+  const handleModal = (name) => {
     setrnmodalvisible(true);
   };
-  const handleClick1 = (name) => {
+  const handleModal1 = (name) => {
     setrnmodalvisible1(true);
   };
 
@@ -326,7 +322,7 @@ export const Flatlistscreen = (props) => {
       <View style={css.container}>
         <View flexDirection="row" justifyContent="center">
           <Text style={css.text}>{mystatus.Activetype} </Text>
-          <Button onPress={HandlerAdd} title="байхгүй бол нэмээрэй" />
+          <Button onPress={HandlerAdd} title="байхгүй бол бүртгээрэй" />
         </View>
         <View>
           <Mymodal
@@ -371,9 +367,6 @@ export const Flatlistscreen = (props) => {
                   if (text === "") {
                     return setFilteredUsers(items);
                   }
-                  // const filtered_users = users.filter((user) =>
-                  //   user.name.first.toLowerCase().startsWith(text.toLowerCase())
-                  // );
                   const filtered_users = items.filter((user) =>
                     user.color.toLowerCase().includes(text.toLowerCase())
                   );
@@ -383,7 +376,7 @@ export const Flatlistscreen = (props) => {
               />
               {searchText.length === 0 ? (
                 <TouchableOpacity>
-                  <Icon name="search" size={24} color="#333" />
+                  <Icon1 name="search" size={24} color="#333" />
                 </TouchableOpacity>
               ) : (
                 <TouchableOpacity
@@ -392,7 +385,7 @@ export const Flatlistscreen = (props) => {
                     setFilteredUsers(items);
                   }}
                 >
-                  <Icon name="cancel" size={24} color="#333" />
+                  <EvilIcons name="close" size={24} color="#333" />
                 </TouchableOpacity>
               )}
             </View>
@@ -414,7 +407,7 @@ export const Flatlistscreen = (props) => {
               <View
                 style={{
                   margin: 4,
-                  backgroundColor: "#E1E43B",
+                  backgroundColor: "#D4DE10",
                   marginRight: 8,
                   paddingHorizontal: 10,
                   paddingVertical: 4,
@@ -425,27 +418,38 @@ export const Flatlistscreen = (props) => {
                 }}
               >
                 <View>
-                  <TouchableOpacity onPress={() => handleClick1(item.name)}>
+                  <TouchableOpacity onPress={() => handleModal1(item.name)}>
                     <Image
-                      style={{ width: 50, height: 50, borderRadius: 100 }}
+                      style={{
+                        width: 50,
+                        height: 50,
+                        borderRadius: 100,
+                      }}
                       source={{
                         uri: "https://pbs.twimg.com/profile_images/486929358120964097/gNLINY67_400x400.png",
                       }}
                     />
                   </TouchableOpacity>
                 </View>
-                <View style={{ flex: 1, paddingHorizontal: 10 }}>
-                  <Text
-                    style={{ fontSize: 16 }}
-                  >{`${item.name} ${item.color}`}</Text>
+                <View
+                  style={{
+                    flex: 1,
+                    paddingHorizontal: 10,
+                  }}
+                >
+                  <TouchableOpacity onPress={() => handleModal(item.name)}>
+                    <Text
+                      style={{ fontSize: 16 }}
+                    >{`${item.name} ${item.color}`}</Text>
+                  </TouchableOpacity>
                 </View>
                 <View style={{ flexDirection: "row" }}>
                   <TouchableOpacity
                     onPress={() => {
-                      Alert.alert(`Тайлбар: ${item.desc}`);
+                      props.navigation.navigate("Detail", { item: item });
                     }}
                   >
-                    <Icon name="phone" style={{ marginLeft: 12 }} size={20} />
+                    <Icon1 name="pen-tool" size={20} color="black" />
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => {
@@ -453,7 +457,7 @@ export const Flatlistscreen = (props) => {
                     }}
                   >
                     <Icon1
-                      name="message-circle"
+                      name="alert-circle"
                       style={{ marginLeft: 14 }}
                       size={20}
                     />
@@ -502,7 +506,7 @@ function UserCard({ item }) {
             Alert.alert(`Calling ${item.im}`);
           }}
         >
-          <Icon name="phone" style={{ marginLeft: 12 }} size={20} />
+          <Icon1 name="phone" style={{ marginLeft: 12 }} size={20} />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {

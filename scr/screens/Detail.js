@@ -16,49 +16,67 @@ import Mycontext, { fdate } from "../../context/Mycontext";
 import { getdb, resultdb } from "../../database/db";
 
 export default (props) => {
+  var selected = props.route.params.item;
+  var selectedid = 0;
+  {
+    selected.id > 0 ? (selectedid = selected.id) : (selectedid = 0);
+  }
   const mystatus = useContext(Mycontext);
-  const [sex, setsex] = useState("");
-  const [im, setim] = useState("");
-  const [tamga, settamga] = useState("");
-  const [name, setname] = useState("");
-  const [color, setcolor] = useState("");
-  const [desc, setdesc] = useState("");
-  const [image, setimage] = useState(
-    "https://www.google.com/imgres?imgurl=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F2%2F2c%2FFlock_of_sheep.jpg%2F240px-Flock_of_sheep.jpg&imgrefurl=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FSheep&tbnid=nPaENMCKkJNJ2M&vet=12ahUKEwiknLi7gqz3AhXsy4sBHejjCb8QMygBegUIARDaAQ..i&docid=1mxhPnu2CWLEhM&w=240&h=365&q=sheep&ved=2ahUKEwiknLi7gqz3AhXsy4sBHejjCb8QMygBegUIARDaAQ"
-  );
-  const [helder, sethelder] = useState("");
-  const [mygroup, setmygroup] = useState(["1", "2"]);
-  const [bdate, setbdate] = useState(fdate());
-  const [tuluv, settuluv] = useState("Амьд");
-  const [qty, setqty] = useState(1);
+  const [sex, setsex] = useState(selected.sex);
+  const [im, setim] = useState(selected.im);
+  const [tamga, settamga] = useState(selected.tamga);
+  const [name, setname] = useState(selected.name);
+  const [color, setcolor] = useState(selected.color);
+  const [desc, setdesc] = useState(selected.desc);
+  const [image, setimage] = useState(selected.image);
+  const [helder, sethelder] = useState(selected.helder);
+  const [mygroup, setmygroup] = useState(selected.mygroup);
+  const [bdate, setbdate] = useState(selected.bdate);
+  const [tuluv, settuluv] = useState(selected.tuluv);
+  const [qty, setqty] = useState(selected.qty);
 
+  const HandlerBack = async () => {
+    props.navigation.goBack();
+  };
   const HandlerSave = async () => {
-    var userstring = await resultdb(
-      "insert into items (type,sex,im,tamga,name,color,image,qty,desc,start,mygroup,helder,status,created, modified) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-      [
-        mystatus.Activetype,
-        sex,
-        im,
-        tamga,
-        name,
-        color,
-        image,
-        qty,
-        desc,
-        bdate,
-        mygroup,
-        helder,
-        tuluv,
-        fdate(),
-        fdate(),
-      ]
-    );
-    let a = userstring.insertId;
+    let mysql;
+    {
+      selectedid === 0
+        ? (mysql =
+            "insert into items (type,sex,im,tamga,name,color,image,qty,desc,start,mygroup,helder,status,created, modified) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)")
+        : (mysql = `update items set type=?,sex=?,im=?,tamga=?,name=?,color=?,image=?,qty=?,desc=?,start=?,mygroup=?,helder=?,status=?,created=?, modified=? where id=${selectedid}`);
+    }
+
+    var userstring = await resultdb(mysql, [
+      mystatus.Activetype,
+      sex,
+      im,
+      tamga,
+      name,
+      color,
+      image,
+      qty,
+      desc,
+      bdate,
+      mygroup,
+      helder,
+      tuluv,
+      fdate(),
+      fdate(),
+    ]);
+    let a;
+    if (selectedid === 0) {
+      a = userstring.insertId;
+      mysql = "Хадгаллаа";
+    } else {
+      a = selectedid;
+      mysql = "Заслаа";
+    }
     userstring = await resultdb(
       "insert into events (itemsId,event,desc,date,created,modified) values(?,?,?,?,?,?)",
       [a, "auto from details add", desc, bdate, fdate(), fdate()]
     );
-    Alert.alert("Хадгаллаа");
+    Alert.alert(mysql);
     props.navigation.goBack();
   };
   return (
@@ -90,6 +108,7 @@ export default (props) => {
           <Text style={css.text}>Тамга</Text>
           <Picker
             style={css.pick}
+            defaultValue={tamga}
             onValueChange={(l) => {
               settamga(l);
             }}
@@ -103,6 +122,7 @@ export default (props) => {
           <Text style={css.text}>Им</Text>
           <Picker
             style={{ flex: 6 }}
+            defaultValue={im}
             onValueChange={(l) => {
               setim(l);
             }}
@@ -116,6 +136,7 @@ export default (props) => {
           <Text style={css.text}>Малчин</Text>
           <Picker
             style={{ flex: 4 }}
+            defaultValue={helder}
             placeholder="Малчин нь"
             onValueChange={(l) => {
               sethelder(l);
@@ -130,6 +151,7 @@ export default (props) => {
           <Text style={css.text}>Сүрэг</Text>
           <Picker
             style={{ flex: 4 }}
+            defaultValue={mygroup}
             placeholder="Сүрэг байдаг уу"
             onValueChange={(l) => {
               setmygroup(l);
@@ -143,6 +165,7 @@ export default (props) => {
         <View flexDirection="row" justifyContent="center">
           <Text style={css.text}>Нэрлэх</Text>
           <TextInput
+            defaultValue={name}
             style={css.input}
             placeholder="Нэрлэнэ үү"
             onChangeText={setname}
@@ -163,6 +186,7 @@ export default (props) => {
         <View style={{ flex: 1 }}>
           <TextInput
             style={css.input}
+            defaultValue={color}
             placeholder="Зүсэлнэ үү"
             onChangeText={setcolor}
           />
@@ -180,6 +204,7 @@ export default (props) => {
         </View>
         <TextInput
           style={css.desc}
+          defaultValue={desc}
           multiline={true}
           placeholder="Тайлбар бичиж болно."
           onChangeText={setdesc}
@@ -192,11 +217,12 @@ export default (props) => {
             justifyContent: "center",
             resizeMode: "stretch",
           }}
-          source={require("../../assets/sheep.jpg")}
+          source={{ uri: selected.image }}
         />
       </View>
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, flexDirection: "row", padding: 5 }}>
         <Button style={css.button} onPress={HandlerSave} title="Хадгалах" />
+        <Button style={css.button} onPress={HandlerBack} title=" Буцах " />
       </View>
     </View>
   );
@@ -252,7 +278,8 @@ const css = StyleSheet.create({
   },
   button: {
     marginHorizontal: 40,
-    marginVertical: 10,
+    marginVertical: 40,
     justifyContent: "center",
+    padding: 5,
   },
 });
