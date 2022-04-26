@@ -172,17 +172,33 @@ export function Mymodal(props) {
       <Modal visible={props.seemodal} animationType="slide" transparent={true}>
         <View style={[css.centeredview, { marginTop: 150 }]}>
           <View style={css.modalview}>
-            <Text
+            <View
               style={{
-                fontSize: 16,
-                fontWeight: "bold",
+                flexDirection: "row",
                 alignItems: "center",
+                justifyContent: "space-between",
               }}
             >
-              {" "}
-              {mystatus.Storename}
-              {"  Юу хийх вэ."}
-            </Text>
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: "bold",
+                  alignItems: "center",
+                }}
+              >
+                {" "}
+                {mystatus.Storename}
+                {"  Юу хийх вэ."}
+              </Text>
+              <TouchableOpacity
+                style={{ marginBottom: 5, alignItems: "center" }}
+                onPress={() => {
+                  props.hidemodal();
+                }}
+              >
+                <EvilIcons name="close" size={30} />
+              </TouchableOpacity>
+            </View>
             <Text style={{ marginTop: 10 }}>
               {props.modalbody}
               {
@@ -227,15 +243,6 @@ export function Mymodal(props) {
                 }}
               >
                 <Text> БАТЛАХ </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{}}
-                onPress={() => {
-                  props.hidemodal();
-                  mystatus.setEvent("");
-                }}
-              >
-                <Text> БУЦАХ </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -368,7 +375,7 @@ export const Flatlistscreen = (props) => {
                     return setFilteredUsers(items);
                   }
                   const filtered_users = items.filter((user) =>
-                    user.color.toLowerCase().includes(text.toLowerCase())
+                    user.name.toLowerCase().includes(text.toLowerCase())
                   );
                   setFilteredUsers(filtered_users);
                 }}
