@@ -38,11 +38,11 @@ export default function (props) {
   };
   const cattletouch = () => {
     mystatus.setActivetype("Үхэр");
-    props.navigation.navigate("Searchdb");
+    props.navigation.navigate("List");
   };
   const sheeptouch = () => {
     mystatus.setActivetype("Хонь");
-    props.navigation.navigate("Searchdb");
+    props.navigation.navigate("List");
   };
   const goattouch = () => {
     mystatus.setActivetype("Ямаа");

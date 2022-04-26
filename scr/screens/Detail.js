@@ -62,20 +62,24 @@ export default (props) => {
       helder,
       tuluv,
       fdate(),
-      fdate(),
+      mystatus.Storename,
     ]);
     let a;
     if (selectedid === 0) {
       a = userstring.insertId;
+      userstring = await resultdb(
+        "insert into events (itemsId,event,desc,date,created,modified) values(?,?,?,?,?,?)",
+        [a, "Анхлан бүртгэв", desc, bdate, fdate(), mystatus.setStorename]
+      );
       mysql = "Хадгаллаа";
     } else {
       a = selectedid;
+      userstring = await resultdb(
+        "insert into events (itemsId,event,desc,date,created,modified) values(?,?,?,?,?,?)",
+        [a, "Засвар хийсэн", desc, bdate, fdate(), mystatus.setStorename]
+      );
       mysql = "Заслаа";
     }
-    userstring = await resultdb(
-      "insert into events (itemsId,event,desc,date,created,modified) values(?,?,?,?,?,?)",
-      [a, "auto from details add", desc, bdate, fdate(), fdate()]
-    );
     Alert.alert(mysql);
     props.navigation.goBack();
   };

@@ -15,7 +15,7 @@ import {
   SafeAreaView,
   Alert,
 } from "react-native";
-import { Feather as Icon1, EvilIcons, AntDesign } from "@expo/vector-icons";
+import { Feather as Icon1, EvilIcons } from "@expo/vector-icons";
 
 import Mycontext, { fdate } from "../context/Mycontext";
 import { resultdb } from "./db";
@@ -328,6 +328,13 @@ export const Flatlistscreen = (props) => {
     <View style={{ flex: 1, paddingTop: 5 }}>
       <View style={css.container}>
         <View flexDirection="row" justifyContent="center">
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate("Event", { item: {} });
+            }}
+          >
+            <Icon1 name="zoom-in" style={{ marginLeft: 14 }} size={34} />
+          </TouchableOpacity>
           <Text style={css.text}>{mystatus.Activetype} </Text>
           <Button onPress={HandlerAdd} title="байхгүй бол бүртгээрэй" />
         </View>
@@ -460,13 +467,13 @@ export const Flatlistscreen = (props) => {
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => {
-                      Alert.alert(`Төрсөн огноо ${item.bdate}`);
+                      props.navigation.navigate("Event", { item: item });
                     }}
                   >
                     <Icon1
-                      name="alert-circle"
+                      name="zoom-in"
                       style={{ marginLeft: 14 }}
-                      size={20}
+                      size={24}
                     />
                   </TouchableOpacity>
                 </View>
