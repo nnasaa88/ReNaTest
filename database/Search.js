@@ -230,6 +230,12 @@ export function Mymodal(props) {
                 )}
               </Picker>
             </View>
+            <TextInput
+              style={css.textinput}
+              // onChangeText={mystasetEvent}
+              value={mystatus.Event}
+            />
+
             <View
               style={{ marginTop: 10 }}
               flexDirection="row"
@@ -239,7 +245,7 @@ export function Mymodal(props) {
                 style={{}}
                 onPress={() => {
                   props.hidemodal();
-                  console.log("Event hii");
+                  console.log(mystatus.Event);
                 }}
               >
                 <Text> БАТЛАХ </Text>

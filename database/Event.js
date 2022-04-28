@@ -51,12 +51,10 @@ export default function EventListScreen(props) {
     }
     setItems(userstring.rows._array);
     setFilteredUsers(items);
-    console.log(userstring);
   }, []);
 
   return (
     <View style={{ flex: 1, paddingTop: 5 }}>
-      {/* console.log({iteminfo}); */}
       <View style={css.container}>
         <View flexDirection="row" justifyContent="center">
           <Text style={css.text}>{mystatus.Activetype} </Text>
@@ -131,7 +129,6 @@ export default function EventListScreen(props) {
             }
             // data={items}
             data={filteredUsers}
-            key={items.id}
             // renderItem={UserCard}
             renderItem={({ item, index, separators }) => (
               <View
@@ -173,6 +170,7 @@ export default function EventListScreen(props) {
                 </View>
               </View>
             )}
+            keyExtractor={(item) => item.id}
           />
         </View>
       </View>
