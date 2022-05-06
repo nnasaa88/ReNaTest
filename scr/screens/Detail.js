@@ -1,9 +1,9 @@
 import {
   StyleSheet,
   Text,
-  Image,
   View,
   TextInput,
+  Image,
   Picker,
   FlatList,
   TouchableHighlight,
@@ -12,6 +12,8 @@ import {
 import React, { useState, useContext } from "react";
 import DatePicker from "react-native-datepicker";
 import { Button, Icon } from "react-native-elements";
+import * as ImagePicker from "expo-image-picker";
+
 import Mycontext, { fdate } from "../../context/Mycontext";
 import { getdb, resultdb } from "../../database/db";
 
@@ -28,12 +30,12 @@ export default (props) => {
   const [name, setname] = useState(selected.name);
   const [color, setcolor] = useState(selected.color);
   const [desc, setdesc] = useState(selected.desc);
-  const [image, setimage] = useState(selected.image);
   const [helder, sethelder] = useState(selected.helder);
   const [mygroup, setmygroup] = useState(selected.mygroup);
   const [bdate, setbdate] = useState(selected.bdate);
   const [tuluv, settuluv] = useState(selected.tuluv);
   const [qty, setqty] = useState(selected.qty);
+  const [image, setimage] = useState(null);
 
   const HandlerBack = async () => {
     props.navigation.goBack();
@@ -82,6 +84,21 @@ export default (props) => {
     }
     Alert.alert(mysql);
     props.navigation.goBack();
+  };
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setimage(result.uri);
+    }
   };
   return (
     <View style={{ flex: 1 }}>
@@ -213,7 +230,18 @@ export default (props) => {
           placeholder="Тайлбар бичиж болно."
           onChangeText={setdesc}
         />
-        <Image
+        <View
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
+          <Button title="Pick an image from camera roll" onPress={pickImage} />
+          {image && (
+            <Image
+              source={{ uri: image }}
+              style={{ width: 200, height: 200 }}
+            />
+          )}
+        </View>
+        {/* <Image
           style={{
             flex: 1,
             width: "50%",
@@ -222,7 +250,7 @@ export default (props) => {
             resizeMode: "stretch",
           }}
           source={{ uri: selected.image }}
-        />
+        /> */}
       </View>
       <View style={{ flex: 1, flexDirection: "row", padding: 5 }}>
         <Button style={css.button} onPress={HandlerSave} title="Хадгалах" />
