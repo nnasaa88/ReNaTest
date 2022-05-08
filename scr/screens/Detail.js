@@ -29,13 +29,13 @@ export default (props) => {
   const [tamga, settamga] = useState(selected.tamga);
   const [name, setname] = useState(selected.name);
   const [color, setcolor] = useState(selected.color);
+  const [image, setimage] = useState(selected.image);
   const [desc, setdesc] = useState(selected.desc);
   const [helder, sethelder] = useState(selected.helder);
   const [mygroup, setmygroup] = useState(selected.mygroup);
   const [bdate, setbdate] = useState(selected.bdate);
   const [tuluv, settuluv] = useState(selected.tuluv);
   const [qty, setqty] = useState(selected.qty);
-  const [image, setimage] = useState(null);
 
   const HandlerBack = async () => {
     props.navigation.goBack();
@@ -71,17 +71,35 @@ export default (props) => {
       a = userstring.insertId;
       userstring = await resultdb(
         "insert into events (itemsId,event,desc,date,created,modified) values(?,?,?,?,?,?)",
-        [a, "Анхлан бүртгэв", desc, bdate, fdate(), mystatus.setStorename]
+        [
+          a,
+          "Анхлан бүртгэв",
+          "desc",
+          "bdate",
+          "fdate()",
+          "mystatus.setStorename",
+        ]
       );
       mysql = "Хадгаллаа";
     } else {
       a = selectedid;
       userstring = await resultdb(
         "insert into events (itemsId,event,desc,date,created,modified) values(?,?,?,?,?,?)",
-        [a, "Засвар хийсэн", desc, bdate, fdate(), mystatus.setStorename]
+        [
+          a,
+          "Засвар хийсэн",
+          "desc",
+          "bdate",
+          "fdate()",
+          "mystatus.setStorename",
+        ]
       );
       mysql = "Заслаа";
     }
+    // mysql = `${a} , Засвар хийсэн, ${desc} , ${bdate}, ${fdate()},  ${
+    //   mystatus.setStorename
+    // } fdfdf `;
+    console.log(mysql);
     Alert.alert(mysql);
     props.navigation.goBack();
   };

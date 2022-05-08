@@ -20,7 +20,7 @@ export default function App() {
       .then((result) => console.log("Items бэлдлээ"))
       .catch((err) => console.log("Items асуудал гарлаа." + err.message));
     initdb(
-      "create table if not exists events (id integer primary key not null, itemsId int,event text,desc text,date text,created text,modified text );"
+      "create table if not exists events (id integer primary key not null, itemsId text,event text,desc text,date text,created text,modified text );"
     )
       .then((result) => console.log("Event db бэлдлээ"))
       .catch((err) => console.log("Event асуудал гарлаа." + err.message));
