@@ -188,7 +188,7 @@ export function Mymodal(props) {
               >
                 {" "}
                 {mystatus.Storename}
-                {"  Юу хийх вэ."}
+                {" Яах санаатай??!!."}
               </Text>
               <TouchableOpacity
                 style={{ marginBottom: 5, alignItems: "center" }}
@@ -201,9 +201,7 @@ export function Mymodal(props) {
             </View>
             <Text style={{ marginTop: 10 }}>
               {props.modalbody}
-              {
-                "hgjhgjhhhgghghjghgg  g gjggghghgjhg h h g   gggg     hghgh   hh    hgjghgjhghgjg    ggfhg gfhfgfgfgfgh fdf f"
-              }
+              {"-f-"}
             </Text>
             {/* <RadioButtonRN data={data} selectedBtn={(e) => console.log(e)} /> */}
             <View
@@ -212,10 +210,6 @@ export function Mymodal(props) {
               justifyContent="center"
               alignItems="center"
             >
-              <Text style={[css.text, { flex: 1, fontSize: 14 }]}>
-                {" "}
-                Яах санаатай??!!
-              </Text>
               <Picker
                 style={css.pick}
                 selectedValue={mystatus.Event}
@@ -278,7 +272,7 @@ export function Mymodal1(props) {
               <TouchableOpacity
                 style={{ marginBottom: 5, alignItems: "center" }}
                 onPress={() => {
-                  console.log("garlaa");
+                  console.log(props.outimage);
                   props.hidemodal();
                 }}
               >
@@ -291,9 +285,7 @@ export function Mymodal1(props) {
                 height: "60%",
                 borderRadius: 100,
               }}
-              source={{
-                uri: "https://pbs.twimg.com/profile_images/486929358120964097/gNLINY67_400x400.png",
-              }}
+              source={{ uri: props.outimage }}
             />
           </View>
         </View>
@@ -307,9 +299,10 @@ export const Flatlistscreen = (props) => {
   const [searchText, setSearchText] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [filterfield, setFilterfield] = useState("color");
-  const [modalbody, setmodalbody] = useState("");
+  const [modalbody, setmodalbody] = useState("Body msg");
   const [rnmodalvisible, setrnmodalvisible] = useState(false);
   const [rnmodalvisible1, setrnmodalvisible1] = useState(false);
+  const [inimage, setinimage] = useState("Zurag url");
   const [items, setItems] = useState([]);
 
   useEffect(async () => {
@@ -348,10 +341,12 @@ export const Flatlistscreen = (props) => {
           <Mymodal
             seemodal={rnmodalvisible}
             hidemodal={() => setrnmodalvisible(false)}
+            modalbody={modalbody}
           />
           <Mymodal1
             seemodal={rnmodalvisible1}
             hidemodal={() => setrnmodalvisible1(false)}
+            outimage={inimage}
           />
           <View style={css.searchView}>
             <View
@@ -438,16 +433,16 @@ export const Flatlistscreen = (props) => {
                 }}
               >
                 <View>
-                  <TouchableOpacity onPress={() => handleModal1(item.name)}>
+                  <TouchableOpacity
+                    onPress={() => handleModal1(setinimage(item.image))}
+                  >
                     <Image
                       style={{
                         width: 50,
                         height: 50,
                         borderRadius: 100,
                       }}
-                      source={{
-                        uri: "https://pbs.twimg.com/profile_images/486929358120964097/gNLINY67_400x400.png",
-                      }}
+                      source={{ uri: item.image }}
                     />
                   </TouchableOpacity>
                 </View>
@@ -457,7 +452,9 @@ export const Flatlistscreen = (props) => {
                     paddingHorizontal: 10,
                   }}
                 >
-                  <TouchableOpacity onPress={() => handleModal(item.name)}>
+                  <TouchableOpacity
+                    onPress={() => handleModal(setmodalbody(item.name))}
+                  >
                     <Text
                       style={{ fontSize: 16 }}
                     >{`${item.name} ${item.color}`}</Text>
