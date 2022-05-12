@@ -41,7 +41,7 @@ export default function SearchScreen1(props) {
   }, []);
 
   const HandlerAdd = () => {
-    props.navigation.navigate("Detail");
+    props.navigation.navigate("Detail", { item: {} });
   };
   return (
     <View style={{ flex: 1, paddingTop: 5 }}>
@@ -92,8 +92,8 @@ export default function SearchScreen1(props) {
                 // const filtered_users = users.filter((user) =>
                 //   user.name.first.toLowerCase().startsWith(text.toLowerCase())
                 // );
-                const filtered_users = items.filter((user) =>
-                  user.color.toLowerCase().includes(text.toLowerCase())
+                const filtered_users = items.filter((item) =>
+                  item.color.toLowerCase().includes(text.toLowerCase())
                 );
                 setFilteredUsers(filtered_users);
               }}
@@ -127,12 +127,7 @@ export default function SearchScreen1(props) {
                   );
                 }}
               >
-                <Image
-                  style={css.userImage}
-                  source={{
-                    uri: "https://pbs.twimg.com/profile_images/486929358120964097/gNLINY67_400x400.png",
-                  }}
-                />
+                <Image style={css.userImage} source={{ uri: user.image }} />
                 <View key={user.id} style={css.userCardRight}>
                   <Text
                     style={{ fontSize: 18, fontWeight: "500" }}
@@ -308,9 +303,12 @@ export const Flatlistscreen = (props) => {
   useEffect(async () => {
     // StatusBar.setBarStyle("dark-content", false);
     var userstring;
-    userstring = await resultdb("select * from items", []);
+    userstring = await resultdb("select * from items where type=?", [
+      mystatus.Activetype,
+    ]);
     setItems(userstring.rows._array);
     setFilteredUsers(items);
+    // console.log(items);
   }, []);
 
   const HandlerAdd = () => {
@@ -382,8 +380,8 @@ export const Flatlistscreen = (props) => {
                   if (text === "") {
                     return setFilteredUsers(items);
                   }
-                  const filtered_users = items.filter((user) =>
-                    user.name.toLowerCase().includes(text.toLowerCase())
+                  const filtered_users = items.filter((item) =>
+                    item.name.toLowerCase().includes(text.toLowerCase())
                   );
                   setFilteredUsers(filtered_users);
                 }}

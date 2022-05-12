@@ -5,6 +5,7 @@ import {
   TextInput,
   Image,
   Picker,
+  TouchableOpacity,
   FlatList,
   TouchableHighlight,
   Alert,
@@ -71,28 +72,14 @@ export default (props) => {
       a = userstring.insertId;
       userstring = await resultdb(
         "insert into events (itemsId,event,desc,date,created,modified) values(?,?,?,?,?,?)",
-        [
-          a,
-          "Анхлан бүртгэв",
-          "desc",
-          "bdate",
-          "fdate()",
-          "mystatus.setStorename",
-        ]
+        [a, "Анхлан бүртгэв", desc, "bdate", "fdate()", "mystatus.setStorename"]
       );
       mysql = "Хадгаллаа";
     } else {
       a = selectedid;
       userstring = await resultdb(
         "insert into events (itemsId,event,desc,date,created,modified) values(?,?,?,?,?,?)",
-        [
-          a,
-          "Засвар хийсэн",
-          "desc",
-          "bdate",
-          "fdate()",
-          "mystatus.setStorename",
-        ]
+        [a, "Засвар хийсэн", desc, "bdate", "fdate()", "mystatus.setStorename"]
       );
       mysql = "Заслаа";
     }
@@ -134,7 +121,7 @@ export default (props) => {
         <View flexDirection="row" justifyContent="center">
           <Text style={css.text}>Хүйс</Text>
           <Picker
-            style={css.pick}
+            style={(css.pick, { flex: 4 })}
             selectedValue={sex}
             onValueChange={(l) => {
               setsex(l);
@@ -144,9 +131,11 @@ export default (props) => {
               <Picker.Item label={l} value={l} />
             ))}
           </Picker>
+        </View>
+        <View flexDirection="row" justifyContent="center">
           <Text style={css.text}>Тамга</Text>
           <Picker
-            style={css.pick}
+            style={{ flex: 4 }}
             defaultValue={tamga}
             onValueChange={(l) => {
               settamga(l);
@@ -158,9 +147,9 @@ export default (props) => {
           </Picker>
         </View>
         <View flexDirection="row" justifyContent="center">
-          <Text style={css.text}>Им</Text>
+          <Text style={css.text}> Им </Text>
           <Picker
-            style={{ flex: 6 }}
+            style={{ flex: 4 }}
             defaultValue={im}
             onValueChange={(l) => {
               setim(l);
@@ -205,7 +194,7 @@ export default (props) => {
           <Text style={css.text}>Нэрлэх</Text>
           <TextInput
             defaultValue={name}
-            style={css.input}
+            style={(css.input, { flex: 4 })}
             placeholder="Нэрлэнэ үү"
             onChangeText={setname}
           />
@@ -213,26 +202,17 @@ export default (props) => {
         <View flexDirection="row" justifyContent="center">
           <Text style={css.text}>Төрсөн</Text>
           <DatePicker
-            style={css.input}
+            style={(css.input, { flex: 4 })}
             date={bdate}
-            placeholder="Төрсөн"
+            placeholder="Төрсөн огноо"
             format="YYYY-MM-DD"
             confirmBtnTestID="Ok"
             cancelBtnText="No"
             onDateChange={(d) => setbdate(d)}
           />
         </View>
-        <View style={{ flex: 1 }}>
-          <TextInput
-            style={css.input}
-            defaultValue={color}
-            placeholder="Зүсэлнэ үү"
-            onChangeText={setcolor}
-          />
-        </View>
         <View flexDirection="row" justifyContent="center">
           <Text style={css.text}> Тоо </Text>
-
           <TextInput
             style={css.input}
             defualtdValue={qty}
@@ -242,13 +222,20 @@ export default (props) => {
           <TextInput style={css.text} editable={false} defaultValue={tuluv} />
         </View>
         <TextInput
-          style={css.desc}
-          defaultValue={desc}
-          multiline={true}
-          placeholder="Тайлбар бичиж болно."
-          onChangeText={setdesc}
+          style={css.input}
+          defaultValue={color}
+          placeholder="Зүсэлнэ үү"
+          onChangeText={setcolor}
         />
-        <View
+        <View style={{ flex: 1 }} flexDirection="row" justifyContent="center">
+          <TextInput
+            style={css.desc}
+            defaultValue={desc}
+            multiline={true}
+            placeholder="Тайлбар бичиж болно."
+            onChangeText={setdesc}
+          />
+          {/* <View
           style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
         >
           <Button title="Pick an image from camera roll" onPress={pickImage} />
@@ -258,19 +245,29 @@ export default (props) => {
               style={{ width: 200, height: 200 }}
             />
           )}
+        </View> */}
+          <TouchableOpacity
+            style={css.text}
+            placeholder="Зураг"
+            onPress={pickImage}
+          >
+            {image && (
+              <Image
+                source={{ uri: image }}
+                style={{ width: 200, height: 200 }}
+              />
+            )}
+          </TouchableOpacity>
         </View>
-        {/* <Image
-          style={{
-            flex: 1,
-            width: "50%",
-            height: "30%",
-            justifyContent: "center",
-            resizeMode: "stretch",
-          }}
-          source={{ uri: selected.image }}
-        /> */}
       </View>
-      <View style={{ flex: 1, flexDirection: "row", padding: 5 }}>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "row",
+          padding: 5,
+          justifyContent: "center",
+        }}
+      >
         <Button style={css.button} onPress={HandlerSave} title="Хадгалах" />
         <Button style={css.button} onPress={HandlerBack} title=" Буцах " />
       </View>
@@ -302,9 +299,9 @@ const css = StyleSheet.create({
     justifyContent: "flex-end",
   },
   desc: {
-    flex: 1,
+    // flex: 1,
     fontSize: 12,
-    padding: 1,
+    padding: 5,
     marginHorizontal: 5,
     marginVertical: 1,
     justifyContent: "space-between",
@@ -315,7 +312,6 @@ const css = StyleSheet.create({
     // height: 100,
   },
   input: {
-    flex: 4,
     fontSize: 14,
     padding: 5,
     marginHorizontal: 5,
@@ -330,6 +326,6 @@ const css = StyleSheet.create({
     marginHorizontal: 40,
     marginVertical: 40,
     justifyContent: "center",
-    padding: 5,
+    padding: 15,
   },
 });

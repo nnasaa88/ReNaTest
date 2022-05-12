@@ -9,6 +9,7 @@ import SplashScreen from "./SplashScreen";
 import Searchdb from "../../database/Search";
 import DetailScreen from "./Detail";
 import EventScreen from "../../database/Event";
+import ConfigScreen from "./Config";
 
 import Mycontext from "../../context/Mycontext";
 // import DrawerScreen from "./DrawerNav";
@@ -39,6 +40,7 @@ export default () => {
       <Stack.Screen name="Searchdb" component={Searchdb} />
       <Stack.Screen name="Detail" component={DetailScreen} />
       <Stack.Screen name="Event" component={EventScreen} />
+      <Stack.Screen name="Config" component={ConfigScreen} />
     </Stack.Navigator>
   );
 };
