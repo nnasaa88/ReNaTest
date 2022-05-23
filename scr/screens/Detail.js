@@ -3,7 +3,7 @@ import {
   Text,
   View,
   TextInput,
-  Image,
+  ImageBackground,
   Picker,
   TouchableOpacity,
   FlatList,
@@ -14,6 +14,7 @@ import React, { useState, useContext } from "react";
 import DatePicker from "react-native-datepicker";
 import { Button, Icon } from "react-native-elements";
 import * as ImagePicker from "expo-image-picker";
+// import { InputText } from "react-native-input-list";
 
 import Mycontext, { fdate } from "../../context/Mycontext";
 import { getdb, resultdb } from "../../database/db";
@@ -96,7 +97,7 @@ export default (props) => {
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 1,
+      quality: 0.8,
     });
 
     console.log(result);
@@ -119,9 +120,9 @@ export default (props) => {
           {mystatus.Activetype} + мэдээлэл оруулж байна{" "}
         </Text>
         <View flexDirection="row" justifyContent="center">
-          <Text style={css.text}>Хүйс</Text>
+          <Text style={[css.text, { flex: 1 }]}>Хүйс тамга</Text>
           <Picker
-            style={(css.pick, { flex: 4 })}
+            style={(css.pick, { flex: 2 })}
             selectedValue={sex}
             onValueChange={(l) => {
               setsex(l);
@@ -131,11 +132,8 @@ export default (props) => {
               <Picker.Item label={l} value={l} />
             ))}
           </Picker>
-        </View>
-        <View flexDirection="row" justifyContent="center">
-          <Text style={css.text}>Тамга</Text>
           <Picker
-            style={{ flex: 4 }}
+            style={{ flex: 3 }}
             defaultValue={tamga}
             onValueChange={(l) => {
               settamga(l);
@@ -147,9 +145,9 @@ export default (props) => {
           </Picker>
         </View>
         <View flexDirection="row" justifyContent="center">
-          <Text style={css.text}> Им </Text>
+          <Text style={css.text}>Им</Text>
           <Picker
-            style={{ flex: 4 }}
+            style={{ flex: 5 }}
             defaultValue={im}
             onValueChange={(l) => {
               setim(l);
@@ -160,10 +158,12 @@ export default (props) => {
             ))}
           </Picker>
         </View>
+
         <View flexDirection="row" justifyContent="center">
           <Text style={css.text}>Малчин</Text>
+          {/* <InputText ref="thirdInput" keyboardType="numeric" label="Numeric" /> */}
           <Picker
-            style={{ flex: 4 }}
+            style={{ flex: 5 }}
             defaultValue={helder}
             placeholder="Малчин нь"
             onValueChange={(l) => {
@@ -178,7 +178,7 @@ export default (props) => {
         <View flexDirection="row" justifyContent="center">
           <Text style={css.text}>Сүрэг</Text>
           <Picker
-            style={{ flex: 4 }}
+            style={{ flex: 5 }}
             defaultValue={mygroup}
             placeholder="Сүрэг байдаг уу"
             onValueChange={(l) => {
@@ -194,7 +194,7 @@ export default (props) => {
           <Text style={css.text}>Нэрлэх</Text>
           <TextInput
             defaultValue={name}
-            style={(css.input, { flex: 4 })}
+            style={(css.input, { flex: 5 })}
             placeholder="Нэрлэнэ үү"
             onChangeText={setname}
           />
@@ -202,7 +202,7 @@ export default (props) => {
         <View flexDirection="row" justifyContent="center">
           <Text style={css.text}>Төрсөн</Text>
           <DatePicker
-            style={(css.input, { flex: 4 })}
+            style={(css.input, { flex: 5 })}
             date={bdate}
             placeholder="Төрсөн огноо"
             format="YYYY-MM-DD"
@@ -212,14 +212,19 @@ export default (props) => {
           />
         </View>
         <View flexDirection="row" justifyContent="center">
-          <Text style={css.text}> Тоо </Text>
+          <Text style={[css.text, { flex: 1 }]}> Тоо </Text>
           <TextInput
-            style={css.input}
+            style={[css.input, { flex: 1 }]}
             defualtdValue={qty}
             placeholder="Тоо, ш"
             onChangeText={setqty}
           />
-          <TextInput style={css.text} editable={false} defaultValue={tuluv} />
+          <Text style={[css.text, { flex: 1 }]}> Төлөв </Text>
+          <TextInput
+            style={[css.text, { flex: 2 }]}
+            editable={false}
+            defaultValue={tuluv}
+          />
         </View>
         <TextInput
           style={css.input}
@@ -227,36 +232,41 @@ export default (props) => {
           placeholder="Зүсэлнэ үү"
           onChangeText={setcolor}
         />
+        <TextInput
+          style={css.desc}
+          defaultValue={desc}
+          multiline={true}
+          placeholder="Тайлбар бичиж болно."
+          onChangeText={setdesc}
+        />
         <View style={{ flex: 1 }} flexDirection="row" justifyContent="center">
-          <TextInput
-            style={css.desc}
-            defaultValue={desc}
-            multiline={true}
-            placeholder="Тайлбар бичиж болно."
-            onChangeText={setdesc}
-          />
-          {/* <View
-          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-        >
-          <Button title="Pick an image from camera roll" onPress={pickImage} />
-          {image && (
-            <Image
+          <View
+            style={{ flex: 1 }}
+            flexDirection="column"
+            justifyContent="center"
+          >
+            <Button
+              style={{ marginLeft: 15 }}
+              onPress={pickImage}
+              title="Зураг авах"
+            />
+            <Button
+              style={{ marginLeft: 15 }}
+              onPress={pickImage}
+              title="Зураг татах"
+            />
+          </View>
+          <TouchableOpacity
+            style={[
+              css.text,
+              { flex: 2, justifyContent: "center", alignItems: "center" },
+            ]}
+            // onPress={pickImage}
+          >
+            <ImageBackground
               source={{ uri: image }}
               style={{ width: 200, height: 200 }}
-            />
-          )}
-        </View> */}
-          <TouchableOpacity
-            style={css.text}
-            placeholder="Зураг"
-            onPress={pickImage}
-          >
-            {image && (
-              <Image
-                source={{ uri: image }}
-                style={{ width: 200, height: 200 }}
-              />
-            )}
+            ></ImageBackground>
           </TouchableOpacity>
         </View>
       </View>
@@ -264,12 +274,22 @@ export default (props) => {
         style={{
           flex: 1,
           flexDirection: "row",
-          padding: 5,
-          justifyContent: "center",
+          padding: 1,
+          justifyContent: "space-between",
+          marginRight: 35,
+          marginLeft: 35,
         }}
       >
-        <Button style={css.button} onPress={HandlerSave} title="Хадгалах" />
-        <Button style={css.button} onPress={HandlerBack} title=" Буцах " />
+        <Button
+          style={[css.button, { marginRight: 15 }]}
+          onPress={HandlerSave}
+          title="Хадгалах"
+        />
+        <Button
+          style={[css.button, { marginLeft: 15 }]}
+          onPress={HandlerBack}
+          title=" Буцах "
+        />
       </View>
     </View>
   );
