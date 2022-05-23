@@ -19,7 +19,7 @@ export const Mystore = (props) => {
   ]);
   const [Tamga, setTamga] = useState(["", "Сар", "Нар"]);
   const [Helder, setHelder] = useState(["", "Dorj", "Dondog"]);
-  const [Mygroup, setMygroup] = useState(["", "1", "2"]);
+  const [Mygroup, setMygroup] = useState(["", "Хүрэн", "Хар азарга"]);
   const [Event, setEvent] = useState("");
 
   return (

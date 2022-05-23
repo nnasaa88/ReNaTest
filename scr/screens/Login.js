@@ -106,7 +106,7 @@ export default function (props) {
       <View style={css.Button}>
         <Button
           onPress={() => {
-            getdb("select * from items");
+            getdb("select * from items where id=11");
           }}
           title="DB"
         />

@@ -3,7 +3,7 @@ import {
   Text,
   View,
   TextInput,
-  ImageBackground,
+  Image,
   Picker,
   TouchableOpacity,
   FlatList,
@@ -22,9 +22,7 @@ import { getdb, resultdb } from "../../database/db";
 export default (props) => {
   var selected = props.route.params.item;
   var selectedid = 0;
-  {
-    selected.id > 0 ? (selectedid = selected.id) : (selectedid = 0);
-  }
+
   const mystatus = useContext(Mycontext);
   const [sex, setsex] = useState(selected.sex);
   const [im, setim] = useState(selected.im);
@@ -35,9 +33,12 @@ export default (props) => {
   const [desc, setdesc] = useState(selected.desc);
   const [helder, sethelder] = useState(selected.helder);
   const [mygroup, setmygroup] = useState(selected.mygroup);
-  const [bdate, setbdate] = useState(selected.bdate);
-  const [tuluv, settuluv] = useState(selected.tuluv);
+  const [bdate, setbdate] = useState(selected.start);
+  const [tuluv, settuluv] = useState(selected.status);
   const [qty, setqty] = useState(selected.qty);
+  {
+    selected.id > 0 ? (selectedid = selected.id) : (selectedid = 0);
+  }
 
   const HandlerBack = async () => {
     props.navigation.goBack();
@@ -91,14 +92,24 @@ export default (props) => {
     Alert.alert(mysql);
     props.navigation.goBack();
   };
-  const pickImage = async () => {
+  const pickImage = async (val) => {
     // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 0.8,
-    });
+    let result;
+    if (val === 1) {
+      result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 0.8,
+      });
+    } else {
+      result = await ImagePicker.launchCameraAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 0.8,
+      });
+    }
 
     console.log(result);
 
@@ -108,7 +119,7 @@ export default (props) => {
   };
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ flex: 8 }}>
+      <View style={{ flex: 12 }}>
         <Text
           style={{
             fontSize: 16,
@@ -117,7 +128,7 @@ export default (props) => {
             fontWeight: "bold",
           }}
         >
-          {mystatus.Activetype} + мэдээлэл оруулж байна{" "}
+          {mystatus.Activetype} ({selectedid}) мэдээлэл оруулж байна{" "}
         </Text>
         <View flexDirection="row" justifyContent="center">
           <Text style={[css.text, { flex: 1 }]}>Хүйс тамга</Text>
@@ -134,7 +145,7 @@ export default (props) => {
           </Picker>
           <Picker
             style={{ flex: 3 }}
-            defaultValue={tamga}
+            selectedValue={tamga}
             onValueChange={(l) => {
               settamga(l);
             }}
@@ -148,7 +159,7 @@ export default (props) => {
           <Text style={css.text}>Им</Text>
           <Picker
             style={{ flex: 5 }}
-            defaultValue={im}
+            selectedValue={im}
             onValueChange={(l) => {
               setim(l);
             }}
@@ -164,7 +175,7 @@ export default (props) => {
           {/* <InputText ref="thirdInput" keyboardType="numeric" label="Numeric" /> */}
           <Picker
             style={{ flex: 5 }}
-            defaultValue={helder}
+            selectedValue={helder}
             placeholder="Малчин нь"
             onValueChange={(l) => {
               sethelder(l);
@@ -179,7 +190,7 @@ export default (props) => {
           <Text style={css.text}>Сүрэг</Text>
           <Picker
             style={{ flex: 5 }}
-            defaultValue={mygroup}
+            selectedValue={mygroup}
             placeholder="Сүрэг байдаг уу"
             onValueChange={(l) => {
               setmygroup(l);
@@ -215,7 +226,8 @@ export default (props) => {
           <Text style={[css.text, { flex: 1 }]}> Тоо </Text>
           <TextInput
             style={[css.input, { flex: 1 }]}
-            defualtdValue={qty}
+            keyboardType="numeric"
+            value={qty.toString()}
             placeholder="Тоо, ш"
             onChangeText={setqty}
           />
@@ -223,7 +235,7 @@ export default (props) => {
           <TextInput
             style={[css.text, { flex: 2 }]}
             editable={false}
-            defaultValue={tuluv}
+            defaultValue={tuluv === null ? "Dtgui" : { tuluv }}
           />
         </View>
         <TextInput
@@ -241,33 +253,37 @@ export default (props) => {
         />
         <View style={{ flex: 1 }} flexDirection="row" justifyContent="center">
           <View
-            style={{ flex: 1 }}
+            style={{
+              flex: 1,
+              marginTop: 20,
+              marginBottom: 20,
+              paddingHorizontal: 15,
+            }}
             flexDirection="column"
-            justifyContent="center"
+            justifyContent="space-between"
           >
             <Button
-              style={{ marginLeft: 15 }}
-              onPress={pickImage}
+              style={{
+                marginLeft: 15,
+                borderRadius: 20,
+              }}
+              onPress={() => {
+                pickImage(0);
+              }}
               title="Зураг авах"
             />
             <Button
               style={{ marginLeft: 15 }}
-              onPress={pickImage}
+              onPress={() => {
+                pickImage(1);
+              }}
               title="Зураг татах"
             />
           </View>
-          <TouchableOpacity
-            style={[
-              css.text,
-              { flex: 2, justifyContent: "center", alignItems: "center" },
-            ]}
-            // onPress={pickImage}
-          >
-            <ImageBackground
-              source={{ uri: image }}
-              style={{ width: 200, height: 200 }}
-            ></ImageBackground>
-          </TouchableOpacity>
+          <Image
+            source={{ uri: image }}
+            style={{ flex: 3, width: 200, height: 200, padding: 5 }}
+          />
         </View>
       </View>
       <View
