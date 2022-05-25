@@ -550,23 +550,30 @@ export const Flatlistscreen = (props) => {
             onChangeText={(text) => {
               setSearchText2(text);
               if (text === "") {
+                setmycount(filteredUsers1.length);
                 return setFilteredUsers(filteredUsers1);
               }
               switch (filterfield2) {
                 case "name":
-                  filtered_users = filteredUsers1.filter((item) =>
-                    item.name.toLowerCase().includes(text.toLowerCase())
-                  );
+                  filtered_users = filteredUsers1.filter((item) => {
+                    if (item.desc !== null) {
+                      item.name.toLowerCase().includes(text.toLowerCase());
+                    } else item;
+                  });
                   break;
                 case "color":
-                  filtered_users = filteredUsers1.filter((item) =>
-                    item.color.toLowerCase().includes(text.toLowerCase())
-                  );
+                  filtered_users = filteredUsers1.filter((item) => {
+                    if (item.color !== null) {
+                      item.desc.toLowerCase().includes(text.toLowerCase());
+                    } else item;
+                  });
                   break;
                 case "desc":
-                  filtered_users = filteredUsers1.filter((item) =>
-                    item.desc.toLowerCase().includes(text.toLowerCase())
-                  );
+                  filtered_users = filteredUsers1.filter((item) => {
+                    if (item.desc !== null) {
+                      item.desc.toLowerCase().includes(text.toLowerCase());
+                    } else item;
+                  });
                   break;
               }
               setFilteredUsers(filtered_users);
@@ -583,6 +590,7 @@ export const Flatlistscreen = (props) => {
               onPress={() => {
                 setSearchText2("");
                 setFilteredUsers(filteredUsers1);
+                setmycount(filteredUsers1.length);
               }}
             >
               <EvilIcons name="close" size={24} color="#333" />
