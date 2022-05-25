@@ -106,7 +106,12 @@ export default function (props) {
       <View style={css.Button}>
         <Button
           onPress={() => {
-            getdb("select * from items where status='Борлуулсан'");
+            // getdb("insert into config (mname, value) values (?, ?)", [
+            //   "user",
+            //   "admin",
+            // ]);
+            // getdb("drop table config");
+            getdb("select * from config");
             // getdb("update items set status='Борлуулсан' where id=12");
           }}
           title="DB"

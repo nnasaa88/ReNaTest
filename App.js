@@ -25,9 +25,9 @@ export default function App() {
       .then((result) => console.log("Event db бэлдлээ"))
       .catch((err) => console.log("Event асуудал гарлаа." + err.message));
     initdb(
-      "create table if not exists configs (id integer primary key not null, ename text,mname text,value text,value1 text,value2 text,Desc text,isback text);"
+      "create table if not exists config (id integer primary key not null, ename text,mname text,value text,value1 text,value2 text,value3 text,Desc text,isback text,created text,user text);"
     )
-      .then((result) => console.log("Event db бэлдлээ"))
+      .then((result) => console.log("config db бэлдлээ"))
       .catch((err) => console.log("Event асуудал гарлаа." + err.message));
   }, []);
 

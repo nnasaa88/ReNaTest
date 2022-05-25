@@ -206,7 +206,7 @@ export function Mymodal(props) {
               alignItems="center"
             >
               <Picker
-                style={css.pick}
+                style={[css.pick, { flx: 2 }]}
                 selectedValue={mystatus.Event}
                 onValueChange={(l) => {
                   mystatus.setEvent(l);
@@ -738,7 +738,7 @@ function UserCard({ item }) {
   );
 }
 
-const css = StyleSheet.create({
+export const css = StyleSheet.create({
   container: {
     // flex: 1,
     paddingHorizontal: 3,
@@ -758,10 +758,15 @@ const css = StyleSheet.create({
     alignItems: "center",
   },
   input: {
-    // flex: 1,
-    paddingHorizontal: 3,
-    height: 40,
-    fontSize: 18,
+    fontSize: 14,
+    padding: 5,
+    marginHorizontal: 5,
+    marginVertical: 1,
+    justifyContent: "space-between",
+    textAlign: "left",
+    borderWidth: 1,
+    borderColor: "#8987C1",
+    borderBottomWidth: 5,
   },
   userImage: {
     width: 40,
@@ -774,11 +779,11 @@ const css = StyleSheet.create({
     justifyContent: "center",
   },
   messageBoxText: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "500",
   },
   text: {
-    fontSize: 18,
+    fontSize: 12,
     padding: 3,
     marginHorizontal: 5,
     marginVertical: 1,
@@ -807,13 +812,15 @@ const css = StyleSheet.create({
     elevation: 5,
   },
   pick: {
-    // fontSize: 12,
-    // padding: 10,
-    flex: 2,
-    // width: "70%",
     textAlign: "center",
     borderWidth: 5,
     borderColor: "#8987C1",
     justifyContent: "flex-end",
+  },
+  button: {
+    marginHorizontal: 30,
+    marginVertical: 40,
+    justifyContent: "center",
+    padding: 5,
   },
 });

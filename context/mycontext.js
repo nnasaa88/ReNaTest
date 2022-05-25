@@ -6,7 +6,7 @@ import { Getdata } from "../scr/screens/Signupscreen";
 export const Mystore = (props) => {
   const [isLoggedIn, setisLoggedIn] = useState(false);
   const [Storemobile, setStoremobile] = useState("");
-  const [Storename, setStorename] = useState("Username");
+  const [Storename, setStorename] = useState("admin");
   const [Storepass, setStorepass] = useState("dddddddz");
   const [IsLoading, setIsLoading] = useState(true);
   const [Userinfo, setUserinfo] = useState({});

@@ -159,7 +159,7 @@ export default (props) => {
           </Picker>
         </View>
         <View flexDirection="row" justifyContent="center">
-          <Text style={css.text}>Им</Text>
+          <Text style={[css.text, { flex: 1 }]}>Им</Text>
           <Picker
             style={{ flex: 5 }}
             selectedValue={im}
@@ -174,7 +174,7 @@ export default (props) => {
         </View>
 
         <View flexDirection="row" justifyContent="center">
-          <Text style={css.text}>Малчин</Text>
+          <Text style={[css.text, { flex: 1 }]}>Малчин</Text>
           <Picker
             style={{ flex: 5 }}
             selectedValue={helder}
@@ -189,7 +189,7 @@ export default (props) => {
           </Picker>
         </View>
         <View flexDirection="row" justifyContent="center">
-          <Text style={css.text}>Сүрэг</Text>
+          <Text style={[css.text, { flex: 1 }]}>Сүрэг</Text>
           <Picker
             style={{ flex: 5 }}
             selectedValue={mygroup}
@@ -204,7 +204,7 @@ export default (props) => {
           </Picker>
         </View>
         <View flexDirection="row" justifyContent="center">
-          <Text style={css.text}>Нэрлэх</Text>
+          <Text style={[css.text, { flex: 1 }]}>Нэрлэх</Text>
           <TextInput
             defaultValue={name}
             style={(css.input, { flex: 5 })}
@@ -213,7 +213,7 @@ export default (props) => {
           />
         </View>
         <View flexDirection="row" justifyContent="center">
-          <Text style={css.text}>Төрсөн</Text>
+          <Text style={[css.text, { flex: 1 }]}>Төрсөн</Text>
           <DatePicker
             style={(css.input, { flex: 5 })}
             date={bdate}
@@ -322,9 +322,8 @@ export default (props) => {
   );
 };
 
-const css = StyleSheet.create({
+export const css = StyleSheet.create({
   text: {
-    flex: 1,
     fontSize: 12,
     padding: 3,
     marginHorizontal: 5,
@@ -336,17 +335,12 @@ const css = StyleSheet.create({
     borderBottomWidth: 5,
   },
   pick: {
-    // fontSize: 12,
-    // padding: 10,
-    flex: 2,
-    // width: "70%",
     textAlign: "center",
     borderWidth: 5,
     borderColor: "#8987C1",
     justifyContent: "flex-end",
   },
   desc: {
-    // flex: 1,
     fontSize: 12,
     padding: 5,
     marginHorizontal: 5,
