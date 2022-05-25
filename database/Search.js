@@ -72,7 +72,7 @@ export default function SearchScreen1(props) {
                 { name: "Нэр", value: "color" },
                 { name: "Им", value: "im" },
                 { name: "Тамга", value: "tamga" },
-                { name: "Т/бар", value: "desc" },
+                { name: "Малчин", value: "helder" },
               ].map((l) => (
                 <Picker.Item label={l.name} value={l.value} />
               ))}
@@ -292,13 +292,20 @@ export function Mymodal1(props) {
 export const Flatlistscreen = (props) => {
   const mystatus = useContext(Mycontext);
   const [searchText, setSearchText] = useState("");
+  const [searchText1, setSearchText1] = useState("");
+  const [searchText2, setSearchText2] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
-  const [filterfield, setFilterfield] = useState("color");
+  const [filterfield, setfilterfield] = useState("status");
+  const [filterfield1, setfilterfield1] = useState("helder");
+  const [filterfield2, setfilterfield2] = useState("name");
   const [modalbody, setmodalbody] = useState("Body msg");
   const [rnmodalvisible, setrnmodalvisible] = useState(false);
   const [rnmodalvisible1, setrnmodalvisible1] = useState(false);
   const [inimage, setinimage] = useState("Zurag url");
   const [items, setItems] = useState([]);
+  const [myarray, setmyarray] = useState([]);
+  const [myarray1, setmyarray1] = useState([]);
+  var filtered_users = ["sdsd", "fdggfh"];
 
   useEffect(async () => {
     // StatusBar.setBarStyle("dark-content", false);
@@ -308,7 +315,6 @@ export const Flatlistscreen = (props) => {
     ]);
     setItems(userstring.rows._array);
     setFilteredUsers(items);
-    // console.log(items);
   }, []);
 
   const HandlerAdd = () => {
@@ -320,89 +326,233 @@ export const Flatlistscreen = (props) => {
   const handleModal1 = (name) => {
     setrnmodalvisible1(true);
   };
-
+  const refreshFlat = (f1, v1, f2, v2) => {
+    console.log(`${f1} - ${v1} , ${f2} - ${v2}`);
+    switch (f1) {
+      case "status":
+        if (v1 !== "?") {
+          console.log(`${f1} status ees ${v1} , ${f2} - ${v2}`);
+          filtered_users = items.filter((item) => item.status === v1);
+        } else {
+          filtered_users = items;
+        }
+        break;
+      case "im":
+        if (v1 !== "?") {
+          console.log(`${f1} status ees ${v1} , ${f2} - ${v2}`);
+          filtered_users = items.filter((item) => item.im === v1);
+        } else {
+          filtered_users = items;
+        }
+        break;
+      case "tamga":
+        if (v1 !== "?") {
+          console.log(`${f1} status ees ${v1} , ${f2} - ${v2}`);
+          filtered_users = items.filter((item) => item.tamga === v1);
+        } else {
+          filtered_users = items;
+        }
+        break;
+      case "helder":
+        if (v1 !== "?") {
+          console.log(`${f1} status ees ${v1} , ${f2} - ${v2}`);
+          filtered_users = items.filter((item) => item.helder === v1);
+        } else {
+          filtered_users = items;
+        }
+        break;
+    }
+    switch (f2) {
+      case "status":
+        if (v2 !== "?") {
+          console.log(`${f1} status ees ${v1} , ${f2} - ${v2}`);
+          filtered_users = filtered_users.filter((item) => item.status === v2);
+        } else {
+          filtered_users = filtered_users;
+        }
+        break;
+    }
+    setFilteredUsers(filtered_users);
+    console.log(filtered_users);
+  };
   return (
-    <View style={{ flex: 1, paddingTop: 5 }}>
-      <View style={css.container}>
-        <View flexDirection="row" justifyContent="center">
-          <TouchableOpacity
-            onPress={() => {
-              props.navigation.navigate("Event", { item: {} });
+    <View style={[css.container, { flex: 1 }]}>
+      <View>
+        <Mymodal
+          seemodal={rnmodalvisible}
+          hidemodal={() => setrnmodalvisible(false)}
+          modalbody={modalbody}
+        />
+        <Mymodal1
+          seemodal={rnmodalvisible1}
+          hidemodal={() => setrnmodalvisible1(false)}
+          outimage={inimage}
+        />
+      </View>
+      <View style={{ flex: 1 }} flexDirection="row" justifyContent="center">
+        <TouchableOpacity
+          onPress={() => {
+            props.navigation.navigate("Event", { item: {} });
+          }}
+        >
+          <Icon1 name="zoom-in" style={{ marginLeft: 14 }} size={34} />
+        </TouchableOpacity>
+        <Text style={css.text}>{mystatus.Activetype} </Text>
+        <Button onPress={HandlerAdd} title="байхгүй бол бүртгээрэй" />
+      </View>
+      <View style={[css.searchView, { flex: 3 }]}>
+        <View
+          style={(css.inputView, { flex: 1 })}
+          flexDirection="row"
+          justifyContent="center"
+        >
+          <Picker
+            style={{ flex: 1 }}
+            selectedValue={filterfield}
+            onValueChange={(l) => {
+              setfilterfield(l);
+              switch (l) {
+                case "status":
+                  setmyarray(mystatus.Tuluv);
+                  return;
+                case "im":
+                  setmyarray(mystatus.Im);
+                  return;
+                case "helder":
+                  setmyarray(mystatus.Helder);
+                  return;
+                case "tamga":
+                  setmyarray(mystatus.Tamga);
+                  return;
+              }
             }}
           >
-            <Icon1 name="zoom-in" style={{ marginLeft: 14 }} size={34} />
-          </TouchableOpacity>
-          <Text style={css.text}>{mystatus.Activetype} </Text>
-          <Button onPress={HandlerAdd} title="байхгүй бол бүртгээрэй" />
+            {[
+              { name: "Төлөв", value: "status" },
+              { name: "Им", value: "im" },
+              { name: "Тамга", value: "tamga" },
+              { name: "Малчин", value: "helder" },
+            ].map((l) => (
+              <Picker.Item label={l.name} value={l.value} />
+            ))}
+          </Picker>
+          <Picker
+            style={{ flex: 2 }}
+            selectedValue={searchText}
+            onValueChange={(l) => {
+              setSearchText(l);
+              refreshFlat(filterfield, l, filterfield1, searchText1);
+            }}
+          >
+            {myarray.map((l) => (
+              <Picker.Item label={l} value={l} />
+            ))}
+          </Picker>
         </View>
-        <View>
-          <Mymodal
-            seemodal={rnmodalvisible}
-            hidemodal={() => setrnmodalvisible(false)}
-            modalbody={modalbody}
+        <View
+          style={(css.inputView, { flex: 1 })}
+          flexDirection="row"
+          justifyContent="center"
+        >
+          <Picker
+            style={{ flex: 1 }}
+            selectedValue={filterfield1}
+            onValueChange={(l) => {
+              setfilterfield1(l);
+              switch (l) {
+                case "status":
+                  setmyarray1(mystatus.Tuluv);
+                  return;
+                case "im":
+                  setmyarray1(mystatus.Im);
+                  return;
+                case "helder":
+                  setmyarray1(mystatus.Helder);
+                  return;
+                case "tamga":
+                  setmyarray1(mystatus.Tamga);
+                  return;
+              }
+            }}
+          >
+            {[
+              { name: "Төлөв", value: "status" },
+              { name: "Им", value: "im" },
+              { name: "Тамга", value: "tamga" },
+              { name: "Малчин", value: "helder" },
+            ].map((l) => (
+              <Picker.Item label={l.name} value={l.value} />
+            ))}
+          </Picker>
+          <Picker
+            style={{ flex: 2 }}
+            selectedValue={searchText1}
+            onValueChange={(l) => {
+              setSearchText1(l);
+              refreshFlat(filterfield, searchText, filterfield1, l);
+            }}
+          >
+            {myarray1.map((l) => (
+              <Picker.Item label={l} value={l} />
+            ))}
+          </Picker>
+        </View>
+        <View
+          style={[css.inputView, { flex: 1 }]}
+          flexDirection="row"
+          justifyContent="center"
+        >
+          <Picker
+            style={{ flex: 1 }}
+            selectedValue={filterfield2}
+            onValueChange={(l) => {
+              setfilterfield2(l);
+            }}
+          >
+            {[
+              { name: "Нэр", value: "name" },
+              { name: "Зүс", value: "color" },
+              { name: "Т.бар", value: "desc" },
+            ].map((l) => (
+              <Picker.Item label={l.name} value={l.value} />
+            ))}
+          </Picker>
+          <TextInput
+            defaultValue={searchText2}
+            style={[css.input, { flex: 2 }]}
+            placeholder="Хайя"
+            placeholderTextColor="blue"
+            textContentType="name"
+            onChangeText={(text) => {
+              setSearchText2(text);
+              if (text === "") {
+                return setFilteredUsers(items);
+              }
+              const filtered_users = items.filter((item) =>
+                item.name.toLowerCase().includes(text.toLowerCase())
+              );
+              setFilteredUsers(filtered_users);
+            }}
+            returnKeyType="search"
           />
-          <Mymodal1
-            seemodal={rnmodalvisible1}
-            hidemodal={() => setrnmodalvisible1(false)}
-            outimage={inimage}
-          />
-          <View style={css.searchView}>
-            <View
-              style={css.inputView}
-              flexDirection="row"
-              justifyContent="center"
+          {searchText2.length === 0 ? (
+            <TouchableOpacity>
+              <Icon1 name="search" size={24} color="#333" />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              onPress={() => {
+                setSearchText2("");
+                setFilteredUsers(items);
+              }}
             >
-              <Picker
-                style={{ flex: 1 }}
-                selectedValue={filterfield}
-                onValueChange={(l) => {
-                  setFilterfield(l.value);
-                }}
-              >
-                {[
-                  { name: "Нэр", value: "color" },
-                  { name: "Им", value: "im" },
-                  { name: "Тамга", value: "tamga" },
-                  { name: "Т/бар", value: "desc" },
-                ].map((l) => (
-                  <Picker.Item label={l.name} value={l.value} />
-                ))}
-              </Picker>
-              <TextInput
-                style={{ flex: 6 }}
-                defaultValue={searchText}
-                style={css.input}
-                placeholder="Хайя"
-                placeholderTextColor="blue"
-                textContentType="name"
-                onChangeText={(text) => {
-                  setSearchText(text);
-                  if (text === "") {
-                    return setFilteredUsers(items);
-                  }
-                  const filtered_users = items.filter((item) =>
-                    item.name.toLowerCase().includes(text.toLowerCase())
-                  );
-                  setFilteredUsers(filtered_users);
-                }}
-                returnKeyType="search"
-              />
-              {searchText.length === 0 ? (
-                <TouchableOpacity>
-                  <Icon1 name="search" size={24} color="#333" />
-                </TouchableOpacity>
-              ) : (
-                <TouchableOpacity
-                  onPress={() => {
-                    setSearchText("");
-                    setFilteredUsers(items);
-                  }}
-                >
-                  <EvilIcons name="close" size={24} color="#333" />
-                </TouchableOpacity>
-              )}
-            </View>
-          </View>
+              <EvilIcons name="close" size={24} color="#333" />
+            </TouchableOpacity>
+          )}
+        </View>
+      </View>
+      <View style={{ flex: 10 }}>
+        {filteredUsers.length > 0 ? (
           <FlatList
             ItemSeparatorComponent={
               Platform.OS !== "android" &&
@@ -412,10 +562,8 @@ export const Flatlistscreen = (props) => {
                 />
               ))
             }
-            // data={items}
             data={filteredUsers}
-            key={items.id}
-            // renderItem={UserCard}
+            keyExtractor={(filteredUser) => filteredUser.id}
             renderItem={({ item, index, separators }) => (
               <View
                 style={{
@@ -481,7 +629,15 @@ export const Flatlistscreen = (props) => {
               </View>
             )}
           />
-        </View>
+        ) : searchText.length > 0 ? (
+          <View style={css.messageBox}>
+            <Text style={css.messageBoxText}>Хайлт олдсонгүй</Text>
+          </View>
+        ) : (
+          <View style={css.messageBox}>
+            <Text style={css.messageBoxText}>Хайх талбар,утгаа оруулна уу</Text>
+          </View>
+        )}
       </View>
     </View>
   );
@@ -537,47 +693,33 @@ function UserCard({ item }) {
 
 const css = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingHorizontal: 12,
-    paddingTop: 5,
+    // flex: 1,
+    paddingHorizontal: 3,
+    paddingTop: 1,
   },
   searchView: {
-    paddingTop: 10,
-    display: "flex",
-    flexDirection: "row",
+    paddingTop: 1,
+    backgroundColor: "#dfe4ea",
   },
   inputView: {
-    flex: 1,
-    height: 40,
+    height: 10,
     backgroundColor: "#dfe4ea",
-    paddingHorizontal: 10,
-    borderRadius: 6,
+    paddingHorizontal: 3,
+    borderRadius: 16,
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
   },
   input: {
-    flex: 1,
+    // flex: 1,
+    paddingHorizontal: 3,
     height: 40,
     fontSize: 18,
-  },
-  userCard: {
-    backgroundColor: "#fafafa",
-    paddingVertical: 6,
-    paddingHorizontal: 6,
-    borderRadius: 10,
-    marginTop: 10,
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
   },
   userImage: {
     width: 40,
     height: 40,
     borderRadius: 100,
-  },
-  userCardRight: {
-    paddingHorizontal: 10,
   },
   messageBox: {
     flex: 1,

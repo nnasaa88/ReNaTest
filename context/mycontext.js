@@ -13,13 +13,14 @@ export const Mystore = (props) => {
   const [Activetype, setActivetype] = useState("");
 
   const [Im, setIm] = useState([
-    "",
+    "?",
     "Баруун тэвхэр Зүүн онь",
     "Баруун Зүүн тэвхэр",
   ]);
-  const [Tamga, setTamga] = useState(["", "Сар", "Нар"]);
-  const [Helder, setHelder] = useState(["", "Dorj", "Dondog"]);
-  const [Mygroup, setMygroup] = useState(["", "Хүрэн", "Хар азарга"]);
+  const [Tamga, setTamga] = useState(["?", "Сар", "Нар"]);
+  const [Helder, setHelder] = useState(["?", "Dorj", "Dondog"]);
+  const [Mygroup, setMygroup] = useState(["?", "Хүрэн", "Хар азарга"]);
+  const [Tuluv, setTuluv] = useState(["Амьд", "Борлуулсан"]);
   const [Event, setEvent] = useState("");
 
   return (
@@ -46,6 +47,8 @@ export const Mystore = (props) => {
         Helder,
         setHelder,
         Mygroup,
+        Tuluv,
+        setTuluv,
         Event,
         setEvent,
       }}

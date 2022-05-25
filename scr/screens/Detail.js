@@ -27,24 +27,31 @@ export default (props) => {
   const [sex, setsex] = useState(selected.sex);
   const [im, setim] = useState(selected.im);
   const [tamga, settamga] = useState(selected.tamga);
-  const [name, setname] = useState(selected.name);
+  const [name, setname] = useState(selected.id > 0 ? selected.name : "");
   const [color, setcolor] = useState(selected.color);
   const [image, setimage] = useState(selected.image);
   const [desc, setdesc] = useState(selected.desc);
   const [helder, sethelder] = useState(selected.helder);
   const [mygroup, setmygroup] = useState(selected.mygroup);
-  const [bdate, setbdate] = useState(selected.start);
-  const [tuluv, settuluv] = useState(selected.status);
-  const [qty, setqty] = useState(selected.qty);
+  const [bdate, setbdate] = useState(
+    selected.id > 0 ? selected.start : fdate()
+  );
+  const [tuluv, settuluv] = useState(
+    selected.id > 0 ? selected.status : "Амьд"
+  );
+  const [qty, setqty] = useState(selected.id > 0 ? selected.qty : 1);
   {
     selected.id > 0 ? (selectedid = selected.id) : (selectedid = 0);
   }
-
   const HandlerBack = async () => {
     props.navigation.goBack();
   };
   const HandlerSave = async () => {
     let mysql;
+    if (name.length < 1) {
+      Alert.alert("Нэр дутуу байна");
+      return;
+    }
     {
       selectedid === 0
         ? (mysql =
@@ -74,21 +81,17 @@ export default (props) => {
       a = userstring.insertId;
       userstring = await resultdb(
         "insert into events (itemsId,event,desc,date,created,modified) values(?,?,?,?,?,?)",
-        [a, "Анхлан бүртгэв", desc, "bdate", "fdate()", "mystatus.setStorename"]
+        [a, "Анхлан бүртгэв", desc, bdate, fdate(), mystatus.Storename]
       );
       mysql = "Хадгаллаа";
     } else {
       a = selectedid;
       userstring = await resultdb(
         "insert into events (itemsId,event,desc,date,created,modified) values(?,?,?,?,?,?)",
-        [a, "Засвар хийсэн", desc, "bdate", "fdate()", "mystatus.setStorename"]
+        [a, "Засвар хийсэн", desc, bdate, fdate(), mystatus.Storename]
       );
       mysql = "Заслаа";
     }
-    // mysql = `${a} , Засвар хийсэн, ${desc} , ${bdate}, ${fdate()},  ${
-    //   mystatus.setStorename
-    // } fdfdf `;
-    console.log(mysql);
     Alert.alert(mysql);
     props.navigation.goBack();
   };
@@ -172,7 +175,6 @@ export default (props) => {
 
         <View flexDirection="row" justifyContent="center">
           <Text style={css.text}>Малчин</Text>
-          {/* <InputText ref="thirdInput" keyboardType="numeric" label="Numeric" /> */}
           <Picker
             style={{ flex: 5 }}
             selectedValue={helder}
@@ -227,15 +229,17 @@ export default (props) => {
           <TextInput
             style={[css.input, { flex: 1 }]}
             keyboardType="numeric"
-            value={qty.toString()}
+            value={qty > 0 ? qty.toString() : 1}
             placeholder="Тоо, ш"
-            onChangeText={setqty}
+            onChangeText={(d) =>
+              d > 0 ? setqty(d) : Alert.alert("Тоо байх учиртай")
+            }
           />
           <Text style={[css.text, { flex: 1 }]}> Төлөв </Text>
           <TextInput
-            style={[css.text, { flex: 2 }]}
+            style={[css.text, { flex: 2, fontWeight: "bold", fontSize: 14 }]}
             editable={false}
-            defaultValue={tuluv === null ? "Dtgui" : { tuluv }}
+            defaultValue={tuluv === null ? "Dtgui" : tuluv}
           />
         </View>
         <TextInput
@@ -282,7 +286,14 @@ export default (props) => {
           </View>
           <Image
             source={{ uri: image }}
-            style={{ flex: 3, width: 200, height: 200, padding: 5 }}
+            style={{
+              flex: 3,
+              width: 200,
+              height: 200,
+              padding: 5,
+              borderWidth: 1,
+              borderColor: "black",
+            }}
           />
         </View>
       </View>

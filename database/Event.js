@@ -39,13 +39,14 @@ export default function EventListScreen(props) {
     var userstring;
     if (selected.id > 0) {
       setIteminfo(selected.name + " нэр " + selected.color + "зүстэй ");
-      userstring = await resultdb("select * from events where itemsid=?", [
-        selectedid,
-      ]);
+      userstring = await resultdb(
+        "select *, id as key from events where itemsid=?",
+        [selectedid]
+      );
     } else {
       selectedid = 0;
       userstring = await resultdb(
-        "select a.*, b.* from events a left join items b on a.itemsid=b.id where type=?",
+        "select a.*, b.*, a.id as key from events a left join items b on a.itemsid=b.id where type=?",
         [mystatus.Activetype]
       );
     }
@@ -127,9 +128,8 @@ export default function EventListScreen(props) {
                 />
               ))
             }
-            // data={items}
             data={filteredUsers}
-            // renderItem={UserCard}
+            key={items.key}
             renderItem={({ item, index, separators }) => (
               <View
                 style={{
@@ -157,20 +157,18 @@ export default function EventListScreen(props) {
                           selected.name + " нэр " + selected.color + "зүстэй "
                         );
                       } else {
-                        setIteminfo(
-                          item.name + " нэр " + item.color + "зүстэй "
-                        );
+                        setIteminfo(item.name + " нэр " + item.key + "зүстэй ");
                       }
                     }}
                   >
                     <Text
                       style={{ fontSize: 16 }}
-                    >{`${item.event}  ${item.desc} ${item.created}`}</Text>
+                    >{`${item.event}  ${item.key}  ${item.desc} ${item.created}`}</Text>
                   </TouchableOpacity>
                 </View>
               </View>
             )}
-            keyExtractor={(item) => item.id}
+            // keyExtractor={(item) => item.key}
           />
         </View>
       </View>
