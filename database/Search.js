@@ -295,6 +295,7 @@ export const Flatlistscreen = (props) => {
   const [searchText1, setSearchText1] = useState("");
   const [searchText2, setSearchText2] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
+  const [filteredUsers1, setFilteredUsers1] = useState([]);
   const [filterfield, setfilterfield] = useState("status");
   const [filterfield1, setfilterfield1] = useState("helder");
   const [filterfield2, setfilterfield2] = useState("name");
@@ -305,6 +306,7 @@ export const Flatlistscreen = (props) => {
   const [items, setItems] = useState([]);
   const [myarray, setmyarray] = useState([]);
   const [myarray1, setmyarray1] = useState([]);
+  const [mycount, setmycount] = useState([]);
   var filtered_users = ["sdsd", "fdggfh"];
 
   useEffect(async () => {
@@ -315,6 +317,9 @@ export const Flatlistscreen = (props) => {
     ]);
     setItems(userstring.rows._array);
     setFilteredUsers(items);
+    setmycount(items.length);
+    setmyarray(mystatus.Tuluv);
+    setmyarray1(mystatus.Helder);
   }, []);
 
   const HandlerAdd = () => {
@@ -327,11 +332,9 @@ export const Flatlistscreen = (props) => {
     setrnmodalvisible1(true);
   };
   const refreshFlat = (f1, v1, f2, v2) => {
-    console.log(`${f1} - ${v1} , ${f2} - ${v2}`);
     switch (f1) {
       case "status":
         if (v1 !== "?") {
-          console.log(`${f1} status ees ${v1} , ${f2} - ${v2}`);
           filtered_users = items.filter((item) => item.status === v1);
         } else {
           filtered_users = items;
@@ -339,7 +342,6 @@ export const Flatlistscreen = (props) => {
         break;
       case "im":
         if (v1 !== "?") {
-          console.log(`${f1} status ees ${v1} , ${f2} - ${v2}`);
           filtered_users = items.filter((item) => item.im === v1);
         } else {
           filtered_users = items;
@@ -347,7 +349,6 @@ export const Flatlistscreen = (props) => {
         break;
       case "tamga":
         if (v1 !== "?") {
-          console.log(`${f1} status ees ${v1} , ${f2} - ${v2}`);
           filtered_users = items.filter((item) => item.tamga === v1);
         } else {
           filtered_users = items;
@@ -365,15 +366,36 @@ export const Flatlistscreen = (props) => {
     switch (f2) {
       case "status":
         if (v2 !== "?") {
-          console.log(`${f1} status ees ${v1} , ${f2} - ${v2}`);
           filtered_users = filtered_users.filter((item) => item.status === v2);
         } else {
           filtered_users = filtered_users;
         }
         break;
+      case "im":
+        if (v2 !== "?") {
+          filtered_users = filtered_users.filter((item) => item.im === v2);
+        } else {
+          filtered_users = filtered_users;
+        }
+        break;
+      case "tamga":
+        if (v2 !== "?") {
+          filtered_users = filtered_users.filter((item) => item.tamga === v2);
+        } else {
+          filtered_users = filtered_users;
+        }
+        break;
+      case "helder":
+        if (v2 !== "?") {
+          filtered_users = filtered_users.filter((item) => item.helder === v2);
+        } else {
+          filtered_users = filtered_users;
+        }
+        break;
     }
+    setFilteredUsers1(filtered_users);
     setFilteredUsers(filtered_users);
-    console.log(filtered_users);
+    setmycount(filtered_users.length);
   };
   return (
     <View style={[css.container, { flex: 1 }]}>
@@ -397,7 +419,9 @@ export const Flatlistscreen = (props) => {
         >
           <Icon1 name="zoom-in" style={{ marginLeft: 14 }} size={34} />
         </TouchableOpacity>
-        <Text style={css.text}>{mystatus.Activetype} </Text>
+        <Text style={css.text}>
+          {mystatus.Activetype} {mycount}
+        </Text>
         <Button onPress={HandlerAdd} title="байхгүй бол бүртгээрэй" />
       </View>
       <View style={[css.searchView, { flex: 3 }]}>
@@ -526,12 +550,27 @@ export const Flatlistscreen = (props) => {
             onChangeText={(text) => {
               setSearchText2(text);
               if (text === "") {
-                return setFilteredUsers(items);
+                return setFilteredUsers(filteredUsers1);
               }
-              const filtered_users = items.filter((item) =>
-                item.name.toLowerCase().includes(text.toLowerCase())
-              );
+              switch (filterfield2) {
+                case "name":
+                  filtered_users = filteredUsers1.filter((item) =>
+                    item.name.toLowerCase().includes(text.toLowerCase())
+                  );
+                  break;
+                case "color":
+                  filtered_users = filteredUsers1.filter((item) =>
+                    item.color.toLowerCase().includes(text.toLowerCase())
+                  );
+                  break;
+                case "desc":
+                  filtered_users = filteredUsers1.filter((item) =>
+                    item.desc.toLowerCase().includes(text.toLowerCase())
+                  );
+                  break;
+              }
               setFilteredUsers(filtered_users);
+              setmycount(filtered_users.length);
             }}
             returnKeyType="search"
           />
@@ -543,7 +582,7 @@ export const Flatlistscreen = (props) => {
             <TouchableOpacity
               onPress={() => {
                 setSearchText2("");
-                setFilteredUsers(items);
+                setFilteredUsers(filteredUsers1);
               }}
             >
               <EvilIcons name="close" size={24} color="#333" />
