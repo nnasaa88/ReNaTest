@@ -10,21 +10,45 @@ import {
   TextInput,
 } from "react-native";
 import SplashScreen from "./SplashScreen";
-import Mycontext, { Mystore } from "../../context/Mycontext";
+import Mycontext from "../../context/Mycontext";
 import { Getdata, Setdata } from "./Signupscreen";
-import { getdb, resultdb, fdate } from "../../database/db";
+import { getdb, resultdb } from "../../database/db";
 
 export default function (props) {
   const [mobile, setMobile] = useState("");
   const [Mypass, setMypass] = useState("");
   const mystatus = useContext(Mycontext);
+  let arrpush = [];
   // let Userinfo1 = {};
 
-  const Handlerlogin = () => {
+  const Handlerlogin = async () => {
+    var userstring;
     if (Mypass === mystatus.Storepass) {
       mystatus.setisLoggedIn(true);
-      props.navigation.navigate("Home");
+      userstring = await resultdb("select * from config");
+      mystatus.Closedfield.map((el) => {
+        arrpush = ["?"];
+        const filtered_users = userstring.rows._array.filter(
+          (elem) => elem.ename === el.ename
+        );
+        filtered_users.map((l) => arrpush.push(l.value));
+        switch (el.ename) {
+          case "im":
+            mystatus.setIm(arrpush);
+            break;
+          case "tamga":
+            mystatus.setTamga(arrpush);
+            break;
+          case "status":
+            mystatus.setTuluv(arrpush);
+            break;
+          case "helder":
+            mystatus.setHelder(arrpush);
+            break;
+        }
+      });
       setMypass(null);
+      props.navigation.navigate("Home");
     } else {
       Alert.alert("Утас эсхүл нууц үг буруу байна");
       mystatus.setisLoggedIn(false);
@@ -55,7 +79,6 @@ export default function (props) {
             "select * from users where mobile = ?",
             [mobile]
           );
-          console.log(userstring.rows.length);
           if (userstring.rows.length !== 0) {
             mystatus.setUserinfo(userstring.rows.item(0));
             mystatus.setStorename(mystatus.Userinfo.name);
@@ -106,13 +129,13 @@ export default function (props) {
       <View style={css.Button}>
         <Button
           onPress={() => {
-            // getdb("insert into config (mname, value) values (?, ?)", [
-            //   "user",
-            //   "admin",
-            // ]);
+            getdb("insert into config (ename, value) values (?, ?)", [
+              "user",
+              "admin2",
+            ]);
             // getdb("drop table config");
-            // getdb("select * from config");
-            getdb("update items set color='?' where color is null");
+            getdb("select * from config");
+            // getdb("update items set color='?' where color is null");
           }}
           title="DB"
         />

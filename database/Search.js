@@ -440,6 +440,8 @@ export const Flatlistscreen = (props) => {
                   setmyarray(mystatus.Tuluv);
                   return;
                 case "im":
+                  console.log(l);
+                  console.log(mystatus.Im);
                   setmyarray(mystatus.Im);
                   return;
                 case "helder":
@@ -451,13 +453,8 @@ export const Flatlistscreen = (props) => {
               }
             }}
           >
-            {[
-              { name: "Төлөв", value: "status" },
-              { name: "Им", value: "im" },
-              { name: "Тамга", value: "tamga" },
-              { name: "Малчин", value: "helder" },
-            ].map((l) => (
-              <Picker.Item label={l.name} value={l.value} />
+            {mystatus.Closedfield.map((l) => (
+              <Picker.Item label={l.mname} value={l.ename} />
             ))}
           </Picker>
           <Picker
@@ -499,13 +496,8 @@ export const Flatlistscreen = (props) => {
               }
             }}
           >
-            {[
-              { name: "Төлөв", value: "status" },
-              { name: "Им", value: "im" },
-              { name: "Тамга", value: "tamga" },
-              { name: "Малчин", value: "helder" },
-            ].map((l) => (
-              <Picker.Item label={l.name} value={l.value} />
+            {mystatus.Closedfield.map((l) => (
+              <Picker.Item label={l.mname} value={l.ename} />
             ))}
           </Picker>
           <Picker

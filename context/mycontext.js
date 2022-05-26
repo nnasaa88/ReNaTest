@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const Mycontext = React.createContext();
-import { Getdata } from "../scr/screens/Signupscreen";
+// import { Getdata } from "../scr/screens/Signupscreen";
 
 export const Mystore = (props) => {
   const [isLoggedIn, setisLoggedIn] = useState(false);
@@ -11,6 +11,12 @@ export const Mystore = (props) => {
   const [IsLoading, setIsLoading] = useState(true);
   const [Userinfo, setUserinfo] = useState({});
   const [Activetype, setActivetype] = useState("");
+  const [Closedfield, setClosedfield] = useState([
+    { mname: "Төлөв", ename: "status" },
+    { mname: "Им", ename: "im" },
+    { mname: "Тамга", ename: "tamga" },
+    { mname: "Малчин", ename: "helder" },
+  ]);
 
   const [Im, setIm] = useState([
     "?",
@@ -51,6 +57,8 @@ export const Mystore = (props) => {
         setTuluv,
         Event,
         setEvent,
+        Closedfield,
+        setClosedfield,
       }}
     >
       {props.children}

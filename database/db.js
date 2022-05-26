@@ -1,5 +1,6 @@
 import * as sqlite from "expo-sqlite";
 import { useContext } from "react";
+import Mycontext from "../context/Mycontext";
 
 const db = sqlite.openDatabase("main.db");
 
