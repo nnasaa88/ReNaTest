@@ -9,8 +9,14 @@ import {
   Image,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import { NavigationContainer } from "@react-navigation/native";
-import Drawernav from "./DrawerNav";
+
+import {
+  NavigationContainer,
+  navigation,
+  toggleDrawer,
+} from "@react-navigation/native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+// import Drawernav from "./DrawerNav";
 import Mycontext, { Mystore } from "../../context/Mycontext";
 
 export default function (props) {
@@ -24,14 +30,13 @@ export default function (props) {
           name="menu"
           color="black"
           onPress={() => {
-            <NavigationContainer>
-              <Drawernav />;
-            </NavigationContainer>;
+            props.navigation.navigate("Config");
           }}
         />
       ),
     });
   }, [props.navigation]);
+
   const horsetouch = () => {
     mystatus.setActivetype("Адуу");
     props.navigation.navigate("Searchdb");

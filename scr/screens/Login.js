@@ -45,6 +45,9 @@ export default function (props) {
           case "helder":
             mystatus.setHelder(arrpush);
             break;
+          case "mygroup":
+            mystatus.setMygroup(arrpush);
+            break;
         }
       });
       setMypass(null);
@@ -138,12 +141,6 @@ export default function (props) {
             // getdb("update items set color='?' where color is null");
           }}
           title="DB"
-        />
-      </View>
-      <View style={css.Button}>
-        <Button
-          onPress={() => props.navigation.navigate("Config")}
-          title="Config"
         />
       </View>
     </View>

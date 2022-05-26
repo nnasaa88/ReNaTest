@@ -154,14 +154,6 @@ export default function SearchScreen1(props) {
 
 export function Mymodal(props) {
   const mystatus = useContext(Mycontext);
-  const data = [
-    {
-      label: "data 1",
-    },
-    {
-      label: "data 2",
-    },
-  ];
   return (
     <View style={css.centeredview}>
       <Modal visible={props.seemodal} animationType="slide" transparent={true}>
@@ -198,7 +190,6 @@ export function Mymodal(props) {
               {props.modalbody}
               {"-f-"}
             </Text>
-            {/* <RadioButtonRN data={data} selectedBtn={(e) => console.log(e)} /> */}
             <View
               style={{ marginTop: 10, backgroundColor: "#CFD20F" }}
               flexDirection="row"
@@ -206,7 +197,7 @@ export function Mymodal(props) {
               alignItems="center"
             >
               <Picker
-                style={[css.pick, { flx: 2 }]}
+                style={[css.pick, { flex: 2 }]}
                 selectedValue={mystatus.Event}
                 onValueChange={(l) => {
                   mystatus.setEvent(l);
@@ -356,8 +347,14 @@ export const Flatlistscreen = (props) => {
         break;
       case "helder":
         if (v1 !== "?") {
-          console.log(`${f1} status ees ${v1} , ${f2} - ${v2}`);
           filtered_users = items.filter((item) => item.helder === v1);
+        } else {
+          filtered_users = items;
+        }
+        break;
+      case "mygroup":
+        if (v1 !== "?") {
+          filtered_users = items.filter((item) => item.mygroup === v1);
         } else {
           filtered_users = items;
         }
@@ -388,6 +385,13 @@ export const Flatlistscreen = (props) => {
       case "helder":
         if (v2 !== "?") {
           filtered_users = filtered_users.filter((item) => item.helder === v2);
+        } else {
+          filtered_users = filtered_users;
+        }
+        break;
+      case "mygroup":
+        if (v2 !== "?") {
+          filtered_users = filtered_users.filter((item) => item.mygroup === v2);
         } else {
           filtered_users = filtered_users;
         }
@@ -438,18 +442,19 @@ export const Flatlistscreen = (props) => {
               switch (l) {
                 case "status":
                   setmyarray(mystatus.Tuluv);
-                  return;
+                  break;
                 case "im":
-                  console.log(l);
-                  console.log(mystatus.Im);
                   setmyarray(mystatus.Im);
-                  return;
+                  break;
                 case "helder":
                   setmyarray(mystatus.Helder);
-                  return;
+                  break;
                 case "tamga":
                   setmyarray(mystatus.Tamga);
-                  return;
+                  break;
+                case "mygroup":
+                  setmyarray(mystatus.Mygroup);
+                  break;
               }
             }}
           >
@@ -483,16 +488,19 @@ export const Flatlistscreen = (props) => {
               switch (l) {
                 case "status":
                   setmyarray1(mystatus.Tuluv);
-                  return;
+                  break;
                 case "im":
                   setmyarray1(mystatus.Im);
-                  return;
+                  break;
                 case "helder":
                   setmyarray1(mystatus.Helder);
-                  return;
+                  break;
                 case "tamga":
                   setmyarray1(mystatus.Tamga);
-                  return;
+                  break;
+                case "Mygroup":
+                  setmyarray1(mystatus.Mygroup);
+                  break;
               }
             }}
           >

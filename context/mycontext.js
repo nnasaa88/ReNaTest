@@ -16,6 +16,7 @@ export const Mystore = (props) => {
     { mname: "Им", ename: "im" },
     { mname: "Тамга", ename: "tamga" },
     { mname: "Малчин", ename: "helder" },
+    { mname: "Бүлэг/Азарга", ename: "mygroup" },
   ]);
 
   const [Im, setIm] = useState([
@@ -53,6 +54,7 @@ export const Mystore = (props) => {
         Helder,
         setHelder,
         Mygroup,
+        setMygroup,
         Tuluv,
         setTuluv,
         Event,

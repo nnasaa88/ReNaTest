@@ -40,7 +40,7 @@ export default function (props) {
       "insert into config (ename,mname ,value,value1,value2,Desc,isback,created,user) values (?,?,?,?,?,?,?,?,?)";
     var userstring = await resultdb(mysql, para);
     mysql = "Хадгаллаа";
-    setrefreshdb(refreshpick + 1);
+    setrefreshpick(refreshpick + 1);
     Alert.alert(mysql);
   };
 
@@ -103,6 +103,7 @@ export default function (props) {
               ))
             }
             data={filteredUsers}
+            key={filteredUsers.id}
             keyExtractor={(filteredUser) => filteredUser.id}
             renderItem={({ item, index, separators }) => (
               <View
