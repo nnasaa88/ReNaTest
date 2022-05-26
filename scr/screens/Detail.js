@@ -27,10 +27,10 @@ export default (props) => {
   const [sex, setsex] = useState(selected.sex);
   const [im, setim] = useState(selected.im);
   const [tamga, settamga] = useState(selected.tamga);
-  const [name, setname] = useState(selected.id > 0 ? selected.name : "");
-  const [color, setcolor] = useState(selected.color);
+  const [name, setname] = useState(selected.id > 0 ? selected.name : "?");
+  const [color, setcolor] = useState(selected.id > 0 ? selected.color : "?");
   const [image, setimage] = useState(selected.image);
-  const [desc, setdesc] = useState(selected.desc);
+  const [desc, setdesc] = useState(selected.id > 0 ? selected.desc : "?");
   const [helder, sethelder] = useState(selected.helder);
   const [mygroup, setmygroup] = useState(selected.mygroup);
   const [bdate, setbdate] = useState(
@@ -209,7 +209,7 @@ export default (props) => {
             defaultValue={name}
             style={(css.input, { flex: 5 })}
             placeholder="Нэрлэнэ үү"
-            onChangeText={setname}
+            onChangeText={(d) => (d !== "" ? setname(d) : setname("?"))}
           />
         </View>
         <View flexDirection="row" justifyContent="center">
@@ -246,14 +246,14 @@ export default (props) => {
           style={css.input}
           defaultValue={color}
           placeholder="Зүсэлнэ үү"
-          onChangeText={setcolor}
+          onChangeText={(d) => (d !== "" ? setcolor(d) : setcolor("?"))}
         />
         <TextInput
           style={css.desc}
           defaultValue={desc}
           multiline={true}
           placeholder="Тайлбар бичиж болно."
-          onChangeText={setdesc}
+          onChangeText={(d) => (d !== "" ? setdesc(d) : setdesc("?"))}
         />
         <View style={{ flex: 1 }} flexDirection="row" justifyContent="center">
           <View

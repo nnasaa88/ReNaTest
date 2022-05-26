@@ -555,26 +555,22 @@ export const Flatlistscreen = (props) => {
               }
               switch (filterfield2) {
                 case "name":
-                  filtered_users = filteredUsers1.filter((item) => {
-                    if (item.desc !== null) {
-                      item.name.toLowerCase().includes(text.toLowerCase());
-                    } else item;
-                  });
+                  filtered_users = filteredUsers1.filter((el) =>
+                    el.name.toLowerCase().includes(text.toLowerCase())
+                  );
                   break;
                 case "color":
-                  filtered_users = filteredUsers1.filter((item) => {
-                    if (item.color !== null) {
-                      item.desc.toLowerCase().includes(text.toLowerCase());
-                    } else item;
-                  });
+                  filtered_users = filteredUsers1.filter((el) =>
+                    el.color.toLowerCase().includes(text.toLowerCase())
+                  );
                   break;
                 case "desc":
-                  filtered_users = filteredUsers1.filter((item) => {
-                    if (item.desc !== null) {
-                      item.desc.toLowerCase().includes(text.toLowerCase());
-                    } else item;
-                  });
+                  filtered_users = filteredUsers1.filter((el) =>
+                    el.desc.toLowerCase().includes(text.toLowerCase())
+                  );
                   break;
+                default: {
+                }
               }
               setFilteredUsers(filtered_users);
               setmycount(filtered_users.length);

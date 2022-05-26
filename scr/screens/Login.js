@@ -111,8 +111,8 @@ export default function (props) {
             //   "admin",
             // ]);
             // getdb("drop table config");
-            getdb("select * from config");
-            // getdb("update items set status='Борлуулсан' where id=12");
+            // getdb("select * from config");
+            getdb("update items set color='?' where color is null");
           }}
           title="DB"
         />

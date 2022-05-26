@@ -17,7 +17,7 @@ export default function (props) {
   const mystatus = useContext(Mycontext);
   const [searchText, setSearchText] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
-  const [filterfield, setFilterfield] = useState("color");
+  const [filterfield, setFilterfield] = useState("status");
   const [items, setItems] = useState([]);
   const [desc, setdesc] = useState("");
   const [checkadd, setcheckadd] = useState(true);
@@ -27,8 +27,9 @@ export default function (props) {
     var userstring;
     userstring = await resultdb("select * from config", []);
     setItems(userstring.rows._array);
-    setFilteredUsers(items);
-    console.log(items);
+    setFilteredUsers(userstring.rows._array);
+    console.log(filteredUsers);
+    console.log(userstring.rows._array);
   }, []);
 
   const HandlerSave = async (para) => {
@@ -66,7 +67,7 @@ export default function (props) {
         <TextInput
           defaultValue={searchText}
           style={[css.input, { flex: 3 }]}
-          placeholder="Хайя"
+          placeholder="Нэмэх утга"
           placeholderTextColor="blue"
           onChangeText={(text) => {
             setSearchText(text);
@@ -74,6 +75,7 @@ export default function (props) {
               setcheckadd(true);
               return setFilteredUsers(items);
             }
+            // console.log(filteredUsers);
             const filtered_users = items.filter((item) => {
               item.mname.toLowerCase().includes(text.toLowerCase());
               setFilteredUsers(filtered_users);
