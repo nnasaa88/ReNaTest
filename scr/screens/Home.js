@@ -27,7 +27,7 @@ export default function (props) {
         <Feather
           size={30}
           style={{ marginRight: 20 }}
-          name="menu"
+          name="settings"
           color="black"
           onPress={() => {
             props.navigation.navigate("Config");

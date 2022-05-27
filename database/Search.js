@@ -359,6 +359,8 @@ export const Flatlistscreen = (props) => {
           filtered_users = items;
         }
         break;
+      default:
+        filtered_users = items;
     }
     switch (f2) {
       case "status":
@@ -396,6 +398,8 @@ export const Flatlistscreen = (props) => {
           filtered_users = filtered_users;
         }
         break;
+      default:
+        filtered_users = filtered_users;
     }
     setFilteredUsers1(filtered_users);
     setFilteredUsers(filtered_users);

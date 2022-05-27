@@ -10,9 +10,11 @@ import {
   TextInput,
   StyleSheet,
 } from "react-native";
+import * as Location from "expo-location";
 import { resultdb } from "../../database/db";
 import Mycontext, { fdate } from "../../context/Mycontext";
 import { css } from "../../database/Search";
+import Getplace from "./Mymap";
 
 export default function (props) {
   const mystatus = useContext(Mycontext);
@@ -23,6 +25,7 @@ export default function (props) {
   const [desc, setdesc] = useState("");
   const [checkadd, setcheckadd] = useState(true);
   const [refreshpick, setrefreshpick] = useState(0);
+  const [myloc, setmyloc] = useState(0);
 
   let myval = [];
   useEffect(async () => {
@@ -57,6 +60,8 @@ export default function (props) {
             setFilterfield(l);
             const filtered_users = items.filter((el) => el.ename === l);
             setFilteredUsers(filtered_users);
+            setSearchText("");
+            console.log(l);
           }}
         >
           {mystatus.Closedfield.map((l) => (
@@ -86,6 +91,9 @@ export default function (props) {
             setFilteredUsers(filtered_users);
             if (text !== "" && filteredUsers.length === 0) {
               setcheckadd(false);
+              console.log(myloc);
+
+              // setdesc( "");
             }
           }}
           returnKeyType="search"
@@ -129,6 +137,7 @@ export default function (props) {
           <View style={css.messageBox}>
             <TextInput
               style={[css.input, {}]}
+              defaultValue={desc}
               multiline={true}
               placeholder="Утга байхгүй тул нэмэх боломжой. Тайлбараа бичнэ үү"
               placeholderTextColor="red"
@@ -137,10 +146,11 @@ export default function (props) {
           </View>
         ) : (
           <View style={css.messageBox}>
-            <Text style={css.messageBoxText}>Нэмэгдэх утгаа шалгах</Text>
+            <Text style={css.messageBoxText}> Нэмэгдэх утгаа шалгах </Text>
           </View>
         )}
       </View>
+      <Getplace />
       <View style={{ flex: 8, paddingHorizontal: 100 }}>
         <Button
           disabled={checkadd}
