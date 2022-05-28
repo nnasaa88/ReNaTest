@@ -33,7 +33,7 @@ const Drawer = createDrawerNavigator();
 
 export default () => (
   <Drawer.Navigator initialRouteName="Screen A">
-    <Drawer.Screen name="Screen A" component={ScreenC} />
+    <Drawer.Screen name="Screen A" component={ConfigScreen} />
     <Drawer.Screen name="Screen B" component={ScreenC} />
     <Drawer.Screen name="Screen C" component={ScreenC} />
   </Drawer.Navigator>

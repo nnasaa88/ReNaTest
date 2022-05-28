@@ -13,6 +13,7 @@ import SplashScreen from "./SplashScreen";
 import Mycontext from "../../context/Mycontext";
 import { Getdata, Setdata } from "./Signupscreen";
 import { getdb, resultdb } from "../../database/db";
+import { fdistance, Getplace1 } from "./Mymap";
 
 export default function (props) {
   const [mobile, setMobile] = useState("");
@@ -132,13 +133,15 @@ export default function (props) {
       <View style={css.Button}>
         <Button
           onPress={() => {
-            getdb("insert into config (ename, value) values (?, ?)", [
-              "user",
-              "admin2",
-            ]);
+            // getdb("insert into config (ename, value) values (?, ?)", [
+            //   "user",
+            //   "admin2",
+            // ]);
             // getdb("drop table config");
-            getdb("select * from config");
+            // getdb("select * from config");
             // getdb("update items set color='?' where color is null");
+            // console.log(fdistance());
+            console.log(Getplace1());
           }}
           title="DB"
         />
