@@ -52,11 +52,21 @@ export async function getCloud() {
   });
   console.log(data);
 }
+
 export async function setCloud() {
-  const querySnapshot = await getDocs(collection(db, "items"));
-  var data = [];
-  querySnapshot.forEach((doc) => {
-    data.push({ id: doc.color, ...doc.data() });
-  });
-  console.log(data);
+  const docData = {
+    name: "value",
+    id: 1,
+  };
+  console.log(await addDoc(collection(db, "items"), docData));
+}
+function updCloud(data, merge) {
+  const myDoc = doc(db, "Users", "user");
+
+  setDoc(myDoc, data, { merge: merge })
+    .then(() => alert("updated " + data))
+    .catch((e) => console.log(e));
+}
+async function delCloud(id) {
+  await deleteDoc(doc(db, "Users", "UhVdcnR9iH0MGMfkzwmG"));
 }

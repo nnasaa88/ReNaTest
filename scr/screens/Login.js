@@ -8,6 +8,7 @@ import {
   Alert,
   Image,
   TextInput,
+  ScrollView,
 } from "react-native";
 import SplashScreen from "./SplashScreen";
 import Mycontext from "../../context/Mycontext";
@@ -77,6 +78,8 @@ export default function (props) {
       </Text>
       <TextInput
         keyboardType="numeric"
+        maxLength={8}
+        autoFocus={true}
         style={css.input}
         placeholder="Утсаа оруулна уу"
         onChangeText={setMobile}
@@ -125,41 +128,42 @@ export default function (props) {
           title="Бүртгүүлэх"
         />
       </View>
-      <View style={css.Button} flexDirection="row" justifyContent="center">
-        <Button
-          onPress={() => Getdata("86163023")}
-          title="LocalStorage - > Get"
-        />
-        <Button
-          onPress={() => Setdata("86163023", "name", "email", "nnutga")}
-          title="Set"
-        />
-      </View>
-      <View style={css.Button} flexDirection="row" justifyContent="center">
-        <Button onPress={() => getCloud()} title="Firebase - > Get" />
-        <Button onPress={() => setCloud()} title="Set" />
-      </View>
-      <View style={css.Button} flexDirection="row" justifyContent="center">
-        <Button onPress={() => getSMS()} title="Message - > Get" />
-        <Button onPress={() => setCloud()} title="Set" />
-      </View>
-      <View style={css.Button}>
-        <Button
-          onPress={() => {
-            // getdb("insert into config (ename, value) values (?, ?)", [
-            //   "user",
-            //   "admin2",
-            // ]);
-            // getdb("drop table config");
-            // getdb("select * from items");
-            // getdb("update items set color='?' where color is null");
-            // console.log(fdistance());
-            // console.log(Getplace1());
-            getCloud();
-            // getSMS();
-          }}
-          title="SQLdatabase - DB"
-        />
+      <View style={{ backgroundColor: "yellow" }}>
+        <Text> Тэстийн хэсэг </Text>
+        <ScrollView>
+          <View style={css.Button} flexDirection="row" justifyContent="center">
+            <Button
+              onPress={() => Getdata("86163023")}
+              title="LocalStorage - > Get"
+            />
+            <Button
+              onPress={() => Setdata("86163023", "name", "email", "nnutga")}
+              title="Set"
+            />
+          </View>
+          <View style={css.Button} flexDirection="row" justifyContent="center">
+            <Button onPress={() => getCloud()} title="Firebase - > Get" />
+            <Button onPress={() => setCloud()} title="Set" />
+          </View>
+          <View style={css.Button} flexDirection="row" justifyContent="center">
+            <Button onPress={() => getSMS()} title="Message - > Get" />
+            <Button onPress={() => setCloud()} title="Set" />
+          </View>
+          <View style={css.Button}>
+            <Button
+              onPress={() => {
+                // getdb("insert into config (ename, value) values (?, ?)", [
+                //   "user",
+                //   "admin2",
+                // ]);
+                // getdb("drop table config");
+                getdb("select * from items");
+                // getdb("update items set color='?' where color is null");
+              }}
+              title="SQLdatabase - DB"
+            />
+          </View>
+        </ScrollView>
       </View>
     </View>
   );
