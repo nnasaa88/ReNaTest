@@ -32,8 +32,8 @@ export const getdb = async (mysql, para) => {
       para,
       (_, result) => {
         const Infodb = result;
-        console.log(Infodb);
-        // console.log(JSON.stringify(result);
+        // console.log(Infodb);
+        console.log(JSON.stringify(result));
       },
       (_, err) => {
         console.log("DB тэст амжилтгүй");

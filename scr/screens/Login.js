@@ -14,6 +14,8 @@ import Mycontext from "../../context/Mycontext";
 import { Getdata, Setdata } from "./Signupscreen";
 import { getdb, resultdb } from "../../database/db";
 import { fdistance, Getplace1 } from "./Mymap";
+import { getCloud, setCloud } from "../../database/Firebase";
+import { getSMS } from "../../database/Sms";
 
 export default function (props) {
   const [mobile, setMobile] = useState("");
@@ -124,11 +126,22 @@ export default function (props) {
         />
       </View>
       <View style={css.Button} flexDirection="row" justifyContent="center">
-        <Button onPress={() => Getdata("86163023")} title="Get" />
+        <Button
+          onPress={() => Getdata("86163023")}
+          title="LocalStorage - > Get"
+        />
         <Button
           onPress={() => Setdata("86163023", "name", "email", "nnutga")}
           title="Set"
         />
+      </View>
+      <View style={css.Button} flexDirection="row" justifyContent="center">
+        <Button onPress={() => getCloud()} title="Firebase - > Get" />
+        <Button onPress={() => setCloud()} title="Set" />
+      </View>
+      <View style={css.Button} flexDirection="row" justifyContent="center">
+        <Button onPress={() => getSMS()} title="Message - > Get" />
+        <Button onPress={() => setCloud()} title="Set" />
       </View>
       <View style={css.Button}>
         <Button
@@ -138,12 +151,14 @@ export default function (props) {
             //   "admin2",
             // ]);
             // getdb("drop table config");
-            // getdb("select * from config");
+            // getdb("select * from items");
             // getdb("update items set color='?' where color is null");
             // console.log(fdistance());
-            console.log(Getplace1());
+            // console.log(Getplace1());
+            getCloud();
+            // getSMS();
           }}
-          title="DB"
+          title="SQLdatabase - DB"
         />
       </View>
     </View>
