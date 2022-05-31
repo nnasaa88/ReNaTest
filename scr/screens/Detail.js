@@ -33,6 +33,7 @@ export default (props) => {
   const [desc, setdesc] = useState(selected.id > 0 ? selected.desc : "?");
   const [helder, sethelder] = useState(selected.helder);
   const [mygroup, setmygroup] = useState(selected.mygroup);
+  const [isbackup, setisbackup] = useState(selected.isbackup);
   const [bdate, setbdate] = useState(
     selected.id > 0 ? selected.start : fdate()
   );
@@ -56,7 +57,7 @@ export default (props) => {
       selectedid === 0
         ? (mysql =
             "insert into items (type,sex,im,tamga,name,color,image,qty,desc,start,mygroup,helder,status,created, modified) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)")
-        : (mysql = `update items set type=?,sex=?,im=?,tamga=?,name=?,color=?,image=?,qty=?,desc=?,start=?,mygroup=?,helder=?,status=?,created=?, modified=? where id=${selectedid}`);
+        : (mysql = `update items set type=?,sex=?,im=?,tamga=?,name=?,color=?,image=?,qty=?,desc=?,start=?,mygroup=?,helder=?,status=?,created=?, modified=?, isbackup=? where id=${selectedid}`);
     }
 
     var userstring = await resultdb(mysql, [
@@ -75,6 +76,7 @@ export default (props) => {
       tuluv,
       fdate(),
       mystatus.Storename,
+      isbackup + "-update",
     ]);
     let a;
     if (selectedid === 0) {

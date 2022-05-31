@@ -51,7 +51,7 @@ export default function (props) {
   useEffect(async () => {
     var userstring;
     userstring = await resultdb(
-      "select * from items where isbackup is null or ltrim(isbackup,6)='update'",
+      "select * from items where isbackup is null or substr(isbackup,-6,6)='update'",
       []
     );
     setcountcloud(userstring.rows._array.length);
@@ -81,7 +81,7 @@ export default function (props) {
       Alert.alert(
         countcloud !== 0
           ? "Интернэт холболтоо шалгана уу!!!"
-          : "Нөөцлэх мэдээлэл алга."
+          : "Нөөцлөх мэдээлэл алга."
       );
       return;
     }
@@ -90,7 +90,7 @@ export default function (props) {
     let st1;
     let mysql;
     userstring = await resultdb(
-      "select * from items where isbackup is null or ltrim(isbackup,6)='update'",
+      "select * from items where isbackup is null or substr(isbackup,-6,6)='update'",
       []
     );
     Alert.alert(userstring.rows._array.length + " Цааш явлаа");
@@ -113,7 +113,11 @@ export default function (props) {
         status: l.status,
         created: l.created,
       };
+      if (l.isbackup.slice(-6, 6) === "update") {
+        await deleteDoc(doc(db, "items", l.isbackup.split("-")[0]));
+      }
       st = await addDoc(collection(db, "items"), docData);
+
       st1 = st.path.toString().split("/")[1];
       mysql = `update items set isbackup=? where id=${l.id}`;
       await resultdb(mysql, [st1]);

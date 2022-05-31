@@ -10,7 +10,7 @@ export const Mystore = (props) => {
   const [Storepass, setStorepass] = useState("dddddddz");
   const [IsLoading, setIsLoading] = useState(true);
   const [Userinfo, setUserinfo] = useState({});
-  const [Activetype, setActivetype] = useState("");
+  const [Activetype, setActivetype] = useState("c");
   const [Closedfield, setClosedfield] = useState([
     { mname: "Төлөв", ename: "status" },
     { mname: "Им", ename: "im" },

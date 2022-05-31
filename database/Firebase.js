@@ -44,12 +44,14 @@ export const db = getFirestore();
 //     console.log(docData);
 //   }
 // }
-export async function getCloud() {
+export async function getCloud(para1, para2) {
   const querySnapshot = await getDocs(collection(db, "items"));
   var data = [];
   var data1 = [];
   querySnapshot.forEach((doc) => {
+    // if (doc.id === para2) {
     data.push({ docid: doc.id, ...doc.data() });
+    // }
   });
   // data.map((l) => {
   //   data1.push(data.name);
@@ -76,5 +78,5 @@ function updCloud(data, merge) {
     .catch((e) => console.log(e));
 }
 async function delCloud(id) {
-  await deleteDoc(doc(db, "Users", "UhVdcnR9iH0MGMfkzwmG"));
+  await deleteDoc(doc(db, "items", "UhVdcnR9iH0MGMfkzwmG"));
 }

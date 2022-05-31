@@ -163,7 +163,7 @@ export default function EventListScreen(props) {
                   >
                     <Text
                       style={{ fontSize: 16 }}
-                    >{`${item.event}  ${item.key}  ${item.desc} ${item.created}`}</Text>
+                    >{`${item.event}  ${item.key} ${item.itemid}  ${item.desc} ${item.created}`}</Text>
                   </TouchableOpacity>
                 </View>
               </View>

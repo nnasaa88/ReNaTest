@@ -79,7 +79,7 @@ export default function (props) {
       <TextInput
         keyboardType="numeric"
         maxLength={8}
-        autoFocus={true}
+        // autoFocus={true}
         style={css.input}
         placeholder="Утсаа оруулна уу"
         onChangeText={setMobile}
@@ -142,7 +142,10 @@ export default function (props) {
             />
           </View>
           <View style={css.Button} flexDirection="row" justifyContent="center">
-            <Button onPress={() => getCloud()} title="Firebase - > Get" />
+            <Button
+              onPress={() => getCloud("id", 19)}
+              title="Firebase - > Get"
+            />
             <Button onPress={() => setCloud()} title="Set" />
           </View>
           <View style={css.Button} flexDirection="row" justifyContent="center">
@@ -157,9 +160,10 @@ export default function (props) {
                 //   "admin2",
                 // ]);
                 // getdb("drop table config");
-
-                // getdb("alter table items add column 'isbackup text' ");
-                getdb("select isbackup from items");
+                // getdb("alter table items drop isbackup text");
+                getdb(
+                  "select * from items where substr(isbackup,-6,6)='update'"
+                );
                 // getdb("update items set qty=1 where qty is null");
               }}
               title="SQLdatabase - DB"

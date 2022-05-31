@@ -3,9 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 
-import Stacknav from "./Stacknav";
-
-import ConfigScreen from "./Config";
+// import ConfigScreen from "./Config";
 
 function ScreenA() {
   return (
@@ -33,7 +31,7 @@ const Drawer = createDrawerNavigator();
 
 export default () => (
   <Drawer.Navigator initialRouteName="Screen A">
-    <Drawer.Screen name="Screen A" component={ConfigScreen} />
+    <Drawer.Screen name="Screen A" component={ScreenC} />
     <Drawer.Screen name="Screen B" component={ScreenC} />
     <Drawer.Screen name="Screen C" component={ScreenC} />
   </Drawer.Navigator>
