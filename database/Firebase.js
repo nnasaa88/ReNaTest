@@ -47,18 +47,26 @@ export const db = getFirestore();
 export async function getCloud() {
   const querySnapshot = await getDocs(collection(db, "items"));
   var data = [];
+  var data1 = [];
   querySnapshot.forEach((doc) => {
-    data.push({ id: doc.color, ...doc.data() });
+    data.push({ docid: doc.id, ...doc.data() });
   });
+  // data.map((l) => {
+  //   data1.push(data.name);
+  // });
   console.log(data);
+  // console.log(data1);
 }
 
-export async function setCloud() {
+export async function setCloud(para1, para2) {
   const docData = {
     name: "value",
     id: 1,
   };
-  console.log(await addDoc(collection(db, "items"), docData));
+  st = await addDoc(collection(db, para1), para2);
+  return st;
+  // console.log(st);
+  // console.log(st.path.toString().split("/")[1]);
 }
 function updCloud(data, merge) {
   const myDoc = doc(db, "Users", "user");

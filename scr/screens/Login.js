@@ -16,7 +16,7 @@ import { Getdata, Setdata } from "./Signupscreen";
 import { getdb, resultdb } from "../../database/db";
 import { fdistance, Getplace1 } from "./Mymap";
 import { getCloud, setCloud } from "../../database/Firebase";
-import { getSMS } from "../../database/Sms";
+// import { getSMS } from "../../database/Sms";
 
 export default function (props) {
   const [mobile, setMobile] = useState("");
@@ -146,7 +146,7 @@ export default function (props) {
             <Button onPress={() => setCloud()} title="Set" />
           </View>
           <View style={css.Button} flexDirection="row" justifyContent="center">
-            <Button onPress={() => getSMS()} title="Message - > Get" />
+            {/* <Button onPress={() => getSMS()} title="Message - > Get" /> */}
             <Button onPress={() => setCloud()} title="Set" />
           </View>
           <View style={css.Button}>
@@ -157,8 +157,10 @@ export default function (props) {
                 //   "admin2",
                 // ]);
                 // getdb("drop table config");
-                getdb("select * from items");
-                // getdb("update items set color='?' where color is null");
+
+                // getdb("alter table items add column 'isbackup text' ");
+                getdb("select isbackup from items");
+                // getdb("update items set qty=1 where qty is null");
               }}
               title="SQLdatabase - DB"
             />
