@@ -10,7 +10,8 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CheckBox } from "react-native-elements";
-import { initdb } from "../../database/db";
+import Mycontext, { fdate } from "../../context/Mycontext";
+import { initdb, resultdb } from "../../database/db";
 
 export default function ({ route, navigation }) {
   const [name, setName] = useState("");
@@ -19,14 +20,9 @@ export default function ({ route, navigation }) {
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
   const [isadmin, setisadmin] = useState(false);
-  const [nemeh, setnemeh] = useState(true);
-  const [ustgah, setustgah] = useState(false);
-  const [zasah, setzasah] = useState(false);
-  const [tuluv, settuluv] = useState(false);
-  const [batlah, setbatlah] = useState(false);
   const [error, setError] = useState(null);
 
-  const signupHandler = () => {
+  const signupHandler = async () => {
     //Alert.alert("Нууц үгнүүд хооронdsfsdfdsfдоо таарахгүй байна!");
     setError(null);
 
@@ -39,45 +35,18 @@ export default function ({ route, navigation }) {
       Alert.alert("Нууц үгнүүд хоорондоо таарахгүй байна!");
       return;
     }
-    const str =
-      "'" +
-      name +
-      "','" +
-      mobile +
-      "','" +
-      email +
-      "','" +
-      password1 +
-      "','" +
-      isadmin +
-      "','" +
-      nemeh +
-      "','" +
-      ustgah +
-      "','" +
-      zasah +
-      "','" +
-      tuluv +
-      "','" +
-      batlah +
-      "'";
-    initdb(
-      "insert into users (name, mobile,email,pass, isadmin,nemeh,ustgah,zasah,tuluv,batlah) values (" +
-        str +
-        ");"
+
+    await resultdb(
+      "insert into config (ename, mname, value,value1,value2, value3, created) values (?,?,?,?,?,?,?)",
+      ["user", name, mobile, email, password1, isadmin ? "1" : "0", fdate()]
     )
       .then((result) => {
-        Alert.alert("Хэрэглэгч нэмлээ" + { name });
+        Alert.alert("Хэрэглэгч нэмлээ :" + name);
         navigation.goBack();
       })
-      .catch((err) => Alert.alert("Items асуудал гарлаа." + err.message));
-
-    //   if (Setdata(mobile, name, email, password1)) {
-    //     Alert.alert("Амжилттай бүртгэлээ");
-    //     return;
-    // } else {
-    //   Alert.alert("Бүртгэхд алдаа гарлаа");
-    // }
+      .catch((err) =>
+        Alert.alert("Хэрэглэгч бүртгэхэд асуудал гарлаа." + err.message)
+      );
   };
   return (
     <View>
@@ -101,11 +70,13 @@ export default function ({ route, navigation }) {
         style={css.inputField}
         keyboardType="numeric"
         placeholder="Та утсаа оруулна уу"
+        maxLength={8}
         onChangeText={setMobile}
       />
       <TextInput
         style={css.inputField}
         askeyboardType="number-pad"
+        keyboardType="email-address"
         placeholder="Та имэйл хаягаа оруулна уу"
         onChangeText={setEmail}
       />
@@ -126,33 +97,6 @@ export default function ({ route, navigation }) {
           title={"admin"}
           checked={isadmin}
           onPress={() => setisadmin(!isadmin)}
-        />
-        <CheckBox
-          title={"нэмэх"}
-          checked={nemeh}
-          onPress={() => setnemeh(!nemeh)}
-        />
-        <CheckBox
-          title={"устгах"}
-          checked={ustgah}
-          onPress={() => setustgah(!ustgah)}
-        />
-      </View>
-      <View style={css.rowview}>
-        <CheckBox
-          title={"засах"}
-          checked={zasah}
-          onPress={() => setzasah(!zasah)}
-        />
-        <CheckBox
-          title={"төлөв"}
-          checked={tuluv}
-          onPress={() => settuluv(!tuluv)}
-        />
-        <CheckBox
-          title={"батлах"}
-          checked={batlah}
-          onPress={() => setbatlah(!batlah)}
         />
       </View>
       <View style={css.rowview}>
@@ -201,5 +145,9 @@ const css = StyleSheet.create({
     marginVertical: 5,
     marginTop: 20,
   },
-  rowview: { flexDirection: "row", justifyContent: "space-evenly" },
+  rowview: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    marginVertical: 15,
+  },
 });

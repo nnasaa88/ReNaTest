@@ -85,35 +85,25 @@ export default function (props) {
         onChangeText={setMobile}
         onEndEditing={async () => {
           const userstring = await resultdb(
-            "select * from users where mobile = ?",
+            "select * from config where ename='user' and value = ?",
             [mobile]
           );
           if (userstring.rows.length !== 0) {
             mystatus.setUserinfo(userstring.rows.item(0));
-            mystatus.setStorename(mystatus.Userinfo.name);
-            mystatus.setStorepass(mystatus.Userinfo.pass);
+            mystatus.setStorename(mystatus.Userinfo.mname);
+            mystatus.setStorepass(mystatus.Userinfo.value2);
           } else {
             Alert.alert("Хэрэглэгч олдсонгүй");
             mystatus.setStorename("Хэрэглэгч олдсонгүй");
             mystatus.setStorepass("sssssssssss");
           }
-
-          // const userstring = await AsyncStorage.getItem(mobile);
-          // if (userstring !== null) {
-          //   Userinfo = JSON.parse(userstring);
-          //   mystatus.setStorename(Userinfo.para1);
-          //   mystatus.setStorepass(Userinfo.para3);
-          // } else {
-          //   Alert.alert("Хэрэглэгч олдсонгүй");
-          //   mystatus.setStorename("");
-          // }
         }}
       />
       <Text style={{ textAlign: "center", fontSize: 14 }}>
         Хэрэглэгч: {mystatus.Storename}
       </Text>
       <TextInput
-        clearTextOnFocus={true}
+        defaultValue={Mypass}
         secureTextEntry={false}
         style={css.input}
         placeholder="Нууц үгээ оруулна уу"
@@ -159,11 +149,10 @@ export default function (props) {
                 //   "user",
                 //   "admin2",
                 // ]);
-                // getdb("drop table config");
+                // getdb("drop table users");
                 // getdb("alter table items drop isbackup text");
-                getdb(
-                  "select * from items where substr(isbackup,-6,6)='update'"
-                );
+                getdb("select * from users");
+                // getdb("delete from config where ename='user'");
                 // getdb("update items set qty=1 where qty is null");
               }}
               title="SQLdatabase - DB"
