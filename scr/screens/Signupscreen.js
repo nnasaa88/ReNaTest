@@ -23,7 +23,6 @@ export default function ({ route, navigation }) {
   const [error, setError] = useState(null);
 
   const signupHandler = async () => {
-    //Alert.alert("Нууц үгнүүд хооронdsfsdfdsfдоо таарахгүй байна!");
     setError(null);
 
     if (name.length === 0) {
@@ -35,12 +34,20 @@ export default function ({ route, navigation }) {
       Alert.alert("Нууц үгнүүд хоорондоо таарахгүй байна!");
       return;
     }
-
     await resultdb(
       "insert into config (ename, mname, value,value1,value2, value3, created) values (?,?,?,?,?,?,?)",
       ["user", name, mobile, email, password1, isadmin ? "1" : "0", fdate()]
     )
-      .then((result) => {
+      .then(async (result) => {
+        var userstring = await resultdb("select * from config where ename=?", [
+          "appid",
+        ]);
+        if (userstring.rows.length === 0) {
+          await resultdb(
+            "insert into config (ename, mname, value,value1,value2, value3, created) values (?,?,?,?,?,?,?)",
+            ["appid", name, mobile, email, "", fdate(), fdate()]
+          );
+        }
         Alert.alert("Хэрэглэгч нэмлээ :" + name);
         navigation.goBack();
       })

@@ -5,6 +5,7 @@ const Mycontext = React.createContext();
 
 export const Mystore = (props) => {
   const [isLoggedIn, setisLoggedIn] = useState(false);
+  const [Storeappid, setStoreappid] = useState("");
   const [Storemobile, setStoremobile] = useState("");
   const [Storename, setStorename] = useState("admin");
   const [Storepass, setStorepass] = useState("dddddddz");
@@ -62,6 +63,8 @@ export const Mystore = (props) => {
         setEvent,
         Closedfield,
         setClosedfield,
+        Storeappid,
+        setStoreappid,
       }}
     >
       {props.children}

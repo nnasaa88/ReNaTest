@@ -103,7 +103,7 @@ export default function (props) {
         tamga: l.tamga,
         name: l.name,
         color: l.color,
-        // image: l.image,
+        image: l.image,
         qty: l.qty.toString(),
         desc: l.desc,
         start: l.start,

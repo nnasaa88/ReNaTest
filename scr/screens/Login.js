@@ -11,24 +11,49 @@ import {
   ScrollView,
 } from "react-native";
 import SplashScreen from "./SplashScreen";
-import Mycontext from "../../context/Mycontext";
+import Mycontext, { fdate } from "../../context/Mycontext";
 import { Getdata, Setdata } from "./Signupscreen";
 import { getdb, resultdb } from "../../database/db";
 import { fdistance, Getplace1 } from "./Mymap";
 import { getCloud, setCloud } from "../../database/Firebase";
+import {
+  getFirestore,
+  setDoc,
+  addDoc,
+  collection,
+  getDocs,
+} from "firebase/firestore";
 // import { getSMS } from "../../database/Sms";
 
 export default function (props) {
   const [mobile, setMobile] = useState("");
   const [Mypass, setMypass] = useState("");
   const mystatus = useContext(Mycontext);
+  const db = getFirestore();
+
   let arrpush = [];
-  // let Userinfo1 = {};
+  let st;
+  var userstring;
 
   const Handlerlogin = async () => {
     var userstring;
     if (Mypass === mystatus.Storepass) {
       mystatus.setisLoggedIn(true);
+      if (mystatus.Storeappid === "") {
+        const docData = {
+          name: mystatus.Userinfo.mname,
+          mobile: mystatus.Userinfo.value,
+          email: mystatus.Userinfo.value1,
+          expired: fdate(),
+          registreddate: fdate(),
+        };
+        st = await addDoc(collection(db, "regapp"), docData);
+        let st1 = st.path.toString().split("/")[1];
+        let mysql = "update config set value2=? where ename='appid'";
+        await resultdb(mysql, [st1]);
+      } else {
+        Alert.alert("Date шалгах");
+      }
       userstring = await resultdb("select * from config");
       mystatus.Closedfield.map((el) => {
         arrpush = ["?"];
@@ -84,7 +109,7 @@ export default function (props) {
         placeholder="Утсаа оруулна уу"
         onChangeText={setMobile}
         onEndEditing={async () => {
-          const userstring = await resultdb(
+          userstring = await resultdb(
             "select * from config where ename='user' and value = ?",
             [mobile]
           );
@@ -92,6 +117,10 @@ export default function (props) {
             mystatus.setUserinfo(userstring.rows.item(0));
             mystatus.setStorename(mystatus.Userinfo.mname);
             mystatus.setStorepass(mystatus.Userinfo.value2);
+            userstring = await resultdb("select * from config where ename=?", [
+              "appid",
+            ]);
+            mystatus.setStoreappid(userstring.rows.item(0).value2);
           } else {
             Alert.alert("Хэрэглэгч олдсонгүй");
             mystatus.setStorename("Хэрэглэгч олдсонгүй");
@@ -101,6 +130,9 @@ export default function (props) {
       />
       <Text style={{ textAlign: "center", fontSize: 14 }}>
         Хэрэглэгч: {mystatus.Storename}
+      </Text>
+      <Text style={{ textAlign: "center", fontSize: 14 }}>
+        AppId: {mystatus.Storeappid}
       </Text>
       <TextInput
         defaultValue={Mypass}
@@ -145,14 +177,14 @@ export default function (props) {
           <View style={css.Button}>
             <Button
               onPress={() => {
-                // getdb("insert into config (ename, value) values (?, ?)", [
-                //   "user",
-                //   "admin2",
+                // getdb("insert into config (ename, value3) values (?, ?)", [
+                //   "appid",
+                //   fdate(),
                 // ]);
                 // getdb("drop table users");
                 // getdb("alter table items drop isbackup text");
-                getdb("select * from users");
-                // getdb("delete from config where ename='user'");
+                getdb("select * from config where ename='appid'");
+                // getdb("delete from config where ename='user' or ename='appid'");
                 // getdb("update items set qty=1 where qty is null");
               }}
               title="SQLdatabase - DB"

@@ -4,7 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 // import {createNativeStackNavigator, HeaderBackButton,} from "@react-navigation/native-stack";
 import Stacknav from "./scr/screens/Stacknav";
 // import Drawernav from "./scr/screens/DrawerNav";
-import { Mystore } from "./context/Mycontext";
+import { Mystore, fdate } from "./context/Mycontext";
 import { initdb } from "./database/db";
 
 export default function App() {
