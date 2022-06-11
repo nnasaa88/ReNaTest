@@ -35,10 +35,8 @@ export default function Getplace() {
     </View>
   );
 }
-export const Getplace1 = () => {
-  async () => {
-    location = await Location.getCurrentPositionAsync({})
-      .then((result) => result)
-      .then((err) => err);
-  };
-};
+// export const Getplace1 = () => {
+//   const gps = async () => {await Location.getCurrentPositionAsync({})};
+//   location=gps().then((result) =>return result)
+//   .then((err) => return err);
+// };

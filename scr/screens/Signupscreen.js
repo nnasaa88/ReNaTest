@@ -79,6 +79,12 @@ export default function ({ route, navigation }) {
         placeholder="Та утсаа оруулна уу"
         maxLength={8}
         onChangeText={setMobile}
+        // onEndEditing={() => {
+        //   if (mobile.length !== 8) {
+        //     Alert("Утсны дугаар алдаатай");
+        //   }
+        //   return;
+        // }}
       />
       <TextInput
         style={css.inputField}

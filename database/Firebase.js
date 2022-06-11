@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
+import { useNetInfo } from "@react-native-community/netinfo";
 // import * as firebase from "firebase";
 
 // import {db} from '../core/Config';
@@ -25,25 +26,18 @@ const firebaseConfig = {
   appId: "1:209414681595:android:906e570b5bfe81ecde515e",
   // measurementId: "G-XZQ1TB0FD2",
 };
-
-// if (!firebase.apps.length) {
-//   firebase.initializeApp(firebaseConfig);
-// } else {
-//   firebase.app();
-// }
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore();
 
-// export function myFirebase() {
-//   async function Create() {
-//     const docData = {
-//       name: value,
-//       role: 0,
-//     };
-//     await addDoc(collection(db, "items"), docData);
-//     console.log(docData);
-//   }
-// }
+export function isnet() {
+  const netinfo = useNetInfo();
+  if (netinfo.isConnected) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 export async function getCloud(para1, para2) {
   const querySnapshot = await getDocs(collection(db, "items"));
   var data = [];

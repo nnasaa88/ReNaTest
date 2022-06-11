@@ -21,15 +21,11 @@ export const Mystore = (props) => {
     { mname: "Тэмдэгт газар", ename: "place" },
   ]);
 
-  const [Im, setIm] = useState([
-    "?",
-    "Баруун тэвхэр Зүүн онь",
-    "Баруун Зүүн тэвхэр",
-  ]);
-  const [Tamga, setTamga] = useState(["?", "Сар", "Нар"]);
-  const [Helder, setHelder] = useState(["?", "Dorj", "Dondog"]);
-  const [Mygroup, setMygroup] = useState(["?", "Хүрэн", "Хар азарга"]);
-  const [Tuluv, setTuluv] = useState(["Амьд", "Борлуулсан"]);
+  const [Im, setIm] = useState(["?"]);
+  const [Tamga, setTamga] = useState(["?"]);
+  const [Helder, setHelder] = useState(["?"]);
+  const [Mygroup, setMygroup] = useState(["?"]);
+  const [Tuluv, setTuluv] = useState(["Амьд"]);
   const [Event, setEvent] = useState("");
 
   return (
