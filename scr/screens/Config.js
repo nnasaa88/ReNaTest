@@ -38,13 +38,13 @@ export default function (props) {
 
   const HandlerSave = async (para) => {
     let mysql;
-    console.log(para);
+    alert(para);
     mysql =
-      "insert into config (ename,mname ,value,value1,value2,Desc,isback,created,user) values (?,?,?,?,?,?,?,?,?)";
-    var userstring = await resultdb(mysql, para);
+      "insert into config (ename,mname ,value,value1,value2,Desc,isbackup,created,user) values (?,?,?,?,?,?,?,?,?)";
+    var userstring = await resultdb(mysql, para).catch((e) => alert(e));
     mysql = "Хадгаллаа";
     setrefreshpick(refreshpick + 1);
-    Alert.alert(mysql);
+    alert(mysql);
   };
 
   return (
