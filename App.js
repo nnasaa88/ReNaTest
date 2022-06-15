@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { StyleSheet, Alert } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-//amaras comment dwad awdwaddawdwad
+//amaras comment dwad awdwaddawdwad awd
 // import {createNativeStackNavigator, HeaderBackButton,} from "@react-navigation/native-stack";
 import Stacknav from "./scr/screens/Stacknav";
 // import Drawernav from "./scr/screens/DrawerNav";
