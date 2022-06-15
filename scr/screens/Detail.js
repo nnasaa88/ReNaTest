@@ -7,6 +7,7 @@ import {
   Picker,
   TouchableOpacity,
   FlatList,
+  ActivityIndicator,
   TouchableHighlight,
   Alert,
 } from "react-native";
@@ -22,6 +23,7 @@ import { getdb, resultdb } from "../../database/db";
 export default (props) => {
   var selected = props.route.params.item;
   var selectedid = 0;
+  const [saving, setSaving] = useState(false);
 
   const mystatus = useContext(Mycontext);
   const [sex, setsex] = useState(selected.sex);
@@ -48,18 +50,23 @@ export default (props) => {
     props.navigation.goBack();
   };
   const HandlerSave = async () => {
+    console.log("saving1");
+    setSaving(true);
     let mysql;
-    if (name.length < 1) {
-      Alert.alert("Нэр дутуу байна");
+    if (name.length < 2) {
+      alert("Нэр дутуу байна");
+      setSaving(false);
       return;
     }
     {
+      console.log("saving2");
       selectedid === 0
         ? (mysql =
-            "insert into items (type,sex,im,tamga,name,color,image,qty,desc,start,mygroup,helder,status,created, modified) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)")
+            "insert into items (type,sex,im,tamga,name,color,image,qty,desc,start,mygroup,helder,status,created, modified,isbackup) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)")
         : (mysql = `update items set type=?,sex=?,im=?,tamga=?,name=?,color=?,image=?,qty=?,desc=?,start=?,mygroup=?,helder=?,status=?,created=?, modified=?, isbackup=? where id=${selectedid}`);
+      console.log("saving3");
     }
-
+    console.log("saving4");
     var userstring = await resultdb(mysql, [
       mystatus.Activetype,
       sex,
@@ -79,6 +86,8 @@ export default (props) => {
       isbackup + "-update",
     ]);
     let a;
+    console.log("saving5");
+    console.log(userstring);
     if (selectedid === 0) {
       a = userstring.insertId;
       userstring = await resultdb(
@@ -94,7 +103,8 @@ export default (props) => {
       );
       mysql = "Заслаа";
     }
-    Alert.alert(mysql);
+    setSaving(false);
+    alert(mysql);
     props.navigation.goBack();
   };
   const pickImage = async (val) => {
@@ -309,11 +319,18 @@ export default (props) => {
           marginLeft: 35,
         }}
       >
-        <Button
-          style={[css.button, { marginRight: 15 }]}
-          onPress={HandlerSave}
-          title="Хадгалах"
-        />
+        <View>
+          {!saving ? (
+            <Button
+              style={[css.button, { marginRight: 15 }]}
+              onPress={HandlerSave}
+              title="Хадгалах"
+            />
+          ) : (
+            <ActivityIndicator color="black" />
+          )}
+        </View>
+
         <Button
           style={[css.button, { marginLeft: 15 }]}
           onPress={HandlerBack}

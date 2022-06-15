@@ -5,6 +5,7 @@ import {
   Text,
   View,
   Button,
+  ActivityIndicator,
   Alert,
   Image,
   TextInput,
@@ -13,6 +14,7 @@ import {
 import SplashScreen from "./SplashScreen";
 import Mycontext, { fdate } from "../../context/Mycontext";
 import { Getdata, Setdata } from "./Signupscreen";
+import { useNetInfo } from "@react-native-community/netinfo";
 import { getdb, resultdb } from "../../database/db";
 import { fdistance, Getplace1 } from "./Mymap";
 import { getCloud, setCloud } from "../../database/Firebase";
@@ -30,13 +32,14 @@ export default function (props) {
   const [Mypass, setMypass] = useState("");
   const mystatus = useContext(Mycontext);
   const db = getFirestore();
+  const netinfo = useNetInfo();
+  const [saving, setSaving] = useState(false);
 
   let arrpush = [];
-  let st;
   var userstring;
 
   const Handlerlogin = async () => {
-    var userstring;
+    setSaving(true);
     if (Mypass === mystatus.Storepass) {
       mystatus.setisLoggedIn(true);
       if (mystatus.Storeappid === "") {
@@ -47,10 +50,13 @@ export default function (props) {
           expired: fdate(),
           registreddate: fdate(),
         };
-        st = await addDoc(collection(db, "regapp"), docData);
-        let st1 = st.path.toString().split("/")[1];
-        let mysql = "update config set value2=? where ename='appid'";
-        await resultdb(mysql, [st1]);
+        if (netinfo.isConnected) {
+          let st = await addDoc(collection(db, "regapp"), docData);
+          let st1 = st.path.toString().split("/")[1];
+          let mysql = "update config set value2=? where ename='appid'";
+          await resultdb(mysql, [st1]);
+          mystatus.Storeappid = st1;
+        }
       } else {
         Alert.alert("Date шалгах");
       }
@@ -80,11 +86,13 @@ export default function (props) {
         }
       });
       setMypass(null);
+      setSaving(false);
       props.navigation.navigate("Home");
     } else {
       Alert.alert("Утас эсхүл нууц үг буруу байна");
       mystatus.setisLoggedIn(false);
       setMypass(null);
+      setSaving(false);
     }
   };
   return (
@@ -114,9 +122,10 @@ export default function (props) {
             [mobile]
           );
           if (userstring.rows.length !== 0) {
+            console.log();
             mystatus.setUserinfo(userstring.rows.item(0));
-            mystatus.setStorename(mystatus.Userinfo.mname);
-            mystatus.setStorepass(mystatus.Userinfo.value2);
+            mystatus.setStorename(userstring.rows.item(0).mname);
+            mystatus.setStorepass(userstring.rows.item(0).value2);
             userstring = await resultdb("select * from config where ename=?", [
               "appid",
             ]);
@@ -142,7 +151,11 @@ export default function (props) {
         onChangeText={setMypass}
       />
       <View style={css.Button}>
-        <Button onPress={Handlerlogin} title="Нэвтрэх" />
+        {!saving ? (
+          <Button onPress={Handlerlogin} title="Нэвтрэх" />
+        ) : (
+          <ActivityIndicator color="black" />
+        )}
       </View>
       <View style={css.Button}>
         <Button
@@ -185,7 +198,7 @@ export default function (props) {
                 // getdb("alter table items drop isbackup text");
                 getdb("select * from config where ename='appid'");
                 // getdb("delete from config where ename='user' or ename='appid'");
-                // getdb("update items set qty=1 where qty is null");
+                // getdb("update config set value2='' where ename='appid'");
               }}
               title="SQLdatabase - DB"
             />
