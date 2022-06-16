@@ -32,24 +32,28 @@ export default function (props) {
     var userstring;
     userstring = await resultdb("select * from config", []);
     setItems(userstring.rows._array);
-    const filtered_users = items.filter((el) => el.ename === filterfield);
-    setFilteredUsers(filtered_users);
+    setFilteredUsers(
+      userstring.rows._array.filter((el) => el.ename === filterfield)
+    );
   }, [refreshpick]);
 
   const HandlerSave = async (para) => {
     let mysql;
-    alert(para);
+    // alert(para);
     mysql =
-      "insert into config (ename,mname ,value,value1,value2,Desc,isbackup,created,user) values (?,?,?,?,?,?,?,?,?)";
-    var userstring = await resultdb(mysql, para).catch((e) => alert(e));
-    mysql = "Хадгаллаа";
-    setrefreshpick(refreshpick + 1);
-    alert(mysql);
+      "insert into config (ename,mname ,value1,value2,Desc,created,user) values (?,?,?,?,?,?,?)";
+    resultdb(mysql, para)
+      .then((e) => {
+        mysql = "Хадгаллаа";
+        setrefreshpick(refreshpick + 1);
+      })
+      .catch((e) => alert(e));
+    //alert(mysql);
   };
 
   return (
     <View style={{ flex: 1, paddingTop: 15 }}>
-      <Text style={[css.text, { flex: 1, fontSize: 14 }]}>
+      <Text style={[css.text, { flex: 1, fontSize: 16 }]}>
         Хаалттай талбарын утга оруулах
       </Text>
       <View style={{ flex: 1 }} flexDirection="row" justifyContent="center">
@@ -65,7 +69,7 @@ export default function (props) {
           }}
         >
           {mystatus.Closedfield.map((l) => (
-            <Picker.Item label={l.mname} value={l.ename} />
+            <Picker.Item key={l.id} label={l.mname} value={l.ename} />
           ))}
         </Picker>
         <TextInput
@@ -86,7 +90,7 @@ export default function (props) {
             const filtered_users = items.filter(
               (el) =>
                 el.ename === filterfield &&
-                el.value.toLowerCase().includes(text.toLowerCase())
+                el.value1.toLowerCase().includes(text.toLowerCase())
             );
             setFilteredUsers(filtered_users);
             if (text !== "" && filteredUsers.length === 0) {
@@ -99,7 +103,7 @@ export default function (props) {
           returnKeyType="search"
         />
       </View>
-      <View style={{ flex: 4, paddingHorizontal: 10 }} justifyContent="center">
+      <View style={{ flex: 6, paddingHorizontal: 10 }} justifyContent="center">
         {filteredUsers.length > 0 ? (
           <FlatList
             ItemSeparatorComponent={
@@ -112,6 +116,7 @@ export default function (props) {
             }
             data={filteredUsers}
             key={filteredUsers.id}
+            extraData={refreshpick}
             keyExtractor={(filteredUser) => filteredUser.id}
             renderItem={({ item, index, separators }) => (
               <View
@@ -124,11 +129,11 @@ export default function (props) {
                   borderRadius: 10,
                   flexDirection: "row",
                   alignItems: "center",
-                  height: 40,
+                  height: 50,
                 }}
               >
-                <Text style={{ fontSize: 16 }}>
-                  {`${item.ename} ${item.mname} ${item.value} ${item.desc}`}
+                <Text style={{ fontSize: 12 }}>
+                  {`${item.value1}:${item.value2} - ${item.Desc}`}
                 </Text>
               </View>
             )}
@@ -150,32 +155,32 @@ export default function (props) {
           </View>
         )}
       </View>
-      <Getplace />
-      <View style={{ flex: 8, paddingHorizontal: 100 }}>
-        <Button
-          disabled={checkadd}
-          onPress={() => {
-            let x = mystatus.Closedfield.findIndex(
-              (el) => el.ename === filterfield,
-              0
-            );
-            myval = [
-              filterfield,
-              mystatus.Closedfield[x].mname,
-              searchText,
-              "",
-              "",
-              desc,
-              "",
-              fdate(),
-              mystatus.Storename,
-            ];
-            HandlerSave(myval);
-            setSearchText("");
-            setdesc("");
-          }}
-          title="Нэмэх"
-        />
+      <Button
+        disabled={checkadd}
+        onPress={() => {
+          let x = mystatus.Closedfield.findIndex(
+            (el) => el.ename === filterfield,
+            0
+          );
+          myval = [
+            filterfield,
+            mystatus.Closedfield[x].mname,
+            searchText,
+            filterfield === "space" ? "fjufjfu" : "",
+            desc,
+            fdate(),
+            mystatus.Storename,
+          ];
+          console.log(myval);
+          HandlerSave(myval);
+          setSearchText("");
+          setcheckadd(true);
+          setdesc("");
+        }}
+        title="Нэмэх"
+      />
+      <View style={{ flex: 6, paddingHorizontal: 100 }}>
+        <Getplace />
       </View>
     </View>
   );

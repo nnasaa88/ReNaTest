@@ -35,7 +35,7 @@ export default function ({ route, navigation }) {
       return;
     }
     await resultdb(
-      "insert into config (ename, mname, value,value1,value2, value3, created) values (?,?,?,?,?,?,?)",
+      "INSERT into config (ename, mname, value,value1,value2, value3, created) values (?,?,?,?,?,?,?)",
       ["user", name, mobile, email, password1, isadmin ? "1" : "0", fdate()]
     )
       .then(async (result) => {
@@ -44,16 +44,21 @@ export default function ({ route, navigation }) {
         ]);
         if (userstring.rows.length === 0) {
           await resultdb(
-            "insert into config (ename, mname, value,value1,value2, value3, created) values (?,?,?,?,?,?,?)",
-            ["appid", name, mobile, email, "", fdate(), fdate()]
+            "INSERT into config (ename, mname, value,value1,value2, value3, created) values (?,?,?,?,?,?,?)",
+            ["appid", name, "appid" + mobile, email, "", fdate(), fdate()]
           );
         }
         Alert.alert("Хэрэглэгч нэмлээ :" + name);
         navigation.goBack();
       })
-      .catch((err) =>
-        Alert.alert("Хэрэглэгч бүртгэхэд асуудал гарлаа." + err.message)
-      );
+      .catch((err) => {
+        console.log(err);
+        alert(
+          err.message.toString().includes("UNIQUE")
+            ? "utasnii dugaar burtgeltei bain"
+            : "Хэрэглэгч бүртгэхэд асуудал гарлаа."
+        );
+      });
   };
   return (
     <View>

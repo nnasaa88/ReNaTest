@@ -785,10 +785,10 @@ export const css = StyleSheet.create({
   text: {
     fontSize: 12,
     padding: 3,
-    marginHorizontal: 5,
+    marginHorizontal: 2,
     marginVertical: 1,
     justifyContent: "space-between",
-    textAlign: "left",
+    textAlign: "center",
     borderWidth: 1,
     borderColor: "#74D122",
     borderBottomWidth: 5,

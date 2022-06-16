@@ -196,7 +196,7 @@ export default function (props) {
                 // ]);
                 // getdb("drop table users");
                 // getdb("alter table items drop isbackup text");
-                getdb("select * from config where ename='appid'");
+                getdb("select * from config");
                 // getdb("delete from config where ename='user' or ename='appid'");
                 // getdb("update config set value2='' where ename='appid'");
               }}

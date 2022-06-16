@@ -22,9 +22,28 @@ export default function App() {
       .then((result) => console.log("Event db бэлдлээ"))
       .catch((err) => alert("Event асуудал гарлаа." + err.message));
     initdb(
-      "create table if not exists config (id integer primary key not null, ename text,mname text,value text,value1 text,value2 text,value3 text,Desc text,isbackup text,created text,user text);"
+      "create table if not exists config (id integer primary key not null, ename text ,mname text,value text UNIQUE,value1 text,value2 text,value3 text,Desc text,isbackup text,created text,user text);"
     )
-      .then((result) => console.log("config db бэлдлээ"))
+      .then((result) => {
+        initdb(
+          "insert into config (ename,mname ,value1,value2,Desc,user) values ('status','Төлөв','Төл','+','Өөрийн төлөөр орлогодсон','admin')"
+        );
+        initdb(
+          "insert into config (ename,mname ,value1,value2,Desc,user) values ('status','Төлөв','Бэлэг','+','Бэлэг болгон авсан','admin')"
+        );
+        initdb(
+          "insert into config (ename,mname ,value1,value2,Desc,user) values ('status','Төлөв','Авсан','+','Бусдаас худалдаж авсан','admin')"
+        );
+        initdb(
+          "insert into config (ename,mname ,value1,value2,Desc,user) values ('status','Төлөв','Хорогдол','-','Элдэв зүй бус хорогдол','admin')"
+        );
+        initdb(
+          "insert into config (ename,mname ,value1,value2,Desc,user) values ('status','Төлөв','Зарсан','-','Бусдад худалдсан','admin')"
+        );
+        initdb(
+          "insert into config (ename,mname ,value1,value2,Desc,user) values ('status','Төлөв','Хэрэглээ','-','Өөрийн хувийн хэрэглээ','admin')"
+        );
+      })
       .catch((err) => alert("Event асуудал гарлаа." + err.message));
   }, []);
 

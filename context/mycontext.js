@@ -18,7 +18,7 @@ export const Mystore = (props) => {
     { mname: "Тамга", ename: "tamga" },
     { mname: "Малчин", ename: "helder" },
     { mname: "Бүлэг/Азарга", ename: "mygroup" },
-    { mname: "Тэмдэгт газар", ename: "place" },
+    { mname: "Байршил", ename: "space" },
   ]);
 
   const [Im, setIm] = useState(["?"]);
