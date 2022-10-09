@@ -80,7 +80,6 @@ export default function SearchScreen1(props) {
             <TextInput
               style={{ flex: 6 }}
               defaultValue={searchText}
-              style={css.input}
               placeholder="Хайя"
               placeholderTextColor="blue"
               textContentType="name"
