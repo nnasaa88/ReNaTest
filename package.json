@@ -19,7 +19,7 @@
     "@react-navigation/native-stack": "^6.6.1",
     "@react-navigation/stack": "^6.2.1",
     "@types/react-native": "~0.69.1",
-    "axios": "^0.26.1",
+    "axios": "^1.6.4",
     "babel-plugin-transform-remove-imports": "^1.7.0",
     "deprecated-react-native-listview": "^0.0.8",
     "expo": "^46.0.0",
