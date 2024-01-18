@@ -22,7 +22,7 @@
     "axios": "^0.26.1",
     "babel-plugin-transform-remove-imports": "^1.7.0",
     "deprecated-react-native-listview": "^0.0.8",
-    "expo": "^46.0.0",
+    "expo": "^50.0.0",
     "expo-image-picker": "~13.3.1",
     "expo-location": "~14.3.0",
     "expo-sqlite": "~10.3.0",
