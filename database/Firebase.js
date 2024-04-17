@@ -18,7 +18,7 @@ import {
 const firebaseConfig = {
   apiKey: "AIzaSyC7I8CaefxGEBm0bprbA-wYAW08OicQ_FM",
 
-  // authDomain: "myngat-ace2c.firebaseapp.com",
+   authDomain: "myngat-ace2c.firebaseapp.com",
   databaseURL: "https://myfirebase-nasaa88.firebaseio.com",
   projectId: "myfirebase-nasaa88",
   storageBucket: "myfirebase-nasaa88.appspot.com",
@@ -26,7 +26,8 @@ const firebaseConfig = {
   appId: "1:209414681595:android:906e570b5bfe81ecde515e",
   // measurementId: "G-XZQ1TB0FD2",
 };
-const app = initializeApp(firebaseConfig);
+
+  const  app = initializeApp(firebaseConfig);
 export const db = getFirestore();
 
 export function isnet() {

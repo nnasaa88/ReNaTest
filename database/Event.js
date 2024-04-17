@@ -85,9 +85,8 @@ export default function EventListScreen(props) {
                 ))}
               </Picker>
               <TextInput
-                style={{ flex: 6 }}
+                style={{ flex: 6}}
                 defaultValue={searchText}
-                style={css.input}
                 placeholder="Хайя"
                 placeholderTextColor="blue"
                 textContentType="name"
