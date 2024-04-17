@@ -6,7 +6,6 @@ import {
   Alert,
   FlatList,
   TouchableOpacity,
-  Picker,
   TextInput,
   StyleSheet,
 } from "react-native";
@@ -15,7 +14,7 @@ import { resultdb } from "../../database/db";
 import Mycontext, { fdate } from "../../context/Mycontext";
 import { css } from "../../database/Search";
 import Getplace from "./Mymap";
-
+import {Picker} from '@react-native-picker/picker';
 export default function (props) {
   const mystatus = useContext(Mycontext);
   const [searchText, setSearchText] = useState("");

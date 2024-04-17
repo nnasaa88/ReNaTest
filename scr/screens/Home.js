@@ -48,17 +48,17 @@ export default function (props) {
       ),
     });
   }, [props.navigation]);
-  useEffect(async () => {
-    var userstring;
-    userstring = await resultdb(
-      "select * from items where isbackup is null or substr(isbackup,-6,6)='update'",
-      []
-    );
-    setcountcloud(userstring.rows._array.length);
-    countcloud > 0 ? setcountcolor("green") : setcountcolor("black");
-    netinfo.isConnected ? setcolorcloud("green") : setcolorcloud("red");
-  }, [mystatus.Activetype]);
-
+  // useEffect(async () => {
+  //   // var userstring;
+  //   // userstring = await resultdb(
+  //   //   "select * from items where isbackup is null or substr(isbackup,-6,6)='update'",
+  //   //   []
+  //   // );
+  //   // setcountcloud(userstring.rows._array.length);
+  //   // countcloud > 0 ? setcountcolor("green") : setcountcolor("black");
+  //   // netinfo.isConnected ? setcolorcloud("green") : setcolorcloud("red");
+  // }, [mystatus.Activetype]);
+  //ambu soliv
   const horsetouch = () => {
     mystatus.setActivetype("Адуу");
     props.navigation.navigate("Searchdb");

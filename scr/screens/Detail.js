@@ -4,13 +4,13 @@ import {
   View,
   TextInput,
   Image,
-  Picker,
   TouchableOpacity,
   FlatList,
   ActivityIndicator,
   TouchableHighlight,
   Alert,
 } from "react-native";
+import {Picker} from '@react-native-picker/picker';
 import React, { useState, useContext } from "react";
 import DatePicker from "react-native-datepicker";
 import { Button, Icon } from "react-native-elements";

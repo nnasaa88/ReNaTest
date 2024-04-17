@@ -9,12 +9,12 @@ import {
   TextInput,
   StatusBar,
   TouchableOpacity,
-  Picker,
   Image,
   ScrollView,
   SafeAreaView,
   Alert,
 } from "react-native";
+import {Picker} from '@react-native-picker/picker';
 import { Feather as Icon1, EvilIcons } from "@expo/vector-icons";
 
 import Mycontext, { fdate } from "../context/Mycontext";

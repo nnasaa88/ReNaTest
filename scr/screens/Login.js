@@ -28,8 +28,8 @@ import {
 // import { getSMS } from "../../database/Sms";
 
 export default function (props) {
-  const [mobile, setMobile] = useState("");
-  const [Mypass, setMypass] = useState("");
+  const [mobile, setMobile] = useState("86163023");
+  const [Mypass, setMypass] = useState("1");
   const mystatus = useContext(Mycontext);
   const db = getFirestore();
   const netinfo = useNetInfo();
@@ -51,11 +51,16 @@ export default function (props) {
           registreddate: fdate(),
         };
         if (netinfo.isConnected) {
+          console.log('end irsen')
+          try{
           let st = await addDoc(collection(db, "regapp"), docData);
           let st1 = st.path.toString().split("/")[1];
           let mysql = "update config set value2=? where ename='appid'";
           await resultdb(mysql, [st1]);
           mystatus.Storeappid = st1;
+          }catch(e){
+              console.log(e)
+          }
         }
       } else {
         Alert.alert("Date шалгах");

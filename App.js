@@ -8,7 +8,7 @@ import Stacknav from "./scr/screens/Stacknav";
 // import Drawernav from "./scr/screens/DrawerNav";
 import { Mystore, fdate } from "./context/Mycontext";
 import { initdb } from "./database/db";
-
+import 'react-native-gesture-handler';
 export default function App() {
   useEffect(() => {
     initdb(
